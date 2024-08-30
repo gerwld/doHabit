@@ -14,7 +14,7 @@ export const Navigation = () => {
             <Stack.Navigator>
                 <Stack.Screen name="home" component={HomeScreen}  options={{ headerShown: false }} />
                 <Stack.Screen name="addtask" component={AddTaskScreen}  options={{ headerShown: true, title: "Add Task" }} />
-                <Stack.Screen name="showdetailstask" component={ShowDetailsTaskScreen}  options={{ headerShown: true, title: "Details" }} />
+                <Stack.Screen name="showdetailstask" component={ShowDetailsTaskScreen}  options={{ headerShown: true, title: "Habit Details" }} />
                 <Stack.Screen name="settings" component={SettingsScreen}  options={{ headerShown: true, title: "Settings" }} />
             </Stack.Navigator>
         </NavigationContainer>
