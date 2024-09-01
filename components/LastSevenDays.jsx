@@ -13,7 +13,7 @@ const LastSevenDays = ({ isTask }) => {
             {[7, 6, 5, 4, 3, 2, 1]
                 .map((i) =>
                     <TimeView>
-                        <Icon type="antdesign" size={19} name="close" color="#839ab2" />
+                        <Icon type="antdesign" size={19} name="close" color="#a5bbd3" />
                     </TimeView>)}
         </ParentView>
     )
