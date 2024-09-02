@@ -1,5 +1,3 @@
-import { updatePlanDaysIndexes } from "@/utils"
-
 const initialState = {
  isInit: false,
  isEditMode: false,
@@ -59,7 +57,6 @@ export default function plans(state = initialState, action) {
   case 'DELETE_PLANDAY':
     let currentDaysFiltered = [...state.currentDays].filter(({id}) => id !== action.itemID);
     return {...state,
-    currentDays: updatePlanDaysIndexes(currentDaysFiltered, 'planDayNumber')
   }
   case 'UPDATE_PLANDAY':
     return {...state,
