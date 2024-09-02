@@ -1,0 +1,13 @@
+{
+    "st_screen": "Settings",
+    "st_tutorial": "Tutorial",
+    "st_support": "Support",
+    "st_lang": "App Language",
+    "st_feat": "Request Feature",
+    "st_rate": "Rate App",
+    "addt_name": "Name",
+    "addt_name_placeholder": "Name of the habbit",
+    "addt_notif": "Notification",
+    "addt_notif_placeholder": "Did you ... today?"
+
+  }
