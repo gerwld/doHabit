@@ -5,9 +5,9 @@
     "st_lang": "App Language",
     "st_feat": "Request Feature",
     "st_rate": "Rate App",
+    "st_dark": "Dark Theme",
     "addt_name": "Name",
     "addt_name_placeholder": "Name of the habbit",
     "addt_notif": "Notification",
     "addt_notif_placeholder": "Did you ... today?"
-
   }
