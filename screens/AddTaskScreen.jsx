@@ -1,8 +1,9 @@
 import React from 'react'
-import { View, Text, TextInput, StyleSheet } from 'react-native'
+import { View, Text, TextInput, StyleSheet, Button } from 'react-native'
 import styled from 'styled-components/native';
 import { BaseView } from '../components';
 import { useTranslation } from 'react-i18next';
+import { BaseButton } from '../components/styling/BaseButton';
 
 const AddTaskScreen = () => {
   const [number, onChangeNumber] = React.useState('');
@@ -27,12 +28,25 @@ const AddTaskScreen = () => {
           placeholder={t("addt_notif_placeholder")}
           placeholderTextColor="#949ca1" 
         />
-
       </View>
+      <ButtonsView>
+        <BaseButton style={{marginRight: 5}} color="#aebddd" title="Cancel"/>
+        <BaseButton title="Add new"/>
+      </ButtonsView>
     </BaseView>
   )
 
 }
+
+
+const ButtonsView = styled.View`
+  justify-content: flex-end;
+  flex-direction: row;
+  gap: 10px;
+  margin-right: 10px;
+  margin-top: 20px;
+
+`
 
 
 const Label = styled.Text`
