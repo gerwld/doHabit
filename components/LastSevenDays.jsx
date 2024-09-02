@@ -3,6 +3,7 @@ import React from 'react'
 import moment from 'moment';
 import styled from 'styled-components/native';
 import { Icon } from '@rneui/base';
+import { v4 as uuid } from 'uuid';
 
 const LastSevenDays = ({ isTask }) => {
     const day = 24 * 60 * 60 * 1000;
@@ -12,7 +13,7 @@ const LastSevenDays = ({ isTask }) => {
         <ParentView>
             {[7, 6, 5, 4, 3, 2, 1]
                 .map((i) =>
-                    <TimeView>
+                    <TimeView key={uuid()}>
                         <Icon type="antdesign" size={19} name="close" color="#a5bbd3" />
                     </TimeView>)}
         </ParentView>
@@ -21,8 +22,8 @@ const LastSevenDays = ({ isTask }) => {
         <ParentView style={{ marginTop:  7 }}>
             {[7, 6, 5, 4, 3, 2, 1]
                 .map((i) =>
-                    <TimeView>
-                        {moment(timestamp - (day * i)).format("MMM Do").split(" ").map(e => <T>{e}</T>)}
+                    <TimeView key={uuid()}>
+                        {moment(timestamp - (day * i)).format("MMM Do").split(" ").map(e => <T key={uuid()}>{e}</T>)}
                     </TimeView>)}
         </ParentView>
     )
