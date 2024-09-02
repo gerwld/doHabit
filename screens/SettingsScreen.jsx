@@ -8,7 +8,7 @@ const SettingsScreen = () => {
   const {t} = useTranslation();
 
   return (
-    <View style={{flex: 1, justifyContent: "space-between"}}>
+    <View style={{flex: 1, justifyContent: "space-between", minHeight: "fit-content"}}>
       <GapView />
       <View style={{flex: 1}}>
         <LineItemView rightArrow>
@@ -17,7 +17,10 @@ const SettingsScreen = () => {
 
         <LineItemView rightArrow>
           <Text>{t("st_support")}</Text>
+        </LineItemView>
 
+        <LineItemView toggle>
+          <Text>{t("st_dark")}</Text>
         </LineItemView>
 
         <LineItemView rightArrow>
@@ -29,6 +32,7 @@ const SettingsScreen = () => {
         <LineItemView rightArrow>
           <Text>{t("st_feat")}</Text>
         </LineItemView>
+
 
         <LineItemView rightArrow>
           <Text>{t("st_rate")}</Text>
