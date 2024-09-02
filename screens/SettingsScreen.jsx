@@ -2,33 +2,36 @@ import { View, Text } from 'react-native'
 import React from 'react'
 import { LineItemView, GapView } from '../components'
 import styled from 'styled-components/native'
+import { useTranslation } from 'react-i18next'
 
 const SettingsScreen = () => {
+  const {t} = useTranslation();
 
   return (
     <View style={{flex: 1, justifyContent: "space-between"}}>
       <GapView />
       <View style={{flex: 1}}>
         <LineItemView rightArrow>
-          <Text>Tutorial</Text>
+          <Text>{t("st_tutorial")}</Text>
         </LineItemView>
 
         <LineItemView rightArrow>
-          <Text>Support</Text>
+          <Text>{t("st_support")}</Text>
+
         </LineItemView>
 
         <LineItemView rightArrow>
-          <Text>App Language</Text>
+          <Text>{t("st_lang")}</Text>
         </LineItemView>
 
         <GapView />
 
         <LineItemView rightArrow>
-          <Text>Request Feature</Text>
+          <Text>{t("st_feat")}</Text>
         </LineItemView>
 
         <LineItemView rightArrow>
-          <Text>Rate App</Text>
+          <Text>{t("st_rate")}</Text>
         </LineItemView>
       </View>
       <Copyright>

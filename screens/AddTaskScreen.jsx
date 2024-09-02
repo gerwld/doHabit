@@ -2,28 +2,29 @@ import React from 'react'
 import { View, Text, TextInput, StyleSheet } from 'react-native'
 import styled from 'styled-components/native';
 import { BaseView } from '../components';
+import { useTranslation } from 'react-i18next';
 
 const AddTaskScreen = () => {
   const [number, onChangeNumber] = React.useState('');
-
+  const { t } = useTranslation();
 
   return (
 
     <BaseView>
       <View style={{paddingTop: 14}}>
-        <Label>Name</Label>
+        <Label>{t("addt_name")}</Label>
         <SettingsInput
           onChangeText={onChangeNumber}
           value={number}
-          placeholder="Name of the habbit"
+          placeholder={t("addt_name_placeholder")}
           placeholderTextColor="#949ca1" 
         />
 
-        <Label>Notification</Label>
+        <Label>{t("addt_notif")}</Label>
         <SettingsInput
           onChangeText={onChangeNumber}
           value={number}
-          placeholder="Did you ... today?"
+          placeholder={t("addt_notif_placeholder")}
           placeholderTextColor="#949ca1" 
         />
 
