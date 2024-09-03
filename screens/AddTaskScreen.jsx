@@ -1,7 +1,7 @@
 import React from 'react'
 import { View, Text, TextInput, StyleSheet, Button } from 'react-native'
 import styled from 'styled-components/native';
-import { BaseView } from '../components';
+import { BaseView, LineItemView } from '../components';
 import { useTranslation } from 'react-i18next';
 import { BaseButton } from '../components/styling/BaseButton';
 
@@ -12,13 +12,13 @@ const AddTaskScreen = () => {
   return (
 
     <BaseView>
-      <View style={{paddingTop: 14}}>
+      <View style={{ paddingTop: 14 }}>
         <Label>{t("addt_name")}</Label>
         <SettingsInput
           onChangeText={onChangeNumber}
           value={number}
           placeholder={t("addt_name_placeholder")}
-          placeholderTextColor="#949ca1" 
+          placeholderTextColor="#949ca1"
         />
 
         <Label>{t("addt_notif")}</Label>
@@ -26,12 +26,21 @@ const AddTaskScreen = () => {
           onChangeText={onChangeNumber}
           value={number}
           placeholder={t("addt_notif_placeholder")}
-          placeholderTextColor="#949ca1" 
+          placeholderTextColor="#949ca1"
         />
+
+        <Label>Regularity</Label>
+        <LineItemView toggle isEnabled>
+          <Text>Remind me</Text>
+        </LineItemView>
+
+        <LineItemView rightArrow>
+          <Text>Repeat</Text>
+        </LineItemView>
       </View>
       <ButtonsView>
-        <BaseButton style={{marginRight: 5}} color="#aebddd" title="Cancel"/>
-        <BaseButton title="Add new"/>
+        <BaseButton style={{ marginRight: 5 }} color="#aebddd" title="Cancel" />
+        <BaseButton title="Add new" />
       </ButtonsView>
     </BaseView>
   )
