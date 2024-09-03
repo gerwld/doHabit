@@ -1,20 +1,22 @@
-import { View, Text, ScrollView, StyleSheet } from 'react-native'
+import { View, Text, ScrollView, StyleSheet, Pressable } from 'react-native'
 import React from 'react'
 import { LineItemView, GapView } from '../components'
 import styled from 'styled-components/native'
 import { useTranslation } from 'react-i18next'
 
-const SettingsScreen = () => {
+const SettingsScreen = ({navigation}) => {
   const { t } = useTranslation();
 
   return (
     <View style={{flex: 1}}>
     <ScrollView contentContainerStyle={styles.scrollViewContent}>
       <GapView />
-      <View style={{ flex: 1, justifyContent: "flex-start", height: "100%" }}>
-        <LineItemView rightArrow>
-          <Text>{t("st_tutorial")}</Text>
-        </LineItemView>
+      <View style={{ flex: 1, justifyContent: "flex-start", height: "100%", minHeight: 390 }}>
+        <Pressable onPress={() => navigation.navigate("tutorial")}>
+          <LineItemView rightArrow>
+            <Text>{t("st_tutorial")}</Text>
+          </LineItemView>
+        </Pressable>
 
         <LineItemView rightArrow>
           <Text>{t("st_support")}</Text>
@@ -55,7 +57,7 @@ const Copyright = styled.View`
   color: #cbd5db;
   font-weight: 500;
   margin-bottom: 30px;
-  padding-top: 10px;
+  padding: 10px 0;
 `
 
 const GrayText = styled.Text`
@@ -66,7 +68,7 @@ const GrayText = styled.Text`
 
 const styles = StyleSheet.create({
   scrollView: {
-    flex: 1, // Ensures the ScrollView takes up the full available space
+    flex: 1, 
     height: "max-height"
   },
   scrollViewContent: {
