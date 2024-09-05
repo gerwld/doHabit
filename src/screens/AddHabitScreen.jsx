@@ -6,7 +6,7 @@ import styled from 'styled-components/native';
 import { useTranslation } from 'react-i18next';
 import { v4 as uuid } from 'uuid';
 
-import { BaseView, LineItemView } from 'components';
+import { BaseView, LineItemView } from '@components';
 
 import { useDispatch } from 'react-redux';
 import { habitsActions } from "actions";
