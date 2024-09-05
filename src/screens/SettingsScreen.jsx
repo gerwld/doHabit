@@ -1,9 +1,10 @@
-import { View, Text, ScrollView, StyleSheet, Pressable, TouchableOpacity } from 'react-native'
 import React from 'react'
-import { LineItemView, GapView } from '../components'
+import { View, Text, ScrollView, StyleSheet, Pressable, TouchableOpacity } from 'react-native'
 import styled from 'styled-components/native'
 import { useTranslation } from 'react-i18next';
 import { Header as HeaderRNE } from '@rneui/themed';
+
+import { LineItemView, GapView } from '@components'
 
 const SettingsScreen = ({ navigation }) => {
   const { t } = useTranslation();
@@ -64,28 +65,28 @@ const SettingsScreen = ({ navigation }) => {
 }
 
 const Copyright = styled.View`
-  align-items: center;
-  flex-direction: column;
-  color: #cbd5db;
-  font-weight: 500;
-  margin-bottom: 30px;
-  padding: 10px 0;
+align-items: center;
+flex-direction: column;
+color: #cbd5db;
+font-weight: 500;
+margin-bottom: 30px;
+padding: 10px 0;
 `
 
 const GrayText = styled.Text`
-  color: #cbd5db;
-  font-weight: 500;
-  font-size: 16px;
+color: #cbd5db;
+font-weight: 500;
+font-size: 16px;
 `
 
 const Title = styled.Text`
-        min-height: 36px;
-        line-height:36px;
-        color: black;
-        font-size: 17px;
-        font-weight: 600;
-        align-items: center;
-        justify-content: center;
+min-height: 36px;
+line-height:36px;
+color: black;
+font-size: 17px;
+font-weight: 600;
+align-items: center;
+justify-content: center;
 `
 
 

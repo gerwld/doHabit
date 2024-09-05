@@ -4,18 +4,25 @@ import { Picker } from '@react-native-picker/picker';
 import { Header as HeaderRNE } from '@rneui/themed';
 import styled from 'styled-components/native';
 import { useTranslation } from 'react-i18next';
-import { v4 as uuid } from 'uuid';
-
-import { BaseView, LineItemView } from 'components';
-
 import { useDispatch } from 'react-redux';
-import { habitsActions } from "actions";
+
+import { BaseView, LineItemView } from '@components';
 
 
-const HabitEditScreen = ({ navigation }) => {
+
+const DetailsHabitScreen = ({ route, navigation }) => {
   const { t } = useTranslation();
   const d = useDispatch();
 
+  const [item, setItem] = React.useState(null);
+
+  React.useEffect(() => {
+    setItem(route.params);
+    console.log(route.params);
+    
+}, [route.params])
+
+  
   const initialState = {
     name: "",
     notification: "",
@@ -31,11 +38,6 @@ const HabitEditScreen = ({ navigation }) => {
     }
   }
 
-  const onSubmit = () => {
-    d(habitsActions.addHabit({ id: uuid(), ...state, datesArray: [] }));
-    setState(initialState);
-    navigation.navigate('home')
-  }
 
   return (
 
@@ -51,12 +53,12 @@ const HabitEditScreen = ({ navigation }) => {
         }
         rightComponent={
           <View style={styles.headerRight}>
-            <TouchableOpacity onPress={onSubmit}>
-              <Title style={{ fontWeight: 400 }}>Save</Title>
+            <TouchableOpacity onPress={() => navigation.navigate("edithabit")}>
+              <Title style={{ fontWeight: 400 }}>Edit</Title>
             </TouchableOpacity>
           </View>
         }
-        centerComponent={<Title>{t("addt_screen")}</Title>}
+        centerComponent={<Title>{item?.name}</Title>}
         backgroundColor='red'
 
       />
@@ -151,4 +153,4 @@ const Title = styled.Text`
 `
 
 
-export default HabitEditScreen
+export default DetailsHabitScreen

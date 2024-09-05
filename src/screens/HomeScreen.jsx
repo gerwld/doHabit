@@ -31,7 +31,7 @@ const LatestTasks = () => {
     <FlatList
       contentContainerStyle={styles.listContent}
       data={items}
-      renderItem={({ item }) => <HomeTask {...item}/>
+      renderItem={({ item }) => <HomeTask item={item}/>
       }
     />
   </>
