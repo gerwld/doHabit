@@ -1,6 +1,8 @@
 export { Header } from "./Header";
-export { HomeTask } from "./HomeTask";
 export { LastSevenDays } from "./LastSevenDays";
+
 export { BaseView } from "./styling/BaseView";
-export { LineItemView } from "./styling/LineItemView";
+export { default as LineItemView } from "./styling/LineItemView";
 export { GapView } from "./styling/GapView";
+export { HomeTask } from "./HomeTask";
+export {default as CircularProgress} from "./CircularProgress";
