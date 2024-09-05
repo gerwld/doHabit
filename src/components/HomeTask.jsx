@@ -6,13 +6,13 @@ import CircularProgress from './CircularProgress'
 import { useNavigation } from '@react-navigation/native'
 
 
-export const HomeTask = ({ name }) => {
+export const HomeTask = ({ item, name }) => {
   const navigation = useNavigation();
   return (
-    <TouchableOpacity onPress={() => navigation.navigate("habitdetails")} >
+    <TouchableOpacity onPress={() => navigation.navigate("habitdetails", item)} >
       <LineItemView>
         <CircularProgress progress={20} size={22} strokeWidth={5} color="#7fcbfd" />
-        <Text style={{ flex: 1, marginLeft: 10, marginRight: 5, color: "#50677a" }}>{name}</Text>
+        <Text style={{ flex: 1, marginLeft: 10, marginRight: 5, color: "#50677a" }}>{item.name}</Text>
         <LastSevenDays isTask />
       </LineItemView>
     </TouchableOpacity>
