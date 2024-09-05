@@ -1,10 +1,11 @@
 import React from 'react';
-import { StatusBar } from 'expo-status-bar';
-import { Navigation } from './screens/Navigation';
-import './i18n';
-import withTranslation from './hoc/withTranslation';
 import { Provider } from 'react-redux';
-import store from './redux/store';
+import { StatusBar } from 'expo-status-bar';
+import './i18n';
+
+import { Navigation } from 'screens/Navigation';
+import withTranslation from 'hoc/withTranslation';
+import store from 'redux/store';
 
 
 export default withTranslation(function App() {
