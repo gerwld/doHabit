@@ -10,9 +10,10 @@ import { BaseView, LineItemView } from '@components';
 
 import { useDispatch } from 'react-redux';
 import { habitsActions } from "actions";
+import { BasePressButton } from '../components/styling/BasePressButton';
 
 
-const EditHabitScreen = ({ navigation }) => {
+const EditHabitScreen = ({ route, navigation }) => {
   const { t } = useTranslation();
   const d = useDispatch();
 
@@ -22,8 +23,8 @@ const EditHabitScreen = ({ navigation }) => {
     remind: true,
     repeat: "every-day"
   };
-  const [state, setState] = React.useState(initialState);
 
+  const [state, setState] = React.useState(initialState);
 
   const onChangeInput = (name, value) => {
     if (name && value !== undefined) {
@@ -32,10 +33,13 @@ const EditHabitScreen = ({ navigation }) => {
   }
 
   const onSubmit = () => {
-    d(habitsActions.addHabit({ id: uuid(), ...state, datesArray: [] }));
-    setState(initialState);
+    d(habitsActions.updateHabit({ ...state }));
     navigation.navigate('home')
   }
+
+  React.useEffect(() => {
+    setState({ ...state, ...route.params });
+  }, [route.params])
 
   return (
 
@@ -56,8 +60,8 @@ const EditHabitScreen = ({ navigation }) => {
             </TouchableOpacity>
           </View>
         }
-        centerComponent={<Title>edithabit</Title>}
-        backgroundColor='red'
+        centerComponent={<Title>Edit Habit</Title>}
+        backgroundColor={state?.color ? state?.color : "#5fb1e7"}
 
       />
       <View style={{ paddingTop: 14 }}>
@@ -68,6 +72,19 @@ const EditHabitScreen = ({ navigation }) => {
           placeholder={t("addt_name_placeholder")}
           placeholderTextColor="#949ca1"
         />
+
+        <BasePressButton
+          styleObj={{
+            width: 30,
+            height: 30,
+            borderRadius: 50,
+            paddingVertical: 0,
+            paddingHorizontal: 0,
+          }}
+          title=" "
+          backgroundColor={state.color}
+        />
+
 
         <Label>{t("addt_notif")}</Label>
         <SettingsInput
