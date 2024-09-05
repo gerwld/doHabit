@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
+import { View, Text, StyleSheet, TouchableOpacity, Button } from 'react-native'
 import { Picker } from '@react-native-picker/picker';
 import { Header as HeaderRNE } from '@rneui/themed';
 import styled from 'styled-components/native';
@@ -10,6 +10,8 @@ import { BaseView, LineItemView } from '@components';
 
 import { useDispatch } from 'react-redux';
 import { habitsActions } from "actions";
+import { HABIT_COLORS, REPEAT_MASKS, getRandomItem } from '../constants';
+import { BasePressButton } from '../components/styling/BasePressButton';
 
 
 const AddHabitScreen = ({ navigation }) => {
@@ -17,6 +19,7 @@ const AddHabitScreen = ({ navigation }) => {
   const d = useDispatch();
 
   const initialState = {
+    color: getRandomItem(HABIT_COLORS),
     name: "",
     notification: "",
     remind: true,
@@ -57,7 +60,7 @@ const AddHabitScreen = ({ navigation }) => {
           </View>
         }
         centerComponent={<Title>{t("addt_screen")}</Title>}
-        backgroundColor='red'
+        backgroundColor={state.color}
 
       />
       <View style={{ paddingTop: 14 }}>
@@ -67,6 +70,18 @@ const AddHabitScreen = ({ navigation }) => {
           value={state.name}
           placeholder={t("addt_name_placeholder")}
           placeholderTextColor="#949ca1"
+        />
+
+        <BasePressButton
+          styleObj={{
+            width: 30,
+            height: 30,
+            borderRadius: 50,
+            paddingVertical: 0,
+            paddingHorizontal: 0,
+          }}
+          title=" "
+          backgroundColor={state.color}
         />
 
         <Label>{t("addt_notif")}</Label>
@@ -86,10 +101,7 @@ const AddHabitScreen = ({ navigation }) => {
             mode="dialog"
             selectedValue={state.repeat}
             onValueChange={(v) => onChangeInput("repeat", v)}>
-            <Picker.Item label="Every Day" value="every-day" />
-            <Picker.Item label="Every Week" value="every-week" />
-            <Picker.Item label="3 times per week" value="3-times-week" />
-            <Picker.Item label="5 times per week" value="5-times-week" />
+            {Object.keys(REPEAT_MASKS).map(i => <Picker.Item label={REPEAT_MASKS[i]} value={i} />)}
           </Picker>
         </LineItemView>
 
