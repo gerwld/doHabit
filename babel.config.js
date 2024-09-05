@@ -7,7 +7,7 @@ module.exports = function (api) {
         'module-resolver',
         {
           alias: {
-            components: './src/components',
+            "@components": './src/components',
             screens: './src/screens',
             locales: './src/locales',
             reduxx: './src/redux',
