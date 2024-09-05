@@ -27,7 +27,7 @@ const CircularProgress = ({ progress, size, strokeWidth, color, isText }) => {
           strokeWidth={strokeWidth}
           strokeDasharray={circumference}
           strokeDashoffset={strokeDashoffset}
-          strokeLinecap="round"
+          strokeLinecap="square"
           transform={`rotate(-90 ${size / 2} ${size / 2})`}
         />
       </Svg>
