@@ -3,8 +3,8 @@ import { initReactI18next } from 'react-i18next';
 import { Platform, I18nManager } from 'react-native';
 import * as RNLocalize from 'react-native-localize';
 
-import en from './locales/en.json';
-import fr from './locales/fr.json';
+import en from 'locales/en.json';
+import fr from 'locales/fr.json';
 
 const resources = {
   en: { translation: en },
