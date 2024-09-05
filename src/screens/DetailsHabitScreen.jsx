@@ -1,13 +1,15 @@
 import React from 'react'
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
+import { View, Text, StyleSheet, TouchableOpacity, Button, Alert } from 'react-native'
 import { Picker } from '@react-native-picker/picker';
 import { Header as HeaderRNE } from '@rneui/themed';
 import styled from 'styled-components/native';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 
-import { BaseView, LineItemView } from '@components';
-
+import { BaseView } from '@components';
+import alert from '../polyfils/alert';
+import { habitsActions } from "actions";
+import { REPEAT_MASKS } from '../constants';
 
 
 const DetailsHabitScreen = ({ route, navigation }) => {
@@ -18,25 +20,36 @@ const DetailsHabitScreen = ({ route, navigation }) => {
 
   React.useEffect(() => {
     setItem(route.params);
-    console.log(route.params);
-    
-}, [route.params])
-
-  
-  const initialState = {
-    name: "",
-    notification: "",
-    remind: true,
-    repeat: "every-day"
-  };
-  const [state, setState] = React.useState(initialState);
+  }, [route.params])
 
 
-  const onChangeInput = (name, value) => {
-    if (name && value !== undefined) {
-      setState({ ...state, [name]: value })
+
+  const onPressDeleteHabit = () => {
+    const onConfirm = () => {
+        d(habitsActions.delHabit(item.id));
+        navigation.navigate("home");
     }
+
+    alert(
+      `Delete "${item.name}"?`,
+      "This action can't be undone.",
+      [
+        {
+          text: 'Cancel',
+          style: 'cancel',
+        },
+        {
+          text: 'Delete',
+          onPress: onConfirm
+        }
+      ],
+      {
+        cancelable: true,
+        onDismiss: () => console.log("ok")
+      })
   }
+
+
 
 
   return (
@@ -53,56 +66,56 @@ const DetailsHabitScreen = ({ route, navigation }) => {
         }
         rightComponent={
           <View style={styles.headerRight}>
-            <TouchableOpacity onPress={() => navigation.navigate("edithabit")}>
+            <TouchableOpacity onPress={() => navigation.navigate("edithabit", item)}>
               <Title style={{ fontWeight: 400 }}>Edit</Title>
             </TouchableOpacity>
           </View>
         }
         centerComponent={<Title>{item?.name}</Title>}
-        backgroundColor='red'
+        backgroundColor={item?.color ? item.color : "#5fb1e7"}
 
       />
       <View style={{ paddingTop: 14 }}>
-        <Label>{t("addt_name")}</Label>
-        <SettingsInput
-          onChangeText={(v) => onChangeInput("name", v)}
-          value={state.name}
-          placeholder={t("addt_name_placeholder")}
-          placeholderTextColor="#949ca1"
-        />
 
-        <Label>{t("addt_notif")}</Label>
-        <SettingsInput
-          onChangeText={(v) => onChangeInput("notification", v)}
-          value={state.notification}
-          placeholder={t("addt_notif_placeholder")}
-          placeholderTextColor="#949ca1"
-        />
+        <InfoBar>
+          <InfoBarItem>
+            <Text>{item?.repeat ? REPEAT_MASKS[item.repeat] : "-"}</Text>
+          </InfoBarItem>
+          <InfoBarItem>
+            <Text>--:--</Text>
+          </InfoBarItem>
+        </InfoBar>
 
-        <Label>Regularity</Label>
 
-        <LineItemView rightArrow>
-          <Text style={{ flex: 1 }}>Repeat</Text>
-          <Picker
-            style={{ textAlign: "right", color: "gray", border: "none", fontSize: 16, appearance: "none", marginRight: 10, outline: "none" }}
-            mode="dialog"
-            selectedValue={state.repeat}
-            onValueChange={(v) => onChangeInput("repeat", v)}>
-            <Picker.Item label="Every Day" value="every-day" />
-            <Picker.Item label="Every Week" value="every-week" />
-            <Picker.Item label="3 times per week" value="3-times-week" />
-            <Picker.Item label="5 times per week" value="5-times-week" />
-          </Picker>
-        </LineItemView>
 
-        <LineItemView toggle isEnabled={state.remind} onToggle={(v) => onChangeInput("remind", v)}>
-          <Text>Remind me</Text>
-        </LineItemView>
+        <Label>Overview</Label>
+
+
+        <Label>History</Label>
+        <Label>Habit Strength</Label>
+
+        <InfoBar>
+          <Button
+            onPress={onPressDeleteHabit}
+            title="Delete"
+          />
+        </InfoBar>
 
       </View>
     </BaseView>
   )
 }
+
+const InfoBar = styled.View`
+width: 100%;
+flex-direction:row;
+  align-content: center;
+  justify-content: space-around;
+`
+const InfoBarItem = styled.View`
+    align-content: center;
+    justify-content: center;
+`
 
 
 const Label = styled.Text`
