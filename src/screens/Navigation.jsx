@@ -26,7 +26,6 @@ export const Navigation = () => {
                 <Stack.Screen name="addhabit" component={AddHabitScreen}  options={{ headerShown: false, title: t("addt_screen") }} />
                 <Stack.Screen name="edithabit" component={EditHabitScreen}  options={{ headerShown: false, title: t("addt_screen") }} />
                 <Stack.Screen name="habitdetails" component={DetailsHabitScreen}  options={{ headerShown: false, title: "Habit Details" }} />
-                
             </Stack.Navigator>
         </NavigationContainer>
     )
