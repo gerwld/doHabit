@@ -1,2 +1,2 @@
-export { default as habbits } from "./reducers/habbitsReducer"
+export { default as habits } from "./reducers/habitsReducer"
 

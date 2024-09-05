@@ -1,11 +1,10 @@
-import { View, Text } from 'react-native'
 import React from 'react'
 import moment from 'moment';
 import styled from 'styled-components/native';
 import { Icon } from '@rneui/base';
 import { v4 as uuid } from 'uuid';
 
-const LastSevenDays = ({ isTask }) => {
+export const LastSevenDays = ({ isTask }) => {
     const day = 24 * 60 * 60 * 1000;
     let timestamp = new Date().getTime();
 
@@ -50,5 +49,3 @@ const ParentView = styled.View`
     flex-direction: row;
     align-items: center;
 `
-
-export default LastSevenDays

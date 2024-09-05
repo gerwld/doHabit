@@ -4,18 +4,23 @@ import { StatusBar } from 'expo-status-bar';
 import './i18n';
 
 import { Navigation } from 'screens/Navigation';
-import withTranslation from 'hoc/withTranslation';
-import store from 'redux/store';
+import withTranslation from 'hocs/withTranslation';
+import store from 'reduxx/store';
+import useInitializeHabits from 'hooks/useInitializeHabits';
 
 
-export default withTranslation(function App() {
+function AppWithProvider({ children }) {
+  useInitializeHabits();
+  return children;
+}
+
+export default withTranslation(function RootComponent() {
   return (
     <Provider store={store}>
-      <Navigation />
-      <StatusBar backgroundColor='transparent'  translucent={true} />
+      <AppWithProvider>
+        <Navigation />
+        <StatusBar backgroundColor='transparent' translucent={true} />
+      </AppWithProvider>
     </Provider>
   )
 })
-
-
-

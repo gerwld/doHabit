@@ -1,9 +1,10 @@
+
 import { configureStore } from "@reduxjs/toolkit"
-import { habbits } from "."
+import { habits } from "."
 
 const store = configureStore({
     reducer: {
-        habbits,
+        habits,
     },
 })
 

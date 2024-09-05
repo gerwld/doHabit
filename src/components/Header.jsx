@@ -16,7 +16,7 @@ export const Header = ({ navigation }) => {
             }
             rightComponent={
                 <View style={styles.headerRight}>
-                    <TouchableOpacity style={{padding: 5 }} onPress={() => navigation.navigate('addtask')}>
+                    <TouchableOpacity style={{padding: 5 }} onPress={() => navigation.navigate('addhabit')}>
                         <Icon type="antdesign" size={24} name="plus" color="white" />
                     </TouchableOpacity>
                 </View>

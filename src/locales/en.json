@@ -6,9 +6,9 @@
     "st_feat": "Request Feature",
     "st_rate": "Rate App",
     "st_dark": "Dark Theme",
-    "addt_screen": "Add Habbit",
+    "addt_screen": "Add Habit",
     "addt_name": "Name",
-    "addt_name_placeholder": "Name of the habbit",
+    "addt_name_placeholder": "Name of the habit",
     "addt_notif": "Notification",
     "addt_notif_placeholder": "Did you ... today?"
   }

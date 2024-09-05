@@ -1,2 +1,2 @@
 
-export * as habbitsActions from "./habbitsActions";
+export * as habitsActions from "./habitsActions";

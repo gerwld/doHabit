@@ -1,4 +1,4 @@
-// hoc/withTranslation.js
+// hocs/withTranslation.js
 import React, { useEffect, useState } from 'react';
 import i18n from 'i18next';
 import { Platform } from 'react-native';

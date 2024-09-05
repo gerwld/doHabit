@@ -9,10 +9,10 @@ import { v4 as uuid } from 'uuid';
 import { BaseView, LineItemView } from 'components';
 
 import { useDispatch } from 'react-redux';
-import { habbitsActions } from "actions";
+import { habitsActions } from "actions";
 
 
-const AddTaskScreen = ({ navigation }) => {
+const HabitDetailsScreen = ({ navigation }) => {
   const { t } = useTranslation();
   const d = useDispatch();
 
@@ -32,7 +32,7 @@ const AddTaskScreen = ({ navigation }) => {
   }
 
   const onSubmit = () => {
-    d(habbitsActions.addHabbit({ id: uuid(), ...state, datesArray: [] }));
+    d(habitsActions.addHabit({ id: uuid(), ...state, datesArray: [] }));
     setState(initialState);
     navigation.navigate('home')
   }
@@ -151,4 +151,4 @@ const Title = styled.Text`
 `
 
 
-export default AddTaskScreen
+export default HabitDetailsScreen

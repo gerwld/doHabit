@@ -1,13 +1,16 @@
 import React from 'react'
-import { StyleSheet, Dimensions, Text } from 'react-native';
-import { Header, HomeTask, BaseView } from '../components';
-import { FlatList, TouchableOpacity } from 'react-native';
-import LastSevenDays from '../components/LastSevenDays';
-import { v4 as uuid } from 'uuid';
+import { StyleSheet, Dimensions, Text, FlatList } from 'react-native';
+import { Header, BaseView, LastSevenDays } from 'components';
 import { useSelector } from 'react-redux';
-
+import { HomeTask } from '../components';
 
 function HomeScreen({ navigation }) {
+  const { isInit } = useSelector(({ habits }) => ({
+    isInit: habits.isInit
+  }))
+  if (!isInit) return <Text>Loader...</Text>
+
+
   return (
     <BaseView>
       <Header {...{ navigation }} />
@@ -17,22 +20,19 @@ function HomeScreen({ navigation }) {
 }
 
 const LatestTasks = () => {
-
-  const { items } = useSelector(({ habbits }) => ({
-    items: habbits.items
+  const { items } = useSelector(({ habits }) => ({
+    items: habits.items
   }))
 
-  if (!items || !items.length) return <Text>To begin, add new habbit.</Text>
 
+  if (!items || !items.length) return <Text>To begin, add a new habit.</Text>
   return <>
     <LastSevenDays />
     <FlatList
       contentContainerStyle={styles.listContent}
       data={items}
-      renderItem={({ item }) =>
-        <TouchableOpacity key={uuid()} onPress={() => navigation.navigate('showdetailstask', { id: item.id, name: item.name })}>
-          <HomeTask {...item} />
-        </TouchableOpacity>
+      keyExtractor={(item) => item.id}
+      renderItem={({ item }) => <HomeTask {...item} />
       }
     /></>
 }
