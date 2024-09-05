@@ -1,5 +1,9 @@
-import { ADD_HABIT } from "actions/habitsActions";
-import { HABITS_INITIALIZE } from "actions/habitsActions";
+import {
+    ADD_HABIT,
+    UPD_HABIT,
+    DEL_HABIT,
+    HABITS_INITIALIZE
+} from "actions/habitsActions";
 
 const initialState = {
     isInit: false,
@@ -11,22 +15,39 @@ const initialState = {
 
 export default function habits(state = initialState, action) {
     switch (action.type) {
-        case "SET_HABITS_INIT": 
-        return {
-            ...state,
-            isInit: action.payload
-        };
-        break;
-        case HABITS_INITIALIZE: 
+        case "SET_HABITS_INIT":
             return {
                 ...state,
-                items: action.payload, 
+                isInit: action.payload
+            };
+            break;
+        case HABITS_INITIALIZE:
+            return {
+                ...state,
+                items: action.payload,
             };
             break;
         case ADD_HABIT:
             return {
                 ...state,
                 items: [action.payload, ...state.items || []]
+            }
+            break;
+        case UPD_HABIT:
+            let arr = [...state?.items || []];
+            let index = arr.indexOf(arr.find(e => e.id === action.payload.id));
+            if (index !== -1) 
+                arr[index] = action.payload;
+
+            return {
+                ...state,
+                items: arr
+            }
+            break;
+        case DEL_HABIT:
+            return {
+                ...state,
+                items: [...state.items || []].filter(e => e.id !== action.id)
             }
             break;
         default:
