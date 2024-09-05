@@ -1,8 +1,8 @@
 import React from 'react'
-import { StyleSheet, Dimensions, Text, FlatList } from 'react-native';
-import { Header, BaseView, LastSevenDays } from 'components';
+import { StyleSheet, Dimensions, Text, FlatList, Pressable } from 'react-native';
+import { Header, BaseView, LastSevenDays, HomeTask } from '@components';
 import { useSelector } from 'react-redux';
-import { HomeTask } from '../components';
+
 
 function HomeScreen({ navigation }) {
   const { isInit } = useSelector(({ habits }) => ({
@@ -26,15 +26,15 @@ const LatestTasks = () => {
 
 
   if (!items || !items.length) return <Text>To begin, add a new habit.</Text>
-  return <>
+  else return <>
     <LastSevenDays />
     <FlatList
       contentContainerStyle={styles.listContent}
       data={items}
-      keyExtractor={(item) => item.id}
-      renderItem={({ item }) => <HomeTask {...item} />
+      renderItem={({ item }) => <HomeTask {...item}/>
       }
-    /></>
+    />
+  </>
 }
 
 
