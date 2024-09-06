@@ -3,6 +3,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 const ADD_HABIT = 'habits/ADD_HABIT';
 const DEL_HABIT = 'habits/DEL_HABIT';
 const UPD_HABIT = 'habits/UPD_HABIT';
+const SET_HABIT_TIMESTAMP = 'habits/SET_HABIT_TIMESTAMP';
 const HABITS_INITIALIZE = 'habits/HABITS_INITIALIZE';
 
 const initializeHabits = (payload) => ({
@@ -38,6 +39,16 @@ const delHabit = (id) => async (dispatch, getState) => {
   await setHabitsToAsyncStorage(getState);
 };
 
+const setHabitTimestamp = ({id, timestamp, isSet}) => async (dispatch, getState) => {
+  await dispatch({
+    type: SET_HABIT_TIMESTAMP,
+    id, timestamp, isSet
+  });
+
+  await setHabitsToAsyncStorage(getState);
+};
+
+
 
 
 const setHabitsToAsyncStorage = async (getState) => {
@@ -53,9 +64,11 @@ module.exports = {
   ADD_HABIT,
   DEL_HABIT,
   UPD_HABIT,
+  SET_HABIT_TIMESTAMP,
   HABITS_INITIALIZE,
   initializeHabits,
   addHabit,
   updateHabit,
   delHabit,
+  setHabitTimestamp
 }
