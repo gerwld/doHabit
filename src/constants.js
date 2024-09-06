@@ -1,3 +1,9 @@
+const THEMES_MASKS = {
+    "st_theme__light": "Light",
+    "st_theme__dark": "Dark",
+    "st_theme__system": "System",
+}
+
 const REPEAT_MASKS = {
     "every-day": "Every Day",
     "every-week": "Every Week",
@@ -14,7 +20,6 @@ const HABIT_COLORS = [
     '#007AFF', // Blue
     '#AF52DE', // Purple
     '#FF2D55', // Pink
-    '#8E8E93', // Gray
 ];
 
 const getRandomItem = (arr) => {
@@ -23,5 +28,5 @@ const getRandomItem = (arr) => {
 };
 
 module.exports = {
-    REPEAT_MASKS, HABIT_COLORS, getRandomItem
+    THEMES_MASKS, REPEAT_MASKS, HABIT_COLORS, getRandomItem
 }
