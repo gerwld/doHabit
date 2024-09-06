@@ -26,8 +26,8 @@ const DetailsHabitScreen = ({ route, navigation }) => {
 
   const onPressDeleteHabit = () => {
     const onConfirm = () => {
-        d(habitsActions.delHabit(item.id));
-        navigation.navigate("home");
+      d(habitsActions.delHabit(item.id));
+      navigation.navigate("home");
     }
 
     alert(
@@ -55,26 +55,29 @@ const DetailsHabitScreen = ({ route, navigation }) => {
   return (
 
     <BaseView>
+
       <HeaderRNE
+        containerStyle={styles.header}
         style={{ height: 60 }}
         leftComponent={
-          <View style={styles.headerLeft}>
-            <TouchableOpacity style={{ marginLeft: 3 }} onPress={() => navigation.navigate('home')}>
+          <TouchableOpacity  onPress={() => navigation.navigate('home')}>
+            <View style={styles.headerButton}>
               <Title style={{ fontWeight: 400 }}>Cancel</Title>
-            </TouchableOpacity>
-          </View>
+            </View>
+          </TouchableOpacity>
         }
         rightComponent={
-          <View style={styles.headerRight}>
-            <TouchableOpacity onPress={() => navigation.navigate("edithabit", item)}>
+          <TouchableOpacity onPress={() => navigation.navigate("edithabit", item)}>
+            <View style={styles.headerButton}>
               <Title style={{ fontWeight: 400 }}>Edit</Title>
-            </TouchableOpacity>
-          </View>
+            </View>
+          </TouchableOpacity>
         }
-        centerComponent={<Title>{item?.name}</Title>}
+        centerComponent={<Text style={styles.headerTitle}>{item?.name}</Text>}
         backgroundColor={item?.color ? item.color : "#5fb1e7"}
-
       />
+
+
       <View style={{ paddingTop: 14 }}>
 
         <InfoBar>
@@ -125,16 +128,7 @@ const Label = styled.Text`
   margin-left: 15px;
 `
 
-const SettingsInput = styled.TextInput`
-  height: 55px;
-  margin-bottom: 14px;
-  margin: 7px 0 14px 0;
-  background: #fff;
-  padding: 12px 10px 12px 15px;
-  border-radius: 0;
-  border: 1px solid #e5e5eaff;
-`
-
+// header 
 // header 
 const styles = StyleSheet.create({
   headerLeft: {
@@ -152,7 +146,48 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: 'center'
   },
+  combinedInput: {
+    width: "100%",
+    flexDirection: "row",
+    alignItems: "center",
+    marginTop: 7,
+    marginBottom: 14,
+    backgroundColor: "white",
+    border: "1px solid #e5e5eaff"
+  },
+  header: {
+    padding: 0,
+    minHeight: 55,
+    paddingVertical: 0,
+    paddingHorizontal: 0
+  },
+  headerButton: {
+    flexDirection: 'row',
+    alignItems: "center",
+    justifyContent: "center",
+    height: 55,
+    minWidth: 55,
+    pointerEvents: "none",
+    userSelect: "none",
+    paddingLeft: 18,
+    paddingRight: 18,
+  },
+  headerTitle: {
+    minHeight: 55,
+    lineHeight: 55,
+    color: "white",
+    fontSize: 17,
+    fontWeight: 'bold',
+    alignItems: "center",
+    justifyContent: "center",
+    pointerEvents: "none",
+    userSelect: "none",
+  },
+  activeBtn: {
+    fontSize: 17,
+  }
 });
+
 
 
 const Title = styled.Text`

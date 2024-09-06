@@ -1,6 +1,5 @@
 import React from 'react'
-import { View, Text, StyleSheet, TouchableOpacity, Button } from 'react-native'
-import { Picker } from '@react-native-picker/picker';
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
 import { Header as HeaderRNE } from '@rneui/themed';
 import styled from 'styled-components/native';
 import { useTranslation } from 'react-i18next';
@@ -44,24 +43,24 @@ const AddHabitScreen = ({ navigation }) => {
 
     <BaseView>
       <HeaderRNE
+        containerStyle={styles.header}
         style={{ height: 60 }}
         leftComponent={
-          <View style={styles.headerLeft}>
-            <TouchableOpacity style={{ marginLeft: 3 }} onPress={() => navigation.navigate('home')}>
+          <TouchableOpacity  onPress={() => navigation.navigate('home')}>
+              <View style={styles.headerButton}>
               <Title style={{ fontWeight: 400 }}>Cancel</Title>
-            </TouchableOpacity>
           </View>
+            </TouchableOpacity>
         }
         rightComponent={
-          <View style={styles.headerRight}>
-            <TouchableOpacity onPress={onSubmit}>
+          <TouchableOpacity onPress={onSubmit}>
+              <View style={styles.headerButton}>
               <Title style={{ fontWeight: 400 }}>Save</Title>
-            </TouchableOpacity>
           </View>
+            </TouchableOpacity>
         }
-        centerComponent={<Title>{t("addt_screen")}</Title>}
+        centerComponent={<Text style={styles.headerTitle}>{t("addt_screen")}</Text>}
         backgroundColor={state.color}
-
       />
 
       {/* color picker & input */}
@@ -69,8 +68,7 @@ const AddHabitScreen = ({ navigation }) => {
       <View style={{ paddingTop: 14 }}>
         <Label>{t("addt_name")}</Label>
         <View style={styles.combinedInput}>
-          <SettingsInput
-            style={{ flex: 1 }}
+          <SettingsInputEmb
             onChangeText={(v) => onChangeInput("name", v)}
             value={state.name}
             placeholder={t("addt_name_placeholder")}
@@ -86,7 +84,8 @@ const AddHabitScreen = ({ navigation }) => {
               paddingVertical: 0,
               paddingHorizontal: 0,
               marginHorizontal: 10,
-              marginBottom: 10
+              marginRight: 15,
+              marginBottom: 0
             }}
             title=" "
             backgroundColor={state.color}
@@ -128,20 +127,14 @@ const AddHabitScreen = ({ navigation }) => {
           placeholderTextColor="#949ca1"
         />
 
-        <Label>Regularity</Label>
+        <Label style={{ marginBottom: 7 }}>Regularity</Label>
 
-        <LineItemView rightArrow>
+        <LineItemView pl1 rightArrow>
           <Text style={{ flex: 1 }}>Repeat</Text>
-          <Picker
-            style={{ textAlign: "right", color: "gray", border: "none", fontSize: 16, appearance: "none", marginRight: 10, outline: "none" }}
-            mode="dialog"
-            selectedValue={state.repeat}
-            onValueChange={(v) => onChangeInput("repeat", v)}>
-            {Object.keys(REPEAT_MASKS).map(i => <Picker.Item label={REPEAT_MASKS[i]} value={i} />)}
-          </Picker>
+          <Text style={{ marginRight: 5, marginLeft: 2, color: "#949dad" }}>{REPEAT_MASKS["every-day"]}</Text>
         </LineItemView>
 
-        <LineItemView toggle toggleColor={state.color} isEnabled={state.remind} onToggle={(v) => onChangeInput("remind", v)}>
+        <LineItemView pl1 toggle toggleColor={state.color} isEnabled={state.remind} onToggle={(v) => onChangeInput("remind", v)}>
           <Text>Remind me</Text>
         </LineItemView>
 
@@ -160,12 +153,21 @@ const Label = styled.Text`
 
 const SettingsInput = styled.TextInput`
   height: 55px;
-  margin-bottom: 14px;
   margin: 7px 0 14px 0;
   background: #fff;
   padding: 12px 10px 12px 15px;
   border-radius: 0;
   border: 1px solid #e5e5eaff;
+`
+
+const SettingsInputEmb = styled.TextInput`
+flex: 1;
+  height: 55px;
+  margin: 0;
+  background: #fff;
+  padding: 12px 10px 12px 15px;
+  border-radius: 0;
+  
 `
 
 // header 
@@ -189,8 +191,46 @@ const styles = StyleSheet.create({
     width: "100%",
     flexDirection: "row",
     alignItems: "center",
+    marginTop: 7,
+    marginBottom: 14,
+    backgroundColor: "white",
+    border: "1px solid #e5e5eaff"
+  },
+  header: {
+    padding: 0,
+    minHeight: 55,
+    paddingVertical: 0,
+    paddingHorizontal: 0
+  },
+  headerButton: {
+    flexDirection: 'row',
+    alignItems: "center",
+    justifyContent: "center",
+    height: 55,
+    minWidth: 55,
+    pointerEvents: "none",
+    userSelect: "none",
+    paddingLeft: 18,
+    paddingRight: 18,
+  },
+  headerTitle: {
+    minHeight: 55,
+    lineHeight: 55,
+    color: "white",
+    fontSize: 17,
+    fontWeight: 'bold',
+    alignItems: "center",
+    justifyContent: "center",
+    pointerEvents: "none",
+    userSelect: "none",
+  },
+  activeBtn: {
+    fontSize: 17,
   }
 });
+
+
+
 
 //modal
 const ModalContent = styled.View`
@@ -209,9 +249,6 @@ const ColorPicker = styled.View`
   justify-content: center;
   gap: 10px
 `
-
-
-
 
 const Title = styled.Text`
         min-height: 36px;

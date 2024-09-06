@@ -3,11 +3,12 @@ import { View, TouchableOpacity, StyleSheet, Text } from 'react-native'
 import { Header as HeaderRNE, Icon } from '@rneui/themed';
 import { LinearGradient } from 'expo-linear-gradient';
 
-export const Header = ({ navigation }) => {
+export const Header = ({ navigation, title, leftChild, rightChild }) => {
     return (
         <HeaderRNE
             containerStyle={styles.header}
             leftComponent={
+                leftChild ? leftChild :
                 <TouchableOpacity onPress={() => navigation.navigate('settings')}>
                     <View style={styles.headerButton}>
                         <Icon type="antdesign" size={25} name="setting" color="white" />
@@ -15,13 +16,14 @@ export const Header = ({ navigation }) => {
                 </TouchableOpacity>
             }
             rightComponent={
+                rightChild ? rightChild :
                 <TouchableOpacity onPress={() => navigation.navigate('addhabit')}>
                     <View style={styles.headerButton}>
                         <Icon type="antdesign" size={24} name="plus" color="white" />
                     </View>
                 </TouchableOpacity>
             }
-            centerComponent={<Text style={styles.headerTitle}>Habitty</Text>}
+            centerComponent={<Text style={styles.headerTitle}>{title ? title : "Habitty"}</Text>}
             ViewComponent={LinearGradient} // Required for gradient
             linearGradientProps={{
                 colors: ['#7fcbfd', '#3c95d0'],
@@ -59,7 +61,7 @@ const styles = StyleSheet.create({
         minHeight: 55,
         lineHeight: 55,
         color: "white",
-        fontSize: 17,
+        fontSize: 19,
         fontWeight: 'bold',
         alignItems: "center",
         justifyContent: "center",

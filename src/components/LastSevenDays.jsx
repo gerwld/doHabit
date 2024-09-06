@@ -11,7 +11,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 const DAYS_COUNT = 5;
 
-export const LastSevenDays = ({ isHabit, habitID }) => {
+export const LastSevenDays = ({ isHabit, habitID, color }) => {
     const day = 86400000,
     timestamp = new Date().setHours(0, 0, 0, 0),
     RANGE_ARR = Array.from({ length: DAYS_COUNT }, (_, i) => DAYS_COUNT - 1 - i);
@@ -42,15 +42,15 @@ const isCurrent = (i) => i === (DAYS_COUNT - 1);
                     <Pressable onPress={() => onDayPress(timestamp - (day * e))}>
                         <TimeView style={styles.timeWiewInt} key={uuid.v4()}>
                         {(tmsArr?.filter && tmsArr?.filter(l => l === timestamp - (day * e)).length > 0) 
-                        ? <Icon style={{ pointerEvents: "none" }} type="antdesign" size={19} name="check" color="#5fb1e7" />
-                        : <Icon style={{ pointerEvents: "none" }} type="antdesign" size={19} name="close" color="#a5bbd3" />}
+                        ? <Icon style={{ pointerEvents: "none" }} type="antdesign" size={21} name="check" color={color ? color : "#5fb1e7"} />
+                        : <Icon style={{ pointerEvents: "none" }} type="antdesign" size={21} name="close" color="#a5bbd3" />}
                         </TimeView>
                     </Pressable>
                 )}
         </ParentView>
     )
     return (
-        <ParentView style={{ marginTop: 7 }}>
+        <ParentView style={{ marginTop: 7, marginBottom: 7 }}>
             {RANGE_ARR
                 .map((e, i) =>
                     <TimeView key={uuid.v4()}>

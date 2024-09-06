@@ -9,55 +9,57 @@ import { LineItemView, GapView } from '@components'
 
 const SettingsScreen = ({ navigation }) => {
   const { t } = useTranslation();
-  const {theme} = useSelector(({app}) => ({
+  const { theme } = useSelector(({ app }) => ({
     theme: app?.theme
   }))
 
   return (
-    <View style={{ flex: 1 }}>
+    <View style={{ flex: 1, backgroundColor: "#f0f2f7" }}>
       <HeaderRNE
+        containerStyle={styles.header}
         leftComponent={
-          <View style={styles.headerLeft}>
-            <TouchableOpacity style={{ marginLeft: 3 }} onPress={() => navigation.navigate('home')}>
-              <Title style={{ fontWeight: 400 }}>Back</Title>
-            </TouchableOpacity>
-          </View>
+          <TouchableOpacity onPress={() => navigation.navigate('home')}>
+            <View style={styles.headerButton}>
+              <Text style={styles.activeBtn}>Back</Text>
+            </View>
+          </TouchableOpacity>
         }
-        centerComponent={<Title>{t("st_screen")}</Title>}
+        centerComponent={<Text style={styles.headerTitle}>{t("st_screen")}</Text>}
         backgroundColor='white'
       />
+      
       <ScrollView contentContainerStyle={styles.scrollViewContent}>
         <GapView />
         <View style={{ flex: 1, justifyContent: "flex-start", height: "100%", minHeight: 390 }}>
           <Pressable onPress={() => navigation.navigate("tutorial")}>
-            <LineItemView rightArrow>
+            <LineItemView pl1 rightArrow>
               <Text>{t("st_tutorial")}</Text>
             </LineItemView>
           </Pressable>
 
-          <LineItemView rightArrow>
+          <LineItemView pl1 rightArrow>
             <Text>{t("st_support")}</Text>
           </LineItemView>
 
-          <LineItemView rightArrow>
+          <LineItemView pl1 rightArrow>
             <Text>{t("st_theme")}</Text>
 
             <CurrentValue>{t(theme || "")}</CurrentValue>
 
           </LineItemView>
 
-          <LineItemView rightArrow>
+          <LineItemView pl1 rightArrow>
             <Text>{t("st_lang")}</Text>
           </LineItemView>
 
           <GapView />
 
-          <LineItemView rightArrow>
+          <LineItemView pl1 rightArrow>
             <Text>{t("st_feat")}</Text>
           </LineItemView>
 
 
-          <LineItemView rightArrow>
+          <LineItemView pl1 rightArrow>
             <Text>{t("st_rate")}</Text>
           </LineItemView>
         </View>
@@ -90,17 +92,6 @@ font-weight: 500;
 font-size: 16px;
 `
 
-const Title = styled.Text`
-min-height: 36px;
-line-height:36px;
-color: black;
-font-size: 17px;
-font-weight: 600;
-align-items: center;
-justify-content: center;
-`
-
-
 const styles = StyleSheet.create({
   scrollView: {
     flex: 1,
@@ -108,6 +99,39 @@ const styles = StyleSheet.create({
   },
   scrollViewContent: {
     flex: 1
+  },
+  header: {
+    padding: 0,
+    minHeight: 55,
+    paddingVertical: 0,
+    paddingHorizontal: 0,
+    // outline: "1px solid red",
+    borderBottomColor: "#dbdce0"
+  },
+  headerButton: {
+    flexDirection: 'row',
+    alignItems: "center",
+    justifyContent: "center",
+    height: 55,
+    minWidth: 55,
+    pointerEvents: "none",
+    userSelect: "none",
+    paddingLeft: 18,
+    paddingRight: 18,
+  },
+  headerTitle: {
+    minHeight: 55,
+    lineHeight: 55,
+    color: "black",
+    fontSize: 17,
+    fontWeight: 'bold',
+    alignItems: "center",
+    justifyContent: "center",
+    pointerEvents: "none",
+    userSelect: "none",
+  },
+  activeBtn: {
+    fontSize: 17,
   }
 })
 

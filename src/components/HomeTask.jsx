@@ -1,11 +1,10 @@
-import { Text, TouchableOpacity } from 'react-native'
+import { Text, Pressable } from 'react-native'
 import React from 'react'
 import LineItemView from './styling/LineItemView'
 import { LastSevenDays } from './LastSevenDays'
 import CircularProgress from './CircularProgress'
 import { useNavigation } from '@react-navigation/native'
 import styled from 'styled-components/native'
-import { Pressable } from 'react-native'
 
 
 export const HomeTask = ({ item }) => {
@@ -19,7 +18,7 @@ export const HomeTask = ({ item }) => {
           <Text style={{ flex: 1, marginLeft: 10, marginRight: 5, color: "#50677a" }}>{item.name}</Text>
         </PressArea>
       </Pressable>
-      <LastSevenDays {...{ isHabit: true, habitID: item.id }} />
+      <LastSevenDays {...{ isHabit: true, habitID: item.id, color: item.color }} />
     </LineItemView>
   )
 }

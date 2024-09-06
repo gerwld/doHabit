@@ -12,7 +12,6 @@ const REPEAT_MASKS = {
 }
 
 const HABIT_COLORS = [
-    '#FF3B30', // Red
     '#FF9500', // Orange
     '#FFCC00', // Yellow
     '#34C759', // Green
@@ -20,6 +19,8 @@ const HABIT_COLORS = [
     '#007AFF', // Blue
     '#AF52DE', // Purple
     '#FF2D55', // Pink
+    '#69dd91',  // Green
+    '#e34234' // Brown
 ];
 
 const getRandomItem = (arr) => {
