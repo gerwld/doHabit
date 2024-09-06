@@ -19,7 +19,7 @@ export const BasePressButton = ({ onPress, title = 'Save', backgroundColor, colo
             paddingHorizontal: 32,
             borderRadius: 4,
             elevation: 3,
-            backgroundColor: backgroundColor ? backgroundColor : "blue",
+            backgroundColor: backgroundColor ? backgroundColor : "#5fb1e7",
         },
         text: {
             fontSize: 16,

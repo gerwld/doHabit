@@ -3,14 +3,14 @@ import { Icon } from '@rneui/base';
 import { Platform, Switch } from 'react-native';
 import styled from 'styled-components/native';
 
-const LineItemView = ({ children, rightArrow, toggle, onToggle, isEnabled }) => (
+const LineItemView = ({ children, rightArrow, toggle, toggleColor, onToggle, isEnabled }) => (
     <LineItemViewItem>
         {children}
         {rightArrow ? <Icon style={{ marginRight: 10 }} type="entypo" size={21} name="chevron-thin-right" color="#ccd1db" /> : ""}
         {toggle ?
             <Switch
                 style={{ marginRight: 10 }}
-                trackColor={{ false: '#d7dcde', true: '#81b0ff' }}
+                trackColor={{ false: '#d7dcde', true: (toggleColor ? toggleColor : '#81b0ff') }}
                 thumbColor={"#ffffff"}
                 ios_backgroundColor="#eff2f3"
                 onValueChange={onToggle ? onToggle : null}
@@ -26,7 +26,7 @@ const LineItemView = ({ children, rightArrow, toggle, onToggle, isEnabled }) => 
 )
 
 const LineItemViewItem = styled.View`
-padding: 10px 0px 10px 15px;
+padding: 0;
 align-items:center;
 justify-content:space-between;
 background-color: #ffffff;
