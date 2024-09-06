@@ -2,8 +2,10 @@ import {
     ADD_HABIT,
     UPD_HABIT,
     DEL_HABIT,
+    SET_HABIT_TIMESTAMP,
     HABITS_INITIALIZE
 } from "actions/habitsActions";
+import alert from "../../polyfils/alert";
 
 const initialState = {
     isInit: false,
@@ -27,6 +29,33 @@ export default function habits(state = initialState, action) {
                 items: action.payload,
             };
             break;
+        case SET_HABIT_TIMESTAMP:
+            // sets whole array of habits
+            function getWithUpdatedTimestamp() {
+                let arr = [...state?.items || []];
+                let item = arr.find(e => e.id === action.id);
+                let index = arr.indexOf(item);
+                
+                // sets only specific habit timestamp (toggle)
+                const setTimestampFromItem = () => {
+                    let isExist = item.datesArray.filter(e => e == action.timestamp)?.length;
+                    let newWithout = {...item, datesArray : [...item.datesArray.filter(e => e !== action.timestamp)]};
+                    
+                    if (isExist)  {
+                        return newWithout;
+                    } 
+                    return  {...newWithout, datesArray: [...newWithout.datesArray, action.timestamp]}
+                }
+                
+                // places it on index (local mutation)
+                if (index !== -1) 
+                    arr[index] = setTimestampFromItem();
+                return arr;
+            }
+            return {
+                ...state,
+                items: getWithUpdatedTimestamp()
+            }
         case ADD_HABIT:
             return {
                 ...state,
@@ -34,14 +63,16 @@ export default function habits(state = initialState, action) {
             }
             break;
         case UPD_HABIT:
-            let arr = [...state?.items || []];
-            let index = arr.indexOf(arr.find(e => e.id === action.payload.id));
-            if (index !== -1) 
-                arr[index] = action.payload;
-
+            function getWithUpdated() {
+                let arr = [...state?.items || []];
+                let index = arr.indexOf(arr.find(e => e.id === action.payload.id));
+                if (index !== -1) 
+                    arr[index] = action.payload;
+                return arr;
+            }
             return {
                 ...state,
-                items: arr
+                items: getWithUpdated()
             }
             break;
         case DEL_HABIT:
@@ -54,5 +85,3 @@ export default function habits(state = initialState, action) {
             return state;
     }
 }
-
-
