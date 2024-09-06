@@ -4,7 +4,6 @@ import { Picker } from '@react-native-picker/picker';
 import { Header as HeaderRNE } from '@rneui/themed';
 import styled from 'styled-components/native';
 import { useTranslation } from 'react-i18next';
-import { v4 as uuid } from 'uuid';
 
 import { BaseView, LineItemView } from '@components';
 
@@ -110,7 +109,7 @@ const EditHabitScreen = ({ route, navigation }) => {
           </Picker>
         </LineItemView>
 
-        <LineItemView toggle isEnabled={state.remind} onToggle={(v) => onChangeInput("remind", v)}>
+        <LineItemView toggle toggleColor={state?.color ? state.color : "#5fb1e7"} isEnabled={state.remind} onToggle={(v) => onChangeInput("remind", v)}>
           <Text>Remind me</Text>
         </LineItemView>
 

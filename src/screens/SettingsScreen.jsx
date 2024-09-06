@@ -1,13 +1,17 @@
 import React from 'react'
+import { useSelector } from 'react-redux';
 import { View, Text, ScrollView, StyleSheet, Pressable, TouchableOpacity } from 'react-native'
-import styled from 'styled-components/native'
 import { useTranslation } from 'react-i18next';
+import styled from 'styled-components/native'
 import { Header as HeaderRNE } from '@rneui/themed';
 
 import { LineItemView, GapView } from '@components'
 
 const SettingsScreen = ({ navigation }) => {
   const { t } = useTranslation();
+  const {theme} = useSelector(({app}) => ({
+    theme: app?.theme
+  }))
 
   return (
     <View style={{ flex: 1 }}>
@@ -35,8 +39,11 @@ const SettingsScreen = ({ navigation }) => {
             <Text>{t("st_support")}</Text>
           </LineItemView>
 
-          <LineItemView toggle>
-            <Text>{t("st_dark")}</Text>
+          <LineItemView rightArrow>
+            <Text>{t("st_theme")}</Text>
+
+            <CurrentValue>{t(theme || "")}</CurrentValue>
+
           </LineItemView>
 
           <LineItemView rightArrow>
@@ -63,6 +70,10 @@ const SettingsScreen = ({ navigation }) => {
     </View>
   )
 }
+
+const CurrentValue = styled.Text`
+  color: gray;
+`
 
 const Copyright = styled.View`
 align-items: center;

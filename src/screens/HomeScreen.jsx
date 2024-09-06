@@ -40,7 +40,8 @@ const LatestTasks = () => {
 
 const styles = StyleSheet.create({
   listContent: {
-    minHeight: Dimensions.get('window').height - 100
+    // minHeight: Dimensions.get('window').height - 100
+    paddingBottom: 10
   }
 });
 
