@@ -12,6 +12,7 @@ import { useDispatch } from 'react-redux';
 import { habitsActions } from "actions";
 import { HABIT_COLORS, REPEAT_MASKS, getRandomItem } from '../constants';
 import { BasePressButton } from '../components/styling/BasePressButton';
+import { Modal } from '../components';
 
 
 const AddHabitScreen = ({ navigation }) => {
@@ -26,6 +27,7 @@ const AddHabitScreen = ({ navigation }) => {
     repeat: "every-day"
   };
   const [state, setState] = React.useState(initialState);
+  const [isColorPicker, setColorPicker] = React.useState(false);
 
 
   const onChangeInput = (name, value) => {
@@ -72,7 +74,10 @@ const AddHabitScreen = ({ navigation }) => {
           placeholderTextColor="#949ca1"
         />
 
+        {/* color picker */}
+
         <BasePressButton
+          onPress={() => setColorPicker(true)}
           styleObj={{
             width: 30,
             height: 30,
@@ -83,6 +88,33 @@ const AddHabitScreen = ({ navigation }) => {
           title=" "
           backgroundColor={state.color}
         />
+
+        <Modal isOpen={isColorPicker}>
+          <ModalContent>
+            <BasePressButton
+              onPress={() => setColorPicker(false)}
+              title='close'
+            />
+
+            <ColorPicker>
+              {HABIT_COLORS.map(color =>
+                <BasePressButton
+                  onPress={() => {onChangeInput("color", color); setColorPicker(false);} }
+                  styleObj={{
+                    width: 30,
+                    height: 30,
+                    borderRadius: 50,
+                    paddingVertical: 0,
+                    paddingHorizontal: 0,
+                  }}
+                  title=" "
+                  backgroundColor={color}
+                />)}
+            </ColorPicker>
+          </ModalContent>
+        </Modal>
+
+        {/* color picker end */}
 
         <Label>{t("addt_notif")}</Label>
         <SettingsInput
@@ -150,6 +182,25 @@ const styles = StyleSheet.create({
     justifyContent: 'center'
   },
 });
+
+//modal
+const ModalContent = styled.View`
+background: white;
+color: black;
+padding: 20px;
+border-radius: 10px;
+`
+
+const ColorPicker = styled.View`
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 10px
+`
+
+
 
 
 const Title = styled.Text`
