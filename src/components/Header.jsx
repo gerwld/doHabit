@@ -1,27 +1,27 @@
 import React from 'react'
-import { View, TouchableOpacity, StyleSheet } from 'react-native'
+import { View, TouchableOpacity, StyleSheet, Text } from 'react-native'
 import { Header as HeaderRNE, Icon } from '@rneui/themed';
 import { LinearGradient } from 'expo-linear-gradient';
-import styled from 'styled-components/native';
 
 export const Header = ({ navigation }) => {
     return (
         <HeaderRNE
+            containerStyle={styles.header}
             leftComponent={
-                <View style={styles.headerLeft}>
-                    <TouchableOpacity style={{ marginLeft: 3, padding: 5 }} onPress={() => navigation.navigate('settings')}>
+                <TouchableOpacity onPress={() => navigation.navigate('settings')}>
+                    <View style={styles.headerButton}>
                         <Icon type="antdesign" size={25} name="setting" color="white" />
-                    </TouchableOpacity>
-                </View>
+                    </View>
+                </TouchableOpacity>
             }
             rightComponent={
-                <View style={styles.headerRight}>
-                    <TouchableOpacity style={{padding: 5 }} onPress={() => navigation.navigate('addhabit')}>
+                <TouchableOpacity onPress={() => navigation.navigate('addhabit')}>
+                    <View style={styles.headerButton}>
                         <Icon type="antdesign" size={24} name="plus" color="white" />
-                    </TouchableOpacity>
-                </View>
+                    </View>
+                </TouchableOpacity>
             }
-            centerComponent={<Title>Habitty</Title>}
+            centerComponent={<Text style={styles.headerTitle}>Habitty</Text>}
             ViewComponent={LinearGradient} // Required for gradient
             linearGradientProps={{
                 colors: ['#7fcbfd', '#3c95d0'],
@@ -33,14 +33,6 @@ export const Header = ({ navigation }) => {
 }
 
 const styles = StyleSheet.create({
-    headerLeft: {
-        flexDirection: 'row',
-        alignItems: 'center',
-    },
-    headerRight: {
-        flexDirection: 'row',
-        alignItems: 'center',
-    },
     heading: {
         color: 'white',
         fontSize: 18,
@@ -48,16 +40,33 @@ const styles = StyleSheet.create({
         alignItems: "center",
         justifyContent: 'center'
     },
+    header: {
+        padding: 0,
+        minHeight: 55,
+        paddingVertical: 0,
+        paddingHorizontal: 0
+    },
+    headerButton: {
+        flexDirection: 'row',
+        alignItems: "center",
+        justifyContent: "center",
+        height: 55,
+        width: 55,
+        pointerEvents: "none",
+        userSelect: "none",
+    },
+    headerTitle: {
+        minHeight: 55,
+        lineHeight: 55,
+        color: "white",
+        fontSize: 17,
+        fontWeight: 'bold',
+        alignItems: "center",
+        justifyContent: "center",
+        pointerEvents: "none",
+        userSelect: "none",
+    }
 });
 
-const Title = styled.Text`
-        min-height: 36px;
-        line-height:36px;
-        color: white;
-        font-size: 17px;
-        font-weight: 600;
-        align-items: center;
-        justify-content: center;
-`
 
 
