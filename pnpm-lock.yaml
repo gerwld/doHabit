@@ -41,6 +41,9 @@ importers:
       expo-linear-gradient:
         specifier: ^13.0.2
         version: 13.0.2(expo@51.0.32(@babel/core@7.25.2)(@babel/preset-env@7.25.4(@babel/core@7.25.2)))
+      expo-localization:
+        specifier: ~15.0.3
+        version: 15.0.3(expo@51.0.32(@babel/core@7.25.2)(@babel/preset-env@7.25.4(@babel/core@7.25.2)))
       expo-status-bar:
         specifier: ~1.12.1
         version: 1.12.1
@@ -77,6 +80,9 @@ importers:
       react-native-svg:
         specifier: ^15.6.0
         version: 15.6.0(react-native@0.74.5(@babel/core@7.25.2)(@babel/preset-env@7.25.4(@babel/core@7.25.2))(@types/react@18.3.5)(react@18.2.0))(react@18.2.0)
+      react-native-uuid:
+        specifier: ^2.0.2
+        version: 2.0.2
       react-native-web:
         specifier: ~0.19.10
         version: 0.19.12(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
@@ -86,9 +92,6 @@ importers:
       styled-components:
         specifier: ^6.1.12
         version: 6.1.13(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
-      uuid:
-        specifier: ^10.0.0
-        version: 10.0.0
     devDependencies:
       '@babel/core':
         specifier: ^7.20.0
@@ -2034,6 +2037,11 @@ packages:
     peerDependencies:
       expo: '*'
 
+  expo-localization@15.0.3:
+    resolution: {integrity: sha512-IfcmlKuKRlowR9qIzL0e+nGHBeNoF7l2GQaOJstc7HZiPjNJ4J1R4D53ZNf483dt7JSkTRJBihdTadOtOEjRdg==}
+    peerDependencies:
+      expo: '*'
+
   expo-modules-autolinking@1.11.2:
     resolution: {integrity: sha512-fdcaNO8ucHA3yLNY52ZUENBcAG7KEx8QyMmnVNavO1JVBGRMZG8JyVcbrhYQDtVtpxkbai5YzwvLutINvbDZDQ==}
     hasBin: true
@@ -3424,6 +3432,10 @@ packages:
       react: '*'
       react-native: '*'
 
+  react-native-uuid@2.0.2:
+    resolution: {integrity: sha512-5ypj/hV58P+6VREdjkW0EudSibsH3WdqDERoHKnD9syFWjF+NfRWWrJb2sa3LIwI5zpzMvUiabs+DX40WHpEMw==}
+    engines: {node: '>=10.0.0', npm: '>=6.0.0'}
+
   react-native-vector-icons@10.1.0:
     resolution: {integrity: sha512-fdQjCHIdoXmRoTZ5gvN1FmT4sGLQ2wmQiNZHKJQUYnE2tkIwjGnxNch+6Nd4lHAACvMWO7LOzBNot2u/zlOmkw==}
     hasBin: true
@@ -3584,6 +3596,9 @@ packages:
     resolution: {integrity: sha512-JZkJMZkAGFFPP2YqXZXPbMlMBgsxzE8ILs4lMIX/2o0L9UBw9O/Y3o6wFw/i9YLapcUJWwqbi3kdxIPdC62TIA==}
     deprecated: Rimraf versions prior to v4 are no longer supported
     hasBin: true
+
+  rtl-detect@1.1.2:
+    resolution: {integrity: sha512-PGMBq03+TTG/p/cRB7HCLKJ1MgDIi07+QU1faSjiYRfmY5UsAttV9Hs08jDAHVwcOwmVLcSJkpwyfXszVjWfIQ==}
 
   run-parallel@1.2.0:
     resolution: {integrity: sha512-5l4VyZR86LZ/lDxZTR6jqL8AFE2S0IFLMP26AbjsLVADxHdhB/c0GUsH+y39UfCi3dzz8OlQuPmnaJOMoDHQBA==}
@@ -4093,10 +4108,6 @@ packages:
   utils-merge@1.0.1:
     resolution: {integrity: sha512-pMZTvIkT1d+TFGvDOqodOclx0QWkkgi6Tdoa8gC8ffGAAqz9pzPTZWAybbsHHoED/ztMtkv/VoYTYyShUn81hA==}
     engines: {node: '>= 0.4.0'}
-
-  uuid@10.0.0:
-    resolution: {integrity: sha512-8XkAphELsDnEGrDxUOHB3RGvXz6TeuYSGEZBOjtTtPm2lwhGBjLgOzLHB63IUWfBpNucQjND6d3AOudO+H3RWQ==}
-    hasBin: true
 
   uuid@7.0.3:
     resolution: {integrity: sha512-DPSke0pXhTZgoF/d+WSt2QaKMCFSfx7QegxEWT+JOuHF5aWrKEn0G+ztjuJg/gG8/ItK+rbPCD/yNv8yyih6Cg==}
@@ -7012,6 +7023,11 @@ snapshots:
     dependencies:
       expo: 51.0.32(@babel/core@7.25.2)(@babel/preset-env@7.25.4(@babel/core@7.25.2))
 
+  expo-localization@15.0.3(expo@51.0.32(@babel/core@7.25.2)(@babel/preset-env@7.25.4(@babel/core@7.25.2))):
+    dependencies:
+      expo: 51.0.32(@babel/core@7.25.2)(@babel/preset-env@7.25.4(@babel/core@7.25.2))
+      rtl-detect: 1.1.2
+
   expo-modules-autolinking@1.11.2:
     dependencies:
       chalk: 4.1.2
@@ -8519,6 +8535,8 @@ snapshots:
       react-native: 0.74.5(@babel/core@7.25.2)(@babel/preset-env@7.25.4(@babel/core@7.25.2))(@types/react@18.3.5)(react@18.2.0)
       warn-once: 0.1.1
 
+  react-native-uuid@2.0.2: {}
+
   react-native-vector-icons@10.1.0:
     dependencies:
       prop-types: 15.8.1
@@ -8728,6 +8746,8 @@ snapshots:
   rimraf@3.0.2:
     dependencies:
       glob: 7.2.3
+
+  rtl-detect@1.1.2: {}
 
   run-parallel@1.2.0:
     dependencies:
@@ -9242,8 +9262,6 @@ snapshots:
   util-deprecate@1.0.2: {}
 
   utils-merge@1.0.1: {}
-
-  uuid@10.0.0: {}
 
   uuid@7.0.3: {}
 
