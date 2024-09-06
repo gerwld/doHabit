@@ -4,7 +4,7 @@ import { Picker } from '@react-native-picker/picker';
 import { Header as HeaderRNE } from '@rneui/themed';
 import styled from 'styled-components/native';
 import { useTranslation } from 'react-i18next';
-import { v4 as uuid } from 'uuid';
+import uuid from 'react-native-uuid';
 
 import { BaseView, LineItemView } from '@components';
 
@@ -35,7 +35,7 @@ const AddHabitScreen = ({ navigation }) => {
   }
 
   const onSubmit = () => {
-    d(habitsActions.addHabit({ id: uuid(), ...state, datesArray: [] }));
+    d(habitsActions.addHabit({ id: uuid.v4(), ...state, datesArray: [] }));
     setState(initialState);
     navigation.navigate('home')
   }
@@ -105,7 +105,7 @@ const AddHabitScreen = ({ navigation }) => {
           </Picker>
         </LineItemView>
 
-        <LineItemView toggle isEnabled={state.remind} onToggle={(v) => onChangeInput("remind", v)}>
+        <LineItemView toggle toggleColor={state.color} isEnabled={state.remind} onToggle={(v) => onChangeInput("remind", v)}>
           <Text>Remind me</Text>
         </LineItemView>
 
