@@ -14,6 +14,7 @@ module.exports = function (api) {
             actions: './src/redux/actions',
             hocs: './src/hocs',
             hooks: './src/hooks',
+            "@constants": './src/constants.js',
           },
         },
       ],

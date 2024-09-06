@@ -9,7 +9,7 @@ import { useDispatch } from 'react-redux';
 import { BaseView } from '@components';
 import alert from '../polyfils/alert';
 import { habitsActions } from "actions";
-import { REPEAT_MASKS } from '../constants';
+import { REPEAT_MASKS } from '@constants';
 
 
 const DetailsHabitScreen = ({ route, navigation }) => {
