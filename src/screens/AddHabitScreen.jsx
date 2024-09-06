@@ -6,13 +6,11 @@ import styled from 'styled-components/native';
 import { useTranslation } from 'react-i18next';
 import uuid from 'react-native-uuid';
 
-import { BaseView, LineItemView } from '@components';
+import { BaseView, LineItemView, Modal, BasePressButton } from '@components';
 
 import { useDispatch } from 'react-redux';
 import { habitsActions } from "actions";
-import { HABIT_COLORS, REPEAT_MASKS, getRandomItem } from '../constants';
-import { BasePressButton } from '../components/styling/BasePressButton';
-import { Modal } from '../components';
+import { HABIT_COLORS, REPEAT_MASKS, getRandomItem } from '@constants';
 
 
 const AddHabitScreen = ({ navigation }) => {
@@ -65,44 +63,50 @@ const AddHabitScreen = ({ navigation }) => {
         backgroundColor={state.color}
 
       />
+
+      {/* color picker & input */}
+
       <View style={{ paddingTop: 14 }}>
         <Label>{t("addt_name")}</Label>
-        <SettingsInput
-          onChangeText={(v) => onChangeInput("name", v)}
-          value={state.name}
-          placeholder={t("addt_name_placeholder")}
-          placeholderTextColor="#949ca1"
-        />
-
-        {/* color picker */}
-
-        <BasePressButton
-          onPress={() => setColorPicker(true)}
-          styleObj={{
-            width: 30,
-            height: 30,
-            borderRadius: 50,
-            paddingVertical: 0,
-            paddingHorizontal: 0,
-          }}
-          title=" "
-          backgroundColor={state.color}
-        />
+        <View style={styles.combinedInput}>
+          <SettingsInput
+            style={{ flex: 1 }}
+            onChangeText={(v) => onChangeInput("name", v)}
+            value={state.name}
+            placeholder={t("addt_name_placeholder")}
+            placeholderTextColor="#949ca1"
+          />
+          <BasePressButton
+            onPress={() => setColorPicker(true)}
+            styleObj={{
+              maxWidth: 40,
+              width: 40,
+              height: 40,
+              borderRadius: 50,
+              paddingVertical: 0,
+              paddingHorizontal: 0,
+              marginHorizontal: 10,
+              marginBottom: 10
+            }}
+            title=" "
+            backgroundColor={state.color}
+          />
+        </View>
 
         <Modal isOpen={isColorPicker}>
           <ModalContent>
-            <BasePressButton
+            {/* <BasePressButton
               onPress={() => setColorPicker(false)}
               title='close'
-            />
+            /> */}
 
             <ColorPicker>
               {HABIT_COLORS.map(color =>
                 <BasePressButton
-                  onPress={() => {onChangeInput("color", color); setColorPicker(false);} }
+                  onPress={() => { onChangeInput("color", color); setColorPicker(false); }}
                   styleObj={{
-                    width: 30,
-                    height: 30,
+                    width: 74,
+                    height: 74,
                     borderRadius: 50,
                     paddingVertical: 0,
                     paddingHorizontal: 0,
@@ -181,10 +185,16 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: 'center'
   },
+  combinedInput: {
+    width: "100%",
+    flexDirection: "row",
+    alignItems: "center",
+  }
 });
 
 //modal
 const ModalContent = styled.View`
+width: 300px;
 background: white;
 color: black;
 padding: 20px;

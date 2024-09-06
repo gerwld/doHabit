@@ -5,11 +5,11 @@ import { Header as HeaderRNE } from '@rneui/themed';
 import styled from 'styled-components/native';
 import { useTranslation } from 'react-i18next';
 
-import { BaseView, LineItemView } from '@components';
+import { BaseView, LineItemView, Modal, BasePressButton } from '@components';
 
 import { useDispatch } from 'react-redux';
 import { habitsActions } from "actions";
-import { BasePressButton } from '../components/styling/BasePressButton';
+import { HABIT_COLORS } from '@constants';
 
 
 const EditHabitScreen = ({ route, navigation }) => {
@@ -24,6 +24,7 @@ const EditHabitScreen = ({ route, navigation }) => {
   };
 
   const [state, setState] = React.useState(initialState);
+  const [isColorPicker, setColorPicker] = React.useState(false);
 
   const onChangeInput = (name, value) => {
     if (name && value !== undefined) {
@@ -63,26 +64,64 @@ const EditHabitScreen = ({ route, navigation }) => {
         backgroundColor={state?.color ? state?.color : "#5fb1e7"}
 
       />
-      <View style={{ paddingTop: 14 }}>
-        <Label>{t("addt_name")}</Label>
-        <SettingsInput
-          onChangeText={(v) => onChangeInput("name", v)}
-          value={state.name}
-          placeholder={t("addt_name_placeholder")}
-          placeholderTextColor="#949ca1"
-        />
 
-        <BasePressButton
-          styleObj={{
-            width: 30,
-            height: 30,
-            borderRadius: 50,
-            paddingVertical: 0,
-            paddingHorizontal: 0,
-          }}
-          title=" "
-          backgroundColor={state.color}
-        />
+
+      <View style={{ paddingTop: 14 }}>
+
+        {/* color picker & input */}
+
+        <Label>{t("addt_name")}</Label>
+        <View style={styles.combinedInput}>
+          <SettingsInput
+            style={{ flex: 1 }}
+            onChangeText={(v) => onChangeInput("name", v)}
+            value={state.name}
+            placeholder={t("addt_name_placeholder")}
+            placeholderTextColor="#949ca1"
+          />
+          <BasePressButton
+            onPress={() => setColorPicker(true)}
+            styleObj={{
+              maxWidth: 40,
+              width: 40,
+              height: 40,
+              borderRadius: 50,
+              paddingVertical: 0,
+              paddingHorizontal: 0,
+              marginHorizontal: 10,
+              marginBottom: 10
+            }}
+            title=" "
+            backgroundColor={state.color}
+          />
+        </View>
+
+        <Modal isOpen={isColorPicker}>
+          <ModalContent>
+            {/* <BasePressButton
+              onPress={() => setColorPicker(false)}
+              title='close'
+            /> */}
+
+            <ColorPicker>
+              {HABIT_COLORS.map(color =>
+                <BasePressButton
+                  onPress={() => { onChangeInput("color", color); setColorPicker(false); }}
+                  styleObj={{
+                    width: 74,
+                    height: 74,
+                    borderRadius: 50,
+                    paddingVertical: 0,
+                    paddingHorizontal: 0,
+                  }}
+                  title=" "
+                  backgroundColor={color}
+                />)}
+            </ColorPicker>
+          </ModalContent>
+        </Modal>
+
+        {/* color picker end */}
 
 
         <Label>{t("addt_notif")}</Label>
@@ -153,7 +192,30 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: 'center'
   },
+  combinedInput: {
+    width: "100%",
+    flexDirection: "row",
+    alignItems: "center",
+  }
 });
+
+//modal
+const ModalContent = styled.View`
+width: 300px;
+background: white;
+color: black;
+padding: 20px;
+border-radius: 10px;
+`
+
+const ColorPicker = styled.View`
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 10px
+`
 
 
 const Title = styled.Text`
