@@ -1,6 +1,5 @@
 import React from 'react'
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
-import { Picker } from '@react-native-picker/picker';
 import { Header as HeaderRNE } from '@rneui/themed';
 import styled from 'styled-components/native';
 import { useTranslation } from 'react-i18next';
@@ -40,8 +39,8 @@ const EditHabitScreen = ({ route, navigation }) => {
 
   const navigateToSetRepeat = () => {
     navigation.navigate('sethabit/repeat', {
-      ...state,
-      onGoBack: (data) => {
+      state,
+      onGoBack: ({data}) => {
         // Callback function to handle data from ScreenB
         setState(data);
       },

@@ -35,6 +35,8 @@ const AddHabitScreen = ({ navigation }) => {
   }
 
   const onSubmit = () => {
+    console.log(state);
+    
     d(habitsActions.addHabit({ id: uuid.v4(), ...state, datesArray: [] }));
     setState(initialState);
     navigation.navigate('home')
@@ -42,8 +44,8 @@ const AddHabitScreen = ({ navigation }) => {
 
   const navigateToSetRepeat = () => {
     navigation.navigate('sethabit/repeat', {
-      ...state,
-      onGoBack: (data) => {
+      state,
+      onGoBack: ({data}) => {
         // Callback function to handle data from ScreenB
         setState(data);
       },
@@ -147,7 +149,6 @@ const AddHabitScreen = ({ navigation }) => {
     </BaseView>
   )
 }
-
 
 const Label = styled.Text`
   font-size: 12px;

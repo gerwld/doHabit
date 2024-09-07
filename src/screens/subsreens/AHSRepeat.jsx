@@ -1,32 +1,24 @@
 import React from 'react'
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
+import { View, Text, StyleSheet, TouchableOpacity, FlatList, Pressable } from 'react-native'
 import { Header as HeaderRNE, Icon } from '@rneui/themed';
 import styled from 'styled-components/native';
 import { useTranslation } from 'react-i18next';
-import uuid from 'react-native-uuid';
 
-import { BaseView, LineItemView, Modal, BasePressButton, LineItemOptions } from '@components';
-import { HABIT_COLORS, REPEAT_MASKS, getRandomItem } from '@constants';
+import { BaseView } from '@components';
+import {  REPEAT_MASKS } from '@constants';
+import { LogBox } from 'react-native';
 
-import { useDispatch } from 'react-redux';
-import { habitsActions } from "actions";
-import { FlatList, Pressable } from 'react-native-gesture-handler';
+LogBox.ignoreLogs([
+  'Non-serializable values were found in the navigation state',
+]);
 
 
 const AHSRepeat = ({ route, navigation }) => {
   const { t } = useTranslation();
-  const d = useDispatch();
-
-  const initialState = {
-    color: getRandomItem(HABIT_COLORS),
-    name: "",
-    notification: "",
-    remind: true,
-    repeat: "every-day"
-  };
-  const [state, setState] = React.useState(initialState);
-  const [isColorPicker, setColorPicker] = React.useState(false);
-
+  
+  const [state, setState] = React.useState({
+  ...route.params.state
+  });
 
   const onChangeInput = (name, value) => {
     if (name && value !== undefined) {
@@ -36,12 +28,24 @@ const AHSRepeat = ({ route, navigation }) => {
 
   const handleGoBack = () => {
     // Pass data back to ScreenA using the onGoBack callback
-    route.params.onGoBack(state);
+    route.params.onGoBack({data: {...state}});
     navigation.goBack();
   };
 
   React.useEffect(() => {
-    setState({ ...state, ...route.params });
+    const unsubscribe = navigation.addListener('beforeRemove', (e) => {
+      e.preventDefault();
+      if (route.params?.onGoBack) {
+        route.params.onGoBack({ data: { ...state } });
+      }
+      navigation.dispatch(e.data.action);
+    });
+
+    return unsubscribe;
+  }, [navigation, route.params, state]);
+
+  React.useEffect(() => {
+    setState({ ...state, ...route.params.state });
   }, [route.params])
 
   return (
@@ -85,10 +89,10 @@ const SelectList = ({ data, title, currentValue, setValue, color }) => {
       <Pressable onPress={onPress}>
         <View style={select.item}>
           <Text style={select.text}>{name}</Text>
-          <Text style={select.checkmark}>{currentValue === value ? 
-        
-          <Icon style={{ pointerEvents: "none" }} type="antdesign" size={24} name="check" color={color ? color : "#5fb1e7"} />
-          : ""}</Text>
+          <Text style={select.checkmark}>{currentValue === value ?
+
+            <Icon style={{ pointerEvents: "none" }} type="antdesign" size={24} name="check" color={color ? color : "#5fb1e7"} />
+            : ""}</Text>
         </View>
       </Pressable>
     )
@@ -101,7 +105,7 @@ const SelectList = ({ data, title, currentValue, setValue, color }) => {
       <FlatList
         contentContainerStyle={styles.listContent}
         data={data}
-        renderItem={({ item }) => <ListItem {...{...item, color, onPress: () => setValue(item.value)}} />
+        renderItem={({ item }) => <ListItem {...{ ...item, color, onPress: () => setValue(item.value) }} />
         }
       />
     </>

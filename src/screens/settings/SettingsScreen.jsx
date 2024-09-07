@@ -13,6 +13,7 @@ const SettingsScreen = ({ navigation }) => {
     theme: app?.theme
   }))
 
+
   return (
     <View style={{ flex: 1, backgroundColor: "#f0f2f7" }}>
       <HeaderRNE
