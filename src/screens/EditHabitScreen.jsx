@@ -10,6 +10,7 @@ import { BaseView, LineItemView, Modal, BasePressButton } from '@components';
 import { useDispatch } from 'react-redux';
 import { habitsActions } from "actions";
 import { HABIT_COLORS, REPEAT_MASKS } from '@constants';
+import { LineItemOptions } from '../components';
 
 
 const EditHabitScreen = ({ route, navigation }) => {
@@ -35,6 +36,16 @@ const EditHabitScreen = ({ route, navigation }) => {
   const onSubmit = () => {
     d(habitsActions.updateHabit({ ...state }));
     navigation.navigate('home')
+  }
+
+  const navigateToSetRepeat = () => {
+    navigation.navigate('sethabit/repeat', {
+      ...state,
+      onGoBack: (data) => {
+        // Callback function to handle data from ScreenB
+        setState(data);
+      },
+    });
   }
 
   React.useEffect(() => {
@@ -130,10 +141,10 @@ const EditHabitScreen = ({ route, navigation }) => {
 
         <Label style={{ marginBottom: 7 }}>Regularity</Label>
 
-        <LineItemView pl1 rightArrow>
-          <Text style={{ flex: 1 }}>Repeat</Text>
-          <Text style={{ marginRight: 5, marginLeft: 2, color: "#949dad" }}>{REPEAT_MASKS["every-day"]}</Text>
-        </LineItemView>
+        <LineItemOptions 
+        onPress={navigateToSetRepeat}
+        title="Repeat" 
+        value={REPEAT_MASKS[state.repeat]}/>
 
         <LineItemView pl1 toggle toggleColor={state.color} isEnabled={state.remind} onToggle={(v) => onChangeInput("remind", v)}>
           <Text>Remind me</Text>

@@ -10,6 +10,7 @@ import { BaseView, LineItemView, Modal, BasePressButton } from '@components';
 import { useDispatch } from 'react-redux';
 import { habitsActions } from "actions";
 import { HABIT_COLORS, REPEAT_MASKS, getRandomItem } from '@constants';
+import LineItemOptions from '../components/LineItemOptions';
 
 
 const AddHabitScreen = ({ navigation }) => {
@@ -37,6 +38,16 @@ const AddHabitScreen = ({ navigation }) => {
     d(habitsActions.addHabit({ id: uuid.v4(), ...state, datesArray: [] }));
     setState(initialState);
     navigation.navigate('home')
+  }
+
+  const navigateToSetRepeat = () => {
+    navigation.navigate('sethabit/repeat', {
+      ...state,
+      onGoBack: (data) => {
+        // Callback function to handle data from ScreenB
+        setState(data);
+      },
+    });
   }
 
   return (
@@ -94,11 +105,6 @@ const AddHabitScreen = ({ navigation }) => {
 
         <Modal isOpen={isColorPicker}>
           <ModalContent>
-            {/* <BasePressButton
-              onPress={() => setColorPicker(false)}
-              title='close'
-            /> */}
-
             <ColorPicker>
               {HABIT_COLORS.map(color =>
                 <BasePressButton
@@ -128,11 +134,10 @@ const AddHabitScreen = ({ navigation }) => {
         />
 
         <Label style={{ marginBottom: 7 }}>Regularity</Label>
-
-        <LineItemView pl1 rightArrow>
-          <Text style={{ flex: 1 }}>Repeat</Text>
-          <Text style={{ marginRight: 5, marginLeft: 2, color: "#949dad" }}>{REPEAT_MASKS["every-day"]}</Text>
-        </LineItemView>
+        <LineItemOptions 
+        onPress={navigateToSetRepeat}
+        title="Repeat" 
+        value={REPEAT_MASKS[state.repeat]}/>
 
         <LineItemView pl1 toggle toggleColor={state.color} isEnabled={state.remind} onToggle={(v) => onChangeInput("remind", v)}>
           <Text>Remind me</Text>
