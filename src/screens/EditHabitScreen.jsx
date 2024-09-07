@@ -77,7 +77,7 @@ const EditHabitScreen = ({ route, navigation }) => {
       />
 
 
-      <View style={{ paddingTop: 14 }}>
+      <View style={{ paddingTop: 14, flex: 1 }}>
         <Label>{t("addt_name")}</Label>
         <View style={styles.combinedInput}>
           <SettingsInputEmb

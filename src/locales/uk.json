@@ -1,0 +1,17 @@
+{
+  "st_screen": "Налаштування",
+  "st_tutorial": "Підручник",
+  "st_support": "Підтримка",
+  "st_lang": "Мова",
+  "st_feat": "Запит функції",
+  "st_rate": "Оцінити додаток",
+  "st_theme": "Тема",
+  "st_theme__light": "Світла",
+  "st_theme__dark": "Темна",
+  "st_theme__system": "Системна",
+  "addt_screen": "Додати звичку",
+  "addt_name": "Назва",
+  "addt_name_placeholder": "Назва звички",
+  "addt_notif": "Сповіщення",
+  "addt_notif_placeholder": "Чи ви ... сьогодні?"
+}

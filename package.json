@@ -22,6 +22,7 @@
     "expo-linear-gradient": "^13.0.2",
     "expo-localization": "~15.0.3",
     "expo-status-bar": "~1.12.1",
+    "i18n-js": "^4.4.3",
     "i18next": "^23.14.0",
     "moment": "^2.30.1",
     "react": "18.2.0",

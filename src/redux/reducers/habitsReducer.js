@@ -5,7 +5,6 @@ import {
     SET_HABIT_TIMESTAMP,
     HABITS_INITIALIZE
 } from "actions/habitsActions";
-import alert from "../../polyfils/alert";
 
 const initialState = {
     isInit: false,
@@ -46,7 +45,7 @@ export default function habits(state = initialState, action) {
                     } 
                     return  {...newWithout, datesArray: [...newWithout.datesArray, action.timestamp]}
                 }
-                
+
                 // places it on index (local mutation)
                 if (index !== -1) 
                     arr[index] = setTimestampFromItem();

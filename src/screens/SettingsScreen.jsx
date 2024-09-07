@@ -6,12 +6,24 @@ import styled from 'styled-components/native'
 import { Header as HeaderRNE } from '@rneui/themed';
 
 import { LineItemView, GapView } from '@components'
+import { LineItemOptions } from '../components';
+import { LANG_MASKS } from '../constants';
 
 const SettingsScreen = ({ navigation }) => {
   const { t } = useTranslation();
-  const { theme } = useSelector(({ app }) => ({
-    theme: app?.theme
+  const { theme, lang } = useSelector(({ app }) => ({
+    theme: app?.theme,
+    lang: app?.lang
   }))
+
+  const navigateToPage = (path) => {
+    navigation.navigate(path, {
+      onGoBack: ({data}) => {
+        // Callback function to handle data from ScreenB
+        // setState(data);
+      },
+    });
+  }
 
 
   return (
@@ -50,9 +62,10 @@ const SettingsScreen = ({ navigation }) => {
 
           </LineItemView>
 
-          <LineItemView pl1 rightArrow>
-            <Text>{t("st_lang")}</Text>
-          </LineItemView>
+          <LineItemOptions 
+            onPress={() => navigateToPage("settings/language")}
+            title={t("st_lang")} 
+            value={LANG_MASKS[lang]}/>
 
           <GapView />
 

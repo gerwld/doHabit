@@ -6,8 +6,9 @@ import { useTranslation } from "react-i18next";
 import TutorialScreen from "./TutorialScreen";
 import DetailsHabitScreen from "./DetailsHabitScreen";
 import EditHabitScreen from "./EditHabitScreen";
-import SettingsScreen from "./Settings/SettingsScreen";
+import SettingsScreen from "./SettingsScreen";
 import AHSRepeat from "./subsreens/AHSRepeat";
+import STLanguage from "./subsreens/STLanguage";
 
 
 const Stack = createNativeStackNavigator();
@@ -23,7 +24,13 @@ export const Navigation = () => {
             <Stack.Screen name="addhabit" component={AddHabitScreen} options={{ headerShown: false, title: t("addt_screen") }} />
             <Stack.Screen name="edithabit" component={EditHabitScreen} options={{ headerShown: false, title: t("addt_screen") }} />
             <Stack.Screen name="sethabit/repeat" component={AHSRepeat} options={{ headerShown: false, title: "Habit Details" }} />
+        </>
+    )
 
+    const settingsSubdirectories = (
+        <>
+            <Stack.Screen name="settings" component={SettingsScreen} options={{ headerShown: false, title: t("st_screen") }} />
+            <Stack.Screen name="settings/language" component={STLanguage} options={{ headerShown: false, title: t("st_screen") }} />
         </>
     )
 
@@ -32,9 +39,9 @@ export const Navigation = () => {
             <Stack.Navigator>
                 <Stack.Screen name="home" component={HomeScreen} options={{ headerShown: false, title: t("home_screen") }} />
                 <Stack.Screen name="tutorial" component={TutorialScreen} options={{ headerShown: false, title: t("tutorial_screen") }} />
-                <Stack.Screen name="settings" component={SettingsScreen} options={{ headerShown: false, title: t("st_screen") }} />
                 <Stack.Screen name="habitdetails" component={DetailsHabitScreen} options={{ headerShown: false, title: "Habit Details" }} />
                 {addEditSubdirectories}
+                {settingsSubdirectories}
             </Stack.Navigator>
         </NavigationContainer>
     )

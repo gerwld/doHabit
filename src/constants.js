@@ -11,6 +11,12 @@ const REPEAT_MASKS = {
     "5-times-week": "5 times per week",
 }
 
+const LANG_MASKS = {
+    "en": "English",
+    "pl": "Polish",
+    "uk": "Ukrainian",
+}
+
 const HABIT_COLORS = [
     '#FF9500', // Orange
     '#FFCC00', // Yellow
@@ -29,5 +35,5 @@ const getRandomItem = (arr) => {
 };
 
 module.exports = {
-    THEMES_MASKS, REPEAT_MASKS, HABIT_COLORS, getRandomItem
+    THEMES_MASKS, REPEAT_MASKS, LANG_MASKS, HABIT_COLORS, getRandomItem
 }

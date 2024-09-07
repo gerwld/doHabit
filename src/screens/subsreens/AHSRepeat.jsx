@@ -66,8 +66,9 @@ const AHSRepeat = ({ route, navigation }) => {
         backgroundColor={state.color}
       />
 
-      <View style={{ paddingTop: 14 }}>
-        <SelectList
+      <View style={{ paddingTop: 14, flex: 1 }}>
+               <SelectList
+          style={{flex: 1}}
           currentValue={state.repeat}
           color={state.color}
           setValue={(v) => onChangeInput('repeat', v)}

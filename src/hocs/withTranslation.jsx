@@ -1,8 +1,9 @@
 // hocs/withTranslation.js
 import React, { useEffect, useState } from 'react';
-import i18n from 'i18next';
 import { Platform } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import i18next from 'i18next';
+
 
 const LANGUAGE_KEY = 'user-language';
 
@@ -21,10 +22,10 @@ const withTranslation = (WrappedComponent) => {
         }
 
         if (storedLanguage) {
-          i18n.changeLanguage(storedLanguage);
+          i18next.changeLanguage(storedLanguage);
           setLanguage(storedLanguage);
         } else {
-          const defaultLanguage = i18n.language || 'en';
+          const defaultLanguage = i18next.language || 'en';
           setLanguage(defaultLanguage);
         }
       };
@@ -33,7 +34,7 @@ const withTranslation = (WrappedComponent) => {
     }, []);
 
     const changeLanguage = async (lng) => {
-      i18n.changeLanguage(lng);
+      i18next.changeLanguage(lng);
       setLanguage(lng);
 
       if (Platform.OS === 'web') {

@@ -1,9 +1,10 @@
 
 import { configureStore } from "@reduxjs/toolkit"
-import { habits } from "."
+import { habits, app } from "."
 
 const store = configureStore({
     reducer: {
+        app,
         habits,
     },
 })
