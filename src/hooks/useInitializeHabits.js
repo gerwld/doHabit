@@ -14,7 +14,6 @@ const useInitializeHabits = () => {
         
         try {
             const storedHabits = await AsyncStorage.getItem(STORAGE_KEY);
-            console.info("storedHabits -", storedHabits);
             if (storedHabits !== null) {
                 d(habitsActions.initializeHabits(JSON.parse(storedHabits)));
             }
