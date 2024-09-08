@@ -5,11 +5,13 @@ import * as Localization from 'expo-localization';
 import en from 'locales/en.json'; 
 import uk from 'locales/uk.json'; 
 import fr from 'locales/fr.json';
+import pl from 'locales/pl.json';
 
 const resources = {
   en: { translation: en },
   fr: { translation: fr },
   uk: { translation: uk },
+  pl: { translation: pl },
 };
 
 
@@ -31,7 +33,7 @@ i18n
   .use(initReactI18next) 
   .init({
     lng: "en",
-    debug: true,
+    // debug: true,
     resources,  
     fallbackLng: 'en', 
     compatibilityJSON: 'v3', 
