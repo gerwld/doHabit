@@ -1,11 +1,14 @@
 import React from 'react'
-import { StyleSheet, Dimensions, Text, FlatList, Pressable } from 'react-native';
+import { Text, FlatList, StatusBar } from 'react-native';
 import { Header, BaseView, LastSevenDays, HomeTask } from '@components';
 import { useSelector } from 'react-redux';
+import { getTheme } from '@constants';
+import { getThemeStatusBar } from '../constants';
 
 
 function HomeScreen({ navigation }) {
-  const { isInit } = useSelector(({ habits }) => ({
+  const { isInit, theme } = useSelector(({ habits, app }) => ({
+    theme: app.theme,
     isInit: habits.isInit
   }))
   if (!isInit) return <Text>Loader...</Text>
@@ -14,12 +17,14 @@ function HomeScreen({ navigation }) {
   return (
     <BaseView>
       <Header {...{ navigation }} />
-      <LatestTasks />
+      <LatestTasks {...{theme}} />
+
+      <StatusBar translucent barStyle={getThemeStatusBar(theme)}/>
     </BaseView>
   );
 }
 
-const LatestTasks = () => {
+const LatestTasks = ({theme}) => {
   const { items } = useSelector(({ habits }) => ({
     items: habits.items
   }))
@@ -27,23 +32,15 @@ const LatestTasks = () => {
 
   if (!items || !items.length) return <Text>To begin, add a new habit.</Text>
   else return <>
-    <LastSevenDays />
+    <LastSevenDays {...{theme}} />
     <FlatList
-      contentContainerStyle={styles.listContent}
+      contentContainerStyle={{paddingBottom: 10}}
       data={items}
-      renderItem={({ item }) => <HomeTask item={item}/>
+      renderItem={({ item }) => <HomeTask item={item} color={getTheme(theme).textColor}/>
       }
     />
   </>
 }
-
-
-const styles = StyleSheet.create({
-  listContent: {
-    // minHeight: Dimensions.get('window').height - 100
-    paddingBottom: 10
-  }
-});
 
 
 export default HomeScreen

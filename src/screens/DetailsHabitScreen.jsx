@@ -1,8 +1,6 @@
 import React from 'react'
-import { View, Text, StyleSheet, TouchableOpacity, Button, Alert } from 'react-native'
-import { Picker } from '@react-native-picker/picker';
+import { View, Text, TouchableOpacity, Button } from 'react-native'
 import { Header as HeaderRNE } from '@rneui/themed';
-import styled from 'styled-components/native';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 
@@ -10,6 +8,8 @@ import { BaseView } from '@components';
 import alert from '../polyfils/alert';
 import { habitsActions } from "actions";
 import { REPEAT_MASKS } from '@constants';
+import { useHeaderStyles } from 'hooks';
+import { Label, InfoBar, InfoBarItem } from "styles/crudtask"
 
 
 const DetailsHabitScreen = ({ route, navigation }) => {
@@ -22,7 +22,8 @@ const DetailsHabitScreen = ({ route, navigation }) => {
     setItem(route.params);
   }, [route.params])
 
-
+  const theme = route.params.theme
+  const headerStyles = useHeaderStyles(theme);
 
   const onPressDeleteHabit = () => {
     const onConfirm = () => {
@@ -55,25 +56,20 @@ const DetailsHabitScreen = ({ route, navigation }) => {
   return (
 
     <BaseView>
-
       <HeaderRNE
-        containerStyle={styles.header}
+        containerStyle={headerStyles.header}
         style={{ height: 60 }}
         leftComponent={
           <TouchableOpacity  onPress={() => navigation.navigate('home')}>
-            <View style={styles.headerButton}>
-              <Title style={{ fontWeight: 400 }}>Cancel</Title>
-            </View>
+              <Text style={headerStyles.headerButton}>{t("act_cancel")}</Text>
           </TouchableOpacity>
         }
         rightComponent={
           <TouchableOpacity onPress={() => navigation.navigate("edithabit", item)}>
-            <View style={styles.headerButton}>
-              <Title style={{ fontWeight: 400 }}>Edit</Title>
-            </View>
+              <Text style={{...headerStyles.headerButton, ...headerStyles.headerButtonRight}}>Edit</Text>
           </TouchableOpacity>
         }
-        centerComponent={<Text style={styles.headerTitle}>{item?.name}</Text>}
+        centerComponent={<Text style={headerStyles.headerTitle}>{item?.name}</Text>}
         backgroundColor={item?.color ? item.color : "#5fb1e7"}
       />
 
@@ -91,16 +87,14 @@ const DetailsHabitScreen = ({ route, navigation }) => {
 
 
 
-        <Label>Overview</Label>
-
-
-        <Label>History</Label>
-        <Label>Habit Strength</Label>
+        <Label>{t("label_ov")}</Label>
+        <Label>{t("label_hits")}</Label>
+        <Label>{t("label_stre")}</Label>
 
         <InfoBar>
           <Button
             onPress={onPressDeleteHabit}
-            title="Delete"
+            title={t('act_delete')}
           />
         </InfoBar>
 
@@ -108,97 +102,5 @@ const DetailsHabitScreen = ({ route, navigation }) => {
     </BaseView>
   )
 }
-
-const InfoBar = styled.View`
-width: 100%;
-flex-direction:row;
-  align-content: center;
-  justify-content: space-around;
-`
-const InfoBarItem = styled.View`
-    align-content: center;
-    justify-content: center;
-`
-
-
-const Label = styled.Text`
-  font-size: 12px;
-  color: #6a767d;
-  text-transform: uppercase;
-  margin-left: 15px;
-`
-
-// header 
-// header 
-const styles = StyleSheet.create({
-  headerLeft: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  headerRight: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  heading: {
-    color: 'white',
-    fontSize: 18,
-    fontWeight: 'bold',
-    alignItems: "center",
-    justifyContent: 'center'
-  },
-  combinedInput: {
-    width: "100%",
-    flexDirection: "row",
-    alignItems: "center",
-    marginTop: 7,
-    marginBottom: 14,
-    backgroundColor: "white",
-    border: "1px solid #e5e5eaff"
-  },
-  header: {
-    padding: 0,
-    minHeight: 55,
-    paddingVertical: 0,
-    paddingHorizontal: 0
-  },
-  headerButton: {
-    flexDirection: 'row',
-    alignItems: "center",
-    justifyContent: "center",
-    height: 55,
-    minWidth: 55,
-    pointerEvents: "none",
-    userSelect: "none",
-    paddingLeft: 18,
-    paddingRight: 18,
-  },
-  headerTitle: {
-    minHeight: 55,
-    lineHeight: 55,
-    color: "white",
-    fontSize: 17,
-    fontWeight: 'bold',
-    alignItems: "center",
-    justifyContent: "center",
-    pointerEvents: "none",
-    userSelect: "none",
-  },
-  activeBtn: {
-    fontSize: 17,
-  }
-});
-
-
-
-const Title = styled.Text`
-        min-height: 36px;
-        line-height:36px;
-        color: white;
-        font-size: 17px;
-        font-weight: 600;
-        align-items: center;
-        justify-content: center;
-`
-
 
 export default DetailsHabitScreen

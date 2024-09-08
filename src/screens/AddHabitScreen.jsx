@@ -1,21 +1,62 @@
 import React from 'react'
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
+import { View, Text, StyleSheet, TouchableOpacity, TextInput } from 'react-native'
 import { Header as HeaderRNE } from '@rneui/themed';
 import styled from 'styled-components/native';
 import { useTranslation } from 'react-i18next';
 import uuid from 'react-native-uuid';
+import { useDispatch, useSelector } from 'react-redux';
 
-import { BaseView, LineItemView, Modal, BasePressButton } from '@components';
 
-import { useDispatch } from 'react-redux';
+import { Label, ColorPicker } from "styles/crudtask"
+import { BaseView, LineItemView, Modal, BasePressButton, LineItemOptions } from '@components';
+import { HABIT_COLORS, getRandomItem, getTheme } from '@constants';
 import { habitsActions } from "actions";
-import { HABIT_COLORS, REPEAT_MASKS, getRandomItem } from '@constants';
-import LineItemOptions from '../components/LineItemOptions';
+import { useHeaderStyles } from 'hooks';
 
 
 const AddHabitScreen = ({ navigation }) => {
   const { t } = useTranslation();
   const d = useDispatch();
+  const { theme } = useSelector(({ app }) => ({ theme: app.theme }))
+  const headerStyles = useHeaderStyles(theme);
+
+
+  const styles = StyleSheet.create({
+    combinedInput: {
+      width: "100%",
+      flexDirection: "row",
+      alignItems: "center",
+      marginTop: 7,
+      marginBottom: 14,
+      backgroundColor: getTheme(theme).bgHighlight,
+      border: `1px solid ${getTheme(theme).borderColor}`
+    },
+    settingsInput: {
+      height: 55,
+      marginTop: 7,
+      marginBottom: 14,
+      backgroundColor: getTheme(theme).bgHighlight,
+      paddingVertical: 12,
+      paddingLeft: 15,
+      paddingRight: 10,
+      borderRadius: 0,
+      border: `1px solid ${getTheme(theme).borderColor}`
+    },
+    settingsInputEmbeded: {
+      flex: 1,
+      marginTop: 0,
+      marginBottom: 0,
+      border: "none"
+    }
+  });
+
+  const ModalContent = styled.View`
+  width: 300px;
+  background:${getTheme(theme).bgHighlight};
+  color: ${getTheme(theme).textColorHighlight};
+  padding: 20px;
+  border-radius: 10px;
+`
 
   const initialState = {
     color: getRandomItem(HABIT_COLORS),
@@ -35,8 +76,6 @@ const AddHabitScreen = ({ navigation }) => {
   }
 
   const onSubmit = () => {
-    console.log(state);
-    
     d(habitsActions.addHabit({ id: uuid.v4(), ...state, datesArray: [] }));
     setState(initialState);
     navigation.navigate('home')
@@ -45,7 +84,8 @@ const AddHabitScreen = ({ navigation }) => {
   const navigateToSetRepeat = () => {
     navigation.navigate('sethabit/repeat', {
       state,
-      onGoBack: ({data}) => {
+      theme,
+      onGoBack: ({ data }) => {
         // Callback function to handle data from ScreenB
         setState(data);
       },
@@ -56,23 +96,19 @@ const AddHabitScreen = ({ navigation }) => {
 
     <BaseView>
       <HeaderRNE
-        containerStyle={styles.header}
+        containerStyle={headerStyles.header}
         style={{ height: 60 }}
         leftComponent={
-          <TouchableOpacity  onPress={() => navigation.navigate('home')}>
-              <View style={styles.headerButton}>
-              <Title style={{ fontWeight: 400 }}>Cancel</Title>
-          </View>
-            </TouchableOpacity>
+          <TouchableOpacity onPress={() => navigation.navigate('home')}>
+            <Text numberOfLines={1} ellipsizeMode="clip" style={headerStyles.headerButton}>{t("act_cancel")}</Text>
+          </TouchableOpacity>
         }
         rightComponent={
           <TouchableOpacity onPress={onSubmit}>
-              <View style={styles.headerButton}>
-              <Title style={{ fontWeight: 400 }}>Save</Title>
-          </View>
-            </TouchableOpacity>
+            <Text numberOfLines={1} ellipsizeMode="clip" style={{ ...headerStyles.headerButton, ...headerStyles.headerButtonRight }}>{t("act_save")}</Text>
+          </TouchableOpacity>
         }
-        centerComponent={<Text style={styles.headerTitle}>{t("addt_screen")}</Text>}
+        centerComponent={<Text style={headerStyles.headerTitle}>{t("addt_screen")}</Text>}
         backgroundColor={state.color}
       />
 
@@ -81,7 +117,8 @@ const AddHabitScreen = ({ navigation }) => {
       <View style={{ paddingTop: 14, flex: 1 }}>
         <Label>{t("addt_name")}</Label>
         <View style={styles.combinedInput}>
-          <SettingsInputEmb
+          <TextInput
+            style={{ ...styles.settingsInput, ...styles.settingsInputEmbeded }}
             onChangeText={(v) => onChangeInput("name", v)}
             value={state.name}
             placeholder={t("addt_name_placeholder")}
@@ -128,143 +165,28 @@ const AddHabitScreen = ({ navigation }) => {
         {/* color picker end */}
 
         <Label>{t("addt_notif")}</Label>
-        <SettingsInput
+        <TextInput
+          style={styles.settingsInput}
           onChangeText={(v) => onChangeInput("notification", v)}
           value={state.notification}
           placeholder={t("addt_notif_placeholder")}
           placeholderTextColor="#949ca1"
         />
 
-        <Label style={{ marginBottom: 7 }}>Regularity</Label>
-        <LineItemOptions 
-        onPress={navigateToSetRepeat}
-        title="Repeat" 
-        value={REPEAT_MASKS[state.repeat]}/>
+        <Label style={{ marginBottom: 7 }}>{t("label_reg")}</Label>
+        <LineItemOptions
+          onPress={navigateToSetRepeat}
+          title={t("addt_repeat")}
+          value={t(state.repeat)} />
 
         <LineItemView pl1 toggle toggleColor={state.color} isEnabled={state.remind} onToggle={(v) => onChangeInput("remind", v)}>
-          <Text>Remind me</Text>
+          <Text style={{ color: getTheme(theme).textColor }}>{t("addt_int_title")}</Text>
         </LineItemView>
 
       </View>
     </BaseView>
   )
 }
-
-const Label = styled.Text`
-  font-size: 12px;
-  color: #6a767d;
-  text-transform: uppercase;
-  margin-left: 15px;
-`
-
-const SettingsInput = styled.TextInput`
-  height: 55px;
-  margin: 7px 0 14px 0;
-  background: #fff;
-  padding: 12px 10px 12px 15px;
-  border-radius: 0;
-  border: 1px solid #e5e5eaff;
-`
-
-const SettingsInputEmb = styled.TextInput`
-flex: 1;
-  height: 55px;
-  margin: 0;
-  background: #fff;
-  padding: 12px 10px 12px 15px;
-  border-radius: 0;
-  
-`
-
-// header 
-const styles = StyleSheet.create({
-  headerLeft: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  headerRight: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  heading: {
-    color: 'white',
-    fontSize: 18,
-    fontWeight: 'bold',
-    alignItems: "center",
-    justifyContent: 'center'
-  },
-  combinedInput: {
-    width: "100%",
-    flexDirection: "row",
-    alignItems: "center",
-    marginTop: 7,
-    marginBottom: 14,
-    backgroundColor: "white",
-    border: "1px solid #e5e5eaff"
-  },
-  header: {
-    padding: 0,
-    minHeight: 55,
-    paddingVertical: 0,
-    paddingHorizontal: 0
-  },
-  headerButton: {
-    flexDirection: 'row',
-    alignItems: "center",
-    justifyContent: "center",
-    height: 55,
-    minWidth: 55,
-    pointerEvents: "none",
-    userSelect: "none",
-    paddingLeft: 18,
-    paddingRight: 18,
-  },
-  headerTitle: {
-    minHeight: 55,
-    lineHeight: 55,
-    color: "white",
-    fontSize: 17,
-    fontWeight: 'bold',
-    alignItems: "center",
-    justifyContent: "center",
-    pointerEvents: "none",
-    userSelect: "none",
-  },
-  activeBtn: {
-    fontSize: 17,
-  }
-});
-
-
-
-
-//modal
-const ModalContent = styled.View`
-width: 300px;
-background: white;
-color: black;
-padding: 20px;
-border-radius: 10px;
-`
-
-const ColorPicker = styled.View`
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: center;
-  gap: 10px
-`
-
-const Title = styled.Text`
-        min-height: 36px;
-        line-height:36px;
-        color: white;
-        font-size: 17px;
-        font-weight: 600;
-        align-items: center;
-        justify-content: center;
-`
 
 
 export default AddHabitScreen

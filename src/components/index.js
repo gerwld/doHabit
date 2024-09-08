@@ -8,4 +8,6 @@ export { GapView } from "./styling/GapView";
 export { HomeTask } from "./HomeTask";
 export { default as CircularProgress } from "./CircularProgress";
 export { default as Modal } from "./Modal";
+export { default as SelectList } from "./SelectList";
 export { BasePressButton } from "./styling/BasePressButton";
+

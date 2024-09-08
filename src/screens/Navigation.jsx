@@ -9,15 +9,29 @@ import EditHabitScreen from "./EditHabitScreen";
 import SettingsScreen from "./SettingsScreen";
 import AHSRepeat from "./subsreens/AHSRepeat";
 import STLanguage from "./subsreens/STLanguage";
+import STTheme from "./subsreens/STTheme";
+import { useSelector } from "react-redux";
+import { getTheme } from "@constants";
 
 
 const Stack = createNativeStackNavigator();
 
 export const Navigation = () => {
     const { t } = useTranslation();
+    const { theme } = useSelector(({ app }) => ({ theme: app.theme }))
+
+    console.log(theme);
+
 
     const navTheme = DefaultTheme;
-    navTheme.colors.background = '#f2f2f7';
+    navTheme.colors = {
+        primary: 'rgb(0, 122, 255)',
+        card: 'rgb(255, 255, 255)',
+        text: getTheme(theme).textColorHighlight,
+        border: getTheme(theme).borderColor,
+        notification: 'rgb(255, 59, 48)',
+        background: getTheme(theme).background
+    };
 
     const addEditSubdirectories = (
         <>
@@ -31,6 +45,7 @@ export const Navigation = () => {
         <>
             <Stack.Screen name="settings" component={SettingsScreen} options={{ headerShown: false, title: t("st_screen") }} />
             <Stack.Screen name="settings/language" component={STLanguage} options={{ headerShown: false, title: t("st_screen") }} />
+            <Stack.Screen name="settings/theme" component={STTheme} options={{ headerShown: false, title: t("st_screen") }} />
         </>
     )
 
