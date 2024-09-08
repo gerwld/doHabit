@@ -9,9 +9,33 @@
   "st_theme__light": "Light",
   "st_theme__dark": "Dark",
   "st_theme__system": "System",
+
   "addt_screen": "Add Habit",
   "addt_name": "Name",
   "addt_name_placeholder": "Name of the habit",
   "addt_notif": "Notification",
-  "addt_notif_placeholder": "Did you ... today?"
+  "addt_notif_placeholder": "Did you ... today?",
+  "addt_int_title": "Repeat intervals",
+  "addt_remind": "Remind me",
+  "addt_repeat": "Repeat",
+
+  "eddt_screen": "Edit Habit",
+
+  "act_back": "Back",
+  "act_cancel": "Cancel",
+  "act_save": "Save",
+  "act_delete": "Delete",
+  
+  "every-day": "Every Day",
+  "every-week": "Every Week",
+  "3-times-week": "3 times per week",
+  "5-times-week": "5 times per week",
+
+  "label_reg": "Regularity",
+  "label_ov": "Overview",
+  "label_hist": "History",
+  "label_stre": "Habit Strength",
+  "int_lang": "Interface language",
+  "lang": "Language"
+
 }
