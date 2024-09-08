@@ -1,0 +1,40 @@
+{
+  "st_screen": "Ustawienia",
+  "st_tutorial": "Samouczek",
+  "st_support": "Wsparcie",
+  "st_lang": "Język aplikacji",
+  "st_feat": "Zaproponuj funkcję",
+  "st_rate": "Oceń aplikację",
+  "st_theme": "Motyw",
+  "st_theme__light": "Jasny",
+  "st_theme__dark": "Ciemny",
+  "st_theme__system": "Systemowy",
+
+  "addt_screen": "Dodaj Nawyk",
+  "addt_name": "Nazwa",
+  "addt_name_placeholder": "Nazwa nawyku",
+  "addt_notif": "Powiadomienie",
+  "addt_notif_placeholder": "Czy zrobiłeś to dzisiaj?",
+  "addt_int_title": "Interwały powtórzeń",
+  "addt_remind": "Przypomnij mi",
+  "addt_repeat": "Powtórz",
+
+  "eddt_screen": "Edytuj Nawyk",
+
+  "act_back": "Wstecz",
+  "act_cancel": "Anuluj",
+  "act_save": "Zapisz",
+  "act_delete": "Usuń",
+  
+  "every-day": "Codziennie",
+  "every-week": "Co tydzień",
+  "3-times-week": "3 razy w tygodniu",
+  "5-times-week": "5 razy w tygodniu",
+
+  "label_reg": "Regularność",
+  "label_ov": "Przegląd",
+  "label_hist": "Historia",
+  "label_stre": "Siła nawyku",
+  "int_lang": "Język interfejsu",
+  "lang": "Język"
+}
