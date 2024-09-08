@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import Svg, { Circle } from 'react-native-svg';
 
-const CircularProgress = ({ progress, size, strokeWidth, color, isText }) => {
+const CircularProgress = ({ progress, size, strokeWidth, color, isText, strColor }) => {
   const radius = (size - strokeWidth) / 2;
   const circumference = 2 * Math.PI * radius;
   const strokeDashoffset = circumference - (circumference * progress) / 100;
@@ -11,7 +11,7 @@ const CircularProgress = ({ progress, size, strokeWidth, color, isText }) => {
     <View style={{ width: size, height: size }}>
       <Svg height={size} width={size} viewBox={`0 0 ${size} ${size}`}>
         <Circle
-          stroke="#e5e5eaff"
+          stroke={strColor ? strColor : "#e5e5eaa1"}
           fill="none"
           cx={size / 2}
           cy={size / 2}
