@@ -1,30 +1,23 @@
 import React from 'react';
 import { Provider, useSelector } from 'react-redux';
-import { StatusBar } from 'expo-status-bar';
+import {StatusBar} from "react-native";
 
 import { Navigation } from 'screens/Navigation';
 import withTranslation from 'hocs/withTranslation';
-import store from 'reduxx/store';
-import useInitializeHabits from './src/hooks/useInitializeHabits';
-import { useInitializeApp } from './src/hooks';
+import store from '@redux/store';
+import { useInitializeApp } from 'hooks';
 import i18n from './i18n';
-import i18next from 'i18next';
-
-// import { useInitializeHabits, useInitializeApp } from 'hooks';,
 
 
 function AppWithProvider({ children }) {
-  const { lang } = useSelector(({ app }) => ({ lang: app.lang }));
-
-  useInitializeHabits();
-  useInitializeApp();
+  const { lang, theme } = useSelector(({ app }) => ({ lang: app.lang, theme: app.theme }));
 
   React.useEffect(() => {
     i18n.locale = lang;
     i18n.changeLanguage(lang);
-    i18next.changeLanguage(lang);
-    console.log('Language set to:', lang)
   }, [lang])
+
+  useInitializeApp();
 
   return children;
 }
