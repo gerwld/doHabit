@@ -3,11 +3,11 @@ import moment from 'moment';
 import styled from 'styled-components/native';
 import { Icon } from '@rneui/base';
 import uuid from 'react-native-uuid';
-import { Pressable, StyleSheet, Text } from 'react-native';
+import { Pressable, StyleSheet } from 'react-native';
 
-import alert from '../polyfils/alert';
 import { habitsActions } from "actions";
 import { useDispatch, useSelector } from 'react-redux';
+import { getTheme } from '@constants';
 
 const DAYS_COUNT = 5;
 
@@ -19,8 +19,9 @@ const isCurrent = (i) => i === (DAYS_COUNT - 1);
 
 
     const d = useDispatch();
-    const {items} = useSelector(({habits}) => ({
-        items: habits.items
+    const {items, theme} = useSelector(({habits, app}) => ({
+        items: habits.items,
+        theme: app.theme
     }))
     const item = items.filter(e => e.id === habitID)[0];
     const tmsArr = item?.datesArray;
@@ -43,7 +44,7 @@ const isCurrent = (i) => i === (DAYS_COUNT - 1);
                         <TimeView style={styles.timeWiewInt} key={uuid.v4()}>
                         {(tmsArr?.filter && tmsArr?.filter(l => l === timestamp - (day * e)).length > 0) 
                         ? <Icon style={{ pointerEvents: "none" }} type="antdesign" size={21} name="check" color={color ? color : "#5fb1e7"} />
-                        : <Icon style={{ pointerEvents: "none" }} type="antdesign" size={21} name="close" color="#a5bbd3" />}
+                        : <Icon style={{ pointerEvents: "none" }} type="antdesign" size={21} name="close" color={getTheme(theme).crossSymb} />}
                         </TimeView>
                     </Pressable>
                 )}
