@@ -40,15 +40,18 @@ const styles = StyleSheet.create({
         fontSize: 18,
         fontWeight: 'bold',
         alignItems: "center",
-        justifyContent: 'center'
+        justifyContent: 'center',
+        
     },
     header: {
         padding: 0,
         minHeight: 55,
         paddingVertical: 0,
-        paddingHorizontal: 0
+        paddingHorizontal: 0,
+        border: "none",
     },
     headerButton: {
+    flexShrink: 0,
         flexDirection: 'row',
         alignItems: "center",
         justifyContent: "center",
