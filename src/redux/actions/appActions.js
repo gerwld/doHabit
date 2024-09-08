@@ -1,11 +1,21 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-const SET_LANG = 'settings/SET_LANG';
 const APP_INITIALIZE = 'settings/APP_INITIALIZE';
+const SET_LANG = 'settings/SET_LANG';
+const SET_THEME = 'settings/SET_THEME';
 
 const setLang = (payload) => async (dispatch, getState) => {
     await dispatch({
         type: SET_LANG,
+        payload,
+    });
+
+    await setSettingsToAsyncStorage(getState);
+};
+
+const setTheme = (payload) => async (dispatch, getState) => {
+    await dispatch({
+        type: SET_THEME,
         payload,
     });
 
@@ -31,5 +41,5 @@ const setSettingsToAsyncStorage = async (getState) => {
 
 
 module.exports = {
-    SET_LANG, APP_INITIALIZE, setLang, initializeApp
+    SET_LANG, SET_THEME, APP_INITIALIZE, setLang, setTheme, initializeApp,
 }
