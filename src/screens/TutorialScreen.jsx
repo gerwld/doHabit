@@ -53,7 +53,7 @@ const TutorialScreen = ({ navigation }) => {
 
         <SafeAreaView style={{ flex: 1 }}>
             <GestureHandlerRootView>
-            <View style={{ flex: 1 }}>
+            <View style={{ flex: 1, width: windowWidth, overflow: "hidden" }}>
                 <Animated.View style={[{
                     flex: 1,
                     flexDirection: "row",
