@@ -1,6 +1,6 @@
 import { View, Text, Button, SafeAreaView, Dimensions } from 'react-native'
 import React from 'react'
-import { Gesture, GestureDetector } from 'react-native-gesture-handler';
+import { Gesture, GestureDetector, GestureHandlerRootView } from 'react-native-gesture-handler';
 import { useAnimatedStyle, withTiming } from 'react-native-reanimated';
 import Animated, { useSharedValue } from 'react-native-reanimated';
 const AnimatedView = Animated.createAnimatedComponent(View);
@@ -12,29 +12,26 @@ const TutorialScreen = ({ navigation }) => {
 
     const x = useSharedValue(0);
     const page = useSharedValue(0)
-    let startX;
+    const startX  = useSharedValue()
 
     const pan = Gesture.Pan()
         .onBegin((event) => {
-            startX = event.translationX;
+            startX.value  = event.translationX;
         })
         .onChange((event) => {
             x.value = -(page.value * windowWidth) + event.translationX
         })
         .onFinalize((event) => {
-
             // prevent on tiny scroll
-            if (Math.max(startX, event.translationX) - Math.min(startX, event.translationX) > 100) {
+            if (Math.max(startX.value , event.translationX) - Math.min(startX.value , event.translationX) > 10) {
                 // back
-                if (startX < event.translationX && page.value >= 1) {
+                if (startX.value  < event.translationX && page.value >= 1) {
                     x.value = withTiming(-windowWidth * (page.value - 1))
-                    console.log(page.value - 1);
                     page.value = page.value - 1;
                 }
                 // forward   
-                else if (startX > event.translationX && page.value < total_pages) {
+                else if (startX.value  > event.translationX && page.value < total_pages) {
                     x.value = withTiming(-windowWidth * (page.value + 1))
-                    console.log(page.value + 1);
                     page.value = page.value + 1;
                 }
                 else x.value = withTiming(-windowWidth * (page.value))
@@ -42,7 +39,7 @@ const TutorialScreen = ({ navigation }) => {
             }
             else x.value = withTiming(-windowWidth * (page.value))
 
-            startX = 0
+            startX.value  = 0
         });
 
     const animatedContainerStyle = useAnimatedStyle(() => ({
@@ -55,6 +52,7 @@ const TutorialScreen = ({ navigation }) => {
     return (
 
         <SafeAreaView style={{ flex: 1 }}>
+            <GestureHandlerRootView>
             <View style={{ flex: 1 }}>
                 <Animated.View style={[{
                     flex: 1,
@@ -66,7 +64,7 @@ const TutorialScreen = ({ navigation }) => {
                             backgroundColor: 'violet',
                         }}
                     >
-                        <Text>page.value 1</Text>
+                        <Text>page.value 1 {windowWidth}</Text>
                     </Slide>
                     <Slide
                         style={{
@@ -109,7 +107,7 @@ const TutorialScreen = ({ navigation }) => {
                 <PageButton onPress={() => { page.value = 1; x.value = withTiming(-windowWidth * 1) }}><Text style={{ color: "white" }}>2</Text></PageButton>
                 <PageButton onPress={() => { page.value = 2; x.value = withTiming(-windowWidth * 2) }}><Text style={{ color: "white" }}>3</Text></PageButton>
             </View>
-
+            </GestureHandlerRootView>
         </SafeAreaView>
     )
 }
