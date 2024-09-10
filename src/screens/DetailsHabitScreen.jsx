@@ -69,7 +69,7 @@ const DetailsHabitScreen = ({ route, navigation }) => {
               <Text style={{...headerStyles.headerButton, ...headerStyles.headerButtonRight}}>Edit</Text>
           </TouchableOpacity>
         }
-        centerComponent={<Text style={headerStyles.headerTitle}>{item?.name}</Text>}
+        centerComponent={<Text numberOfLines={1} ellipsizeMode='tail' style={headerStyles.headerTitle}>{item?.name}</Text>}
         backgroundColor={item?.color ? item.color : "#5fb1e7"}
       />
 

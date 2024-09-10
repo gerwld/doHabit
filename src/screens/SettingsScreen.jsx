@@ -25,17 +25,24 @@ const SettingsScreen = ({ navigation }) => {
       height: "max-height"
     },
     scrollViewContent: {
-      flex: 1
+      // flex: 1,
+       backgroundColor: getTheme(theme).background,
+      //  height: "80%"
     },
     t: {
       fontSize: 16,
       color: getTheme(theme).textColorHighlight,
     },
     copyright: {
+      width: "100%",
+      position: "absolute",
+      left: 0,
+      bottom: 0,
       alignItems: "center",
       flexDirection: "column",
       marginBottom: 30,
-      paddingVertical: 10
+      paddingVertical: 10,
+      zIndex: -1
     },
     copyrightText: {
       color: getTheme(theme).crossSymb,
@@ -67,7 +74,6 @@ const SettingsScreen = ({ navigation }) => {
       />
 
       <ScrollView contentContainerStyle={styles.scrollViewContent}>
-        <GapView />
         <GapView />
         <View style={{ flex: 1, justifyContent: "flex-start", height: "100%", minHeight: 390 }}>
           <Pressable onPress={() => navigation.replace("tutorial")}>
@@ -103,12 +109,13 @@ const SettingsScreen = ({ navigation }) => {
             <Text style={styles.t}>{t("st_rate")}</Text>
           </LineItemView>
         </View>
-        <View style={styles.copyright} >
+      
+      </ScrollView>
+
+      <View style={styles.copyright} >
           <Text style={styles.copyrightText}>© weblxapplications.com</Text>
           <Text style={styles.copyrightText}>{new Date().getFullYear()}</Text>
         </View>
-      </ScrollView>
-
       <StatusBar translucent barStyle={getThemeStatusBar(theme, true)}/>
     </View>
   )

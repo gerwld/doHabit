@@ -66,7 +66,11 @@ const EditHabitScreen = ({ route, navigation }) => {
       marginTop: 7,
       marginBottom: 14,
       backgroundColor: getTheme(theme).bgHighlight,
-      border: `1px solid ${getTheme(theme).borderColor}`
+      border: `1px solid ${getTheme(theme).borderColor}`,
+      borderWidth: 1,
+      borderColor: `${getTheme(theme).borderColor}`,
+      borderLeftColor: "transparent",
+      borderRightColor: "transparent"
     },
     settingsInput: {
       height: 55,
@@ -77,16 +81,20 @@ const EditHabitScreen = ({ route, navigation }) => {
       paddingLeft: 15,
       paddingRight: 10,
       borderRadius: 0,
-      fontSize: 16.5,
+      fontSize: 16,
       color:  getTheme(theme).textColorHighlight,
-      border: `1px solid ${getTheme(theme).borderColor}`
+      // border: `1px solid ${getTheme(theme).borderColor}`,
+      borderWidth: 1,
+      borderColor: `${getTheme(theme).borderColor}`,
+      borderLeftColor: "transparent",
+      borderRightColor: "transparent",
+    
     },
     settingsInputEmbeded: {
       flex: 1,
       marginTop: 0,
       marginBottom: 0,
       border: "none",
-      fontSize: 16.5,
     }
   });
 
@@ -124,7 +132,7 @@ const EditHabitScreen = ({ route, navigation }) => {
         <Label>{t("addt_name")}</Label>
         <View style={styles.combinedInput}>
         <TextInput
-            style={[styles.settingsInput, styles.settingsInputEmbeded]}
+            style={[styles.settingsInput, styles.settingsInputEmbeded, {borderWidth: 0}]}
             onChangeText={(v) => onChangeInput("name", v)}
             value={state.name}
             placeholder={t("addt_name_placeholder")}

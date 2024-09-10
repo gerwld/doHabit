@@ -9,7 +9,7 @@ import { habitsActions } from "actions";
 import { useDispatch, useSelector } from 'react-redux';
 import { getTheme } from '@constants';
 
-const DAYS_COUNT = 4;
+const DAYS_COUNT = 5;
 
 export const LastSevenDays = ({ isHabit, habitID, color }) => {
     const day = 86400000,
@@ -70,17 +70,17 @@ const TimeView = styled.View`
     display: flex;
     flex-direction:column;
     align-items: center;
-    margin-right: 10px;
+    margin-right: 3px;
 `
 
 const styles = StyleSheet.create({
     timeWiewInt: {
         minHeight: 55,
-        width: 40,
+        width: 33,
         alignItems: "center",
         justifyContent: "center",
         paddingVertical: 0,
-        paddingHorizontal: 3,
+        paddingHorizontal: 0,
         marginRight: 0
     },
     parentViewInt: {
@@ -91,7 +91,7 @@ const styles = StyleSheet.create({
 
 const T = styled.Text`
     font-size: 14px;
-    font-size: 13.8px;
+    font-size: 12px;
     color: #526880;
     user-select: none;
 `
