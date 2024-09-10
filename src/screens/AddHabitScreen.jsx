@@ -40,6 +40,8 @@ const AddHabitScreen = ({ navigation }) => {
       paddingLeft: 15,
       paddingRight: 10,
       borderRadius: 0,
+      fontSize: 16,
+      color:  getTheme(theme).textColorHighlight,
       border: `1px solid ${getTheme(theme).borderColor}`
     },
     settingsInputEmbeded: {
@@ -118,11 +120,11 @@ const AddHabitScreen = ({ navigation }) => {
         <Label>{t("addt_name")}</Label>
         <View style={styles.combinedInput}>
           <TextInput
-            style={{ ...styles.settingsInput, ...styles.settingsInputEmbeded }}
+            style={[styles.settingsInput, styles.settingsInputEmbeded]}
             onChangeText={(v) => onChangeInput("name", v)}
             value={state.name}
             placeholder={t("addt_name_placeholder")}
-            placeholderTextColor="#949ca1"
+            placeholderTextColor="#9ba2a7"
           />
           <BasePressButton
             onPress={() => setColorPicker(true)}
@@ -170,7 +172,7 @@ const AddHabitScreen = ({ navigation }) => {
           onChangeText={(v) => onChangeInput("notification", v)}
           value={state.notification}
           placeholder={t("addt_notif_placeholder")}
-          placeholderTextColor="#949ca1"
+          placeholderTextColor="#9ba2a7"
         />
 
         <Label style={{ marginBottom: 7 }}>{t("label_reg")}</Label>
@@ -180,7 +182,7 @@ const AddHabitScreen = ({ navigation }) => {
           value={t(state.repeat)} />
 
         <LineItemView pl1 toggle toggleColor={state.color} isEnabled={state.remind} onToggle={(v) => onChangeInput("remind", v)}>
-          <Text style={{ color: getTheme(theme).textColor }}>{t("addt_int_title")}</Text>
+          <Text style={{ fontSize: 16, color: getTheme(theme).textColorHighlight }}>{t("addt_int_title")}</Text>
         </LineItemView>
 
       </View>

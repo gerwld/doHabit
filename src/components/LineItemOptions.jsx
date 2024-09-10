@@ -14,8 +14,8 @@ const LineItemOptions = ({ navTo, title, value, onPress, ...rest }) => {
 
     const content = (
         <LineItemView pl1 rightArrow {...rest}>
-            <Text style={{ flex: 1, color: getTheme(theme).textColor ?? "#000" }}>{title}</Text>
-            <Text style={{ marginRight: 5, marginLeft: 2, color: "#949dad" }}>{value}</Text>
+            <Text style={{ flex: 1, fontSize: 16, color: getTheme(theme).textColorHighlight ?? "#000" }}>{title}</Text>
+            <Text style={{ marginRight: 5, fontSize: 16, marginLeft: 2, color: "#949dad" }}>{value}</Text>
         </LineItemView>
     )
 

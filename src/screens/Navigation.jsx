@@ -53,10 +53,19 @@ export const Navigation = () => {
         <NavigationContainer>
             <Stack.Navigator>
                 <Stack.Screen name="home" component={HomeScreen} options={{ headerShown: false, title: t("home_screen") }} />
-                <Stack.Screen name="tutorial" component={TutorialScreen} options={{ headerShown: false, title: t("tutorial_screen") }} />
                 <Stack.Screen name="habitdetails" component={DetailsHabitScreen} options={{ headerShown: false, title: "Habit Details" }} />
                 {addEditSubdirectories}
                 {settingsSubdirectories}
+                <Stack.Screen
+                    name="tutorial"
+                    component={TutorialScreen}
+                    options={{
+                        headerShown: false,
+                        title: t("tutorial_screen"),
+                        animationTypeForReplace: 'push',
+                        animation: 'fade'
+                    }}
+                />
             </Stack.Navigator>
         </NavigationContainer>
     )

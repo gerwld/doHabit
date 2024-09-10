@@ -9,7 +9,7 @@ import { habitsActions } from "actions";
 import { useDispatch, useSelector } from 'react-redux';
 import { getTheme } from '@constants';
 
-const DAYS_COUNT = 5;
+const DAYS_COUNT = 4;
 
 export const LastSevenDays = ({ isHabit, habitID, color }) => {
     const day = 86400000,
@@ -43,15 +43,15 @@ const isCurrent = (i) => i === (DAYS_COUNT - 1);
                     <Pressable onPress={() => onDayPress(timestamp - (day * e))}>
                         <TimeView style={styles.timeWiewInt} key={uuid.v4()}>
                         {(tmsArr?.filter && tmsArr?.filter(l => l === timestamp - (day * e)).length > 0) 
-                        ? <Icon style={{ pointerEvents: "none" }} type="antdesign" size={21} name="check" color={color ? color : "#5fb1e7"} />
-                        : <Icon style={{ pointerEvents: "none" }} type="antdesign" size={21} name="close" color={getTheme(theme).crossSymb} />}
+                        ? <Icon style={{ pointerEvents: "none" }} type="antdesign" size={24} name="check" color={color ? color : "#5fb1e7"} />
+                        : <Icon style={{ pointerEvents: "none" }} type="antdesign" size={24} name="close" color={getTheme(theme).crossSymb} />}
                         </TimeView>
                     </Pressable>
                 )}
         </ParentView>
     )
     return (
-        <ParentView style={{ marginTop: 7, marginBottom: 7 }}>
+        <ParentView style={{ marginTop: 14, marginBottom: 7 }}>
             {RANGE_ARR
                 .map((e, i) =>
                     <TimeView key={uuid.v4()}>
@@ -76,11 +76,11 @@ const TimeView = styled.View`
 const styles = StyleSheet.create({
     timeWiewInt: {
         minHeight: 55,
-        minWidth: 40,
+        width: 40,
         alignItems: "center",
         justifyContent: "center",
         paddingVertical: 0,
-        paddingHorizontal: 10,
+        paddingHorizontal: 3,
         marginRight: 0
     },
     parentViewInt: {
@@ -90,7 +90,8 @@ const styles = StyleSheet.create({
 
 
 const T = styled.Text`
-    font-size: 12px;
+    font-size: 14px;
+    font-size: 13.8px;
     color: #526880;
     user-select: none;
 `

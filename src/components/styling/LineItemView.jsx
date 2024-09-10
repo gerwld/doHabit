@@ -5,7 +5,7 @@ import styled from 'styled-components/native';
 import { getTheme } from '@constants';
 import { useSelector } from 'react-redux';
 
-const LineItemView = ({ children, rightArrow, toggle, toggleColor, onToggle, isEnabled, pl1 }) => {
+const LineItemView = ({ children, rightArrow, toggle, toggleColor, onToggle, isEnabled, pl1, st }) => {
     const {theme} = useSelector(({app}) => ({theme: app.theme}))
     const LineItemViewItem = styled.View`
 padding: 0;
@@ -22,7 +22,7 @@ border-left-color: transparent;
 border-right-color: transparent;
 `
     return (
-        <LineItemViewItem style={{ paddingLeft: pl1 ? 18 : 0, paddingRight: pl1 ? 6 : 0 }}>
+        <LineItemViewItem style={{ paddingLeft: pl1 ? 18 : 0, paddingRight: pl1 ? 6 : 0, ...st }}>
             {children}
             {rightArrow ? <Icon style={{ marginRight: 10 }} type="entypo" size={21} name="chevron-thin-right" color="#ccd1db" /> : ""}
             {toggle ?

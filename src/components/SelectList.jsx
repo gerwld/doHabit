@@ -13,10 +13,16 @@ const SelectList = ({ data, title, currentValue, setValue, color, theme, without
             justifyContent: "space-between",
             alignItems: "center",
             backgroundColor: getTheme(theme).bgHighlight,
-            border: `1px solid ${getTheme(theme).borderColor}`,
-            minHeight: 48,
+            
+            borderWidth: 1,
+            borderColor: `${getTheme(theme).borderColor}`,
+            borderLeftColor: "transparent",
+            borderRightColor: "transparent",
+            minHeight: 54,
+            marginBottom: -1
         },
         text: {
+            fontSize: 16,
             lineHeight: 48,
             paddingLeft: 18,
             paddingRight: 10,

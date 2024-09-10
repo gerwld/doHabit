@@ -11,11 +11,11 @@ import { getTheme } from '@constants';
 export const HomeTask = ({ item, color, theme }) => {
   const navigation = useNavigation();
   return (
-    <LineItemView>
+    <LineItemView st={{height: 63}}>
       <Pressable style={{flex: 1}} onPress={() => navigation.navigate("habitdetails", item)} >
         <PressArea>
-          <CircularProgress progress={20} size={25} strokeWidth={4} strColor={getTheme(theme).crossSymbL} color={item?.color ? item.color : "#7fcbfd"} />
-          <Text style={{ flex: 1, marginLeft: 10, marginRight: 5, color: color ?? "#50677a" }}>{item.name}</Text>
+          <CircularProgress progress={20} size={28} strokeWidth={4} strColor={getTheme(theme).crossSymbL} color={item?.color ? item.color : "#7fcbfd"} />
+          <Text style={{ fontSize: 16, flex: 1, marginLeft: 10, marginRight: 5, color: color ?? "#50677a" }}>{item.name}</Text>
         </PressArea>
       </Pressable>
       <LastSevenDays {...{ isHabit: true, habitID: item.id, color: item.color }} />

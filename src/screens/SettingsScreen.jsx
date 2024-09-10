@@ -28,7 +28,8 @@ const SettingsScreen = ({ navigation }) => {
       flex: 1
     },
     t: {
-      color: getTheme(theme).textColor,
+      fontSize: 16,
+      color: getTheme(theme).textColorHighlight,
     },
     copyright: {
       alignItems: "center",
@@ -69,7 +70,7 @@ const SettingsScreen = ({ navigation }) => {
         <GapView />
         <GapView />
         <View style={{ flex: 1, justifyContent: "flex-start", height: "100%", minHeight: 390 }}>
-          <Pressable onPress={() => navigation.navigate("tutorial")}>
+          <Pressable onPress={() => navigation.replace("tutorial")}>
             <LineItemView pl1 rightArrow>
               <Text style={styles.t}>{t("st_tutorial")}</Text>
             </LineItemView>
