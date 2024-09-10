@@ -15,10 +15,12 @@ module.exports = function (api) {
             hocs: './src/hocs',
             hooks: './src/hooks',
             styles: './src/styles',
+            "@polyfils": './src/polyfils',
             "@constants": './src/constants.js',
           },
         },
       ],
+    'react-native-reanimated/plugin',
     ],
   }
 }
