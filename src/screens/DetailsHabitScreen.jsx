@@ -22,7 +22,7 @@ const DetailsHabitScreen = ({ route, navigation }) => {
     setItem(route.params);
   }, [route.params])
 
-  const theme = route.params.theme
+  const theme = route?.params?.theme
   const headerStyles = useHeaderStyles(theme);
 
   const onPressDeleteHabit = () => {
