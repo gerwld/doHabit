@@ -6,7 +6,7 @@ import { appActions, habitsActions } from "actions";
 const useInitializeApp = () => {
     const d = useDispatch();
 
-    const loadPart = async () => {
+    const loadBase = async () => {
         
         try {
             const storedSet = await AsyncStorage.getItem('@settings');
@@ -14,7 +14,7 @@ const useInitializeApp = () => {
                 d(appActions.initializeApp(JSON.parse(storedSet)));
             }
         } catch (e) {
-            console.error('Failed to load habits from storage', e);
+            console.error('Failed to load settings from storage', e);
         }
     };
 
@@ -31,7 +31,7 @@ const useInitializeApp = () => {
     };
 
     useEffect(() => {
-        loadPart();
+        loadBase();
         loadHabits();
     }, []);
 
