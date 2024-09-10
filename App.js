@@ -7,6 +7,7 @@ import withTranslation from 'hocs/withTranslation';
 import store from '@redux/store';
 import { useInitializeApp } from 'hooks';
 import i18n from './i18n';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
 
 function AppWithProvider({ children }) {
@@ -25,10 +26,12 @@ function AppWithProvider({ children }) {
 export default withTranslation(function RootComponent() {
   return (
     <Provider store={store}>
+      <GestureHandlerRootView style={{ flex: 1 }}>
       <AppWithProvider>
         <Navigation />
         <StatusBar backgroundColor='transparent' translucent={true} />
       </AppWithProvider>
+      </GestureHandlerRootView>
     </Provider>
   )
 })
