@@ -11,7 +11,7 @@ export const Header = ({ navigation, title, leftChild, rightChild }) => {
                 leftChild ? leftChild :
                 <TouchableOpacity onPress={() => navigation.navigate('settings')}>
                     <View style={styles.headerButton}>
-                        <Icon type="antdesign" size={25} name="setting" color="white" />
+                        <Icon type="antdesign" size={31} name="setting" color="white" />
                     </View>
                 </TouchableOpacity>
             }
@@ -19,7 +19,7 @@ export const Header = ({ navigation, title, leftChild, rightChild }) => {
                 rightChild ? rightChild :
                 <TouchableOpacity onPress={() => navigation.navigate('addhabit')}>
                     <View style={styles.headerButton}>
-                        <Icon type="antdesign" size={24} name="plus" color="white" />
+                        <Icon type="antdesign" size={29} name="plus" color="white" />
                     </View>
                 </TouchableOpacity>
             }
@@ -64,7 +64,7 @@ const styles = StyleSheet.create({
         minHeight: 55,
         lineHeight: 55,
         color: "white",
-        fontSize: 19,
+        fontSize: 21,
         fontWeight: 'bold',
         alignItems: "center",
         justifyContent: "center",
