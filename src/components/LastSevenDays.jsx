@@ -2,12 +2,12 @@ import React from 'react'
 import moment from 'moment';
 import styled from 'styled-components/native';
 import { Icon } from '@rneui/base';
-import uuid from 'react-native-uuid';
 import { Pressable, StyleSheet } from 'react-native';
 
 import { habitsActions } from "actions";
 import { useDispatch, useSelector } from 'react-redux';
 import { getTheme } from '@constants';
+import { appSelectors, habitSelectors } from '@redux';
 
 const DAYS_COUNT = 5;
 
@@ -19,11 +19,8 @@ const isCurrent = (i) => i === (DAYS_COUNT - 1);
 
 
     const d = useDispatch();
-    const {items, theme} = useSelector(({habits, app}) => ({
-        items: habits.items,
-        theme: app.theme
-    }))
-    const item = items.filter(e => e.id === habitID)[0];
+    const item = useSelector(state => habitSelectors.selectItemById(state, habitID));
+    const theme = useSelector(appSelectors.selectAppTheme);
     const tmsArr = item?.datesArray;
  
 
@@ -41,7 +38,7 @@ const isCurrent = (i) => i === (DAYS_COUNT - 1);
             {RANGE_ARR
                 .map((e, i) =>
                     <Pressable key={e + "__dayid"} onPress={() => onDayPress(timestamp - (day * e))}>
-                        <TimeView style={styles.timeWiewInt} key={uuid.v4()}>
+                        <TimeView style={styles.timeWiewInt}>
                         {(tmsArr?.filter && tmsArr?.filter(l => l === timestamp - (day * e)).length > 0) 
                         ? <Icon style={{ pointerEvents: "none" }} type="antdesign" size={24} name="check" color={color ? color : "#5fb1e7"} />
                         : <Icon style={{ pointerEvents: "none" }} type="antdesign" size={24} name="close" color={getTheme(theme).crossSymb} />}
@@ -53,13 +50,15 @@ const isCurrent = (i) => i === (DAYS_COUNT - 1);
     return (
         <ParentView style={{ marginTop: 14, marginBottom: 7 }}>
             {RANGE_ARR
-                .map((e, i) =>
-                    <TimeView key={uuid.v4()}>
-                        {moment(timestamp - (day * e))
+                .map((e, i) => {
+                    const dayWithoutTime = timestamp - (day * e);
+                    return <TimeView key={`key_dayitem_${dayWithoutTime}`}>
+                        {moment(dayWithoutTime)
                             .format("MMM Do")
                             .split(" ")
-                            .map(v => <T key={uuid.v4()} style={isCurrent(i) ? { color: "#5fb1e7" } : null}>{v}</T>)}
-                    </TimeView>)}
+                            .map((v, i) => <T key={`key_dayitem${dayWithoutTime}__part${i}`} style={isCurrent(i) ? { color: "#5fb1e7" } : null}>{v}</T>)}
+                    </TimeView>}
+                    )}
         </ParentView>
     )
 }

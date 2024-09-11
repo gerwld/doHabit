@@ -1,5 +1,5 @@
-import { View, Text, Button, SafeAreaView, Dimensions } from 'react-native'
-import React, { useEffect, useState } from 'react'
+import { View, Button, SafeAreaView, Dimensions } from 'react-native'
+import React, { useState } from 'react'
 import { Gesture, GestureDetector, GestureHandlerRootView } from 'react-native-gesture-handler';
 import { runOnJS, useAnimatedStyle, withTiming } from 'react-native-reanimated';
 import Animated, { useSharedValue } from 'react-native-reanimated';
@@ -68,7 +68,8 @@ const ScrollPages = ({ children, navigateToHome = true }) => {
         transform: [{ translateX: x.value }]
     }))
 
-    const navBlock = RANGE_ARR.map(e => <PageButton
+    const navBlock = RANGE_ARR.map((e, i) => <PageButton
+        key={`key_scrollpages_nav_${i}`}
         children={<PageButtonIc
             style={{ backgroundColor: e == pagevis ? "#2296f3" : "#8080804f" }}
         />}

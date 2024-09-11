@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, TouchableOpacity, StyleSheet, Text } from 'react-native'
+import { View, Pressable, StyleSheet, Text } from 'react-native'
 import { Header as HeaderRNE, Icon } from '@rneui/themed';
 import { LinearGradient } from 'expo-linear-gradient';
 
@@ -9,19 +9,19 @@ export const Header = ({ navigation, title, leftChild, rightChild }) => {
             containerStyle={styles.header}
             leftComponent={
                 leftChild ? leftChild :
-                <TouchableOpacity onPress={() => navigation.navigate('settings')}>
+                <Pressable onPress={() => navigation.navigate('settings')}>
                     <View style={styles.headerButton}>
                         <Icon type="antdesign" size={31} name="setting" color="white" />
                     </View>
-                </TouchableOpacity>
+                </Pressable>
             }
             rightComponent={
                 rightChild ? rightChild :
-                <TouchableOpacity onPress={() => navigation.navigate('addhabit')}>
+                <Pressable onPress={() => navigation.navigate('addhabit')}>
                     <View style={styles.headerButton}>
                         <Icon type="antdesign" size={29} name="plus" color="white" />
                     </View>
-                </TouchableOpacity>
+                </Pressable>
             }
             centerComponent={<Text style={styles.headerTitle}>{title ? title : "Habitty"}</Text>}
             ViewComponent={LinearGradient} // Required for gradient

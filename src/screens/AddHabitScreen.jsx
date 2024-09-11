@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, Text, StyleSheet, TouchableOpacity, TextInput } from 'react-native'
+import { View, Text, StyleSheet, Pressable, TextInput } from 'react-native'
 import { Header as HeaderRNE } from '@rneui/themed';
 import styled from 'styled-components/native';
 import { useTranslation } from 'react-i18next';
@@ -12,12 +12,13 @@ import { BaseView, LineItemView, Modal, BasePressButton, LineItemOptions } from 
 import { HABIT_COLORS, getRandomItem, getTheme } from '@constants';
 import { habitsActions } from "actions";
 import { useHeaderStyles } from 'hooks';
+import { appSelectors } from '@redux';
 
 
 const AddHabitScreen = ({ navigation }) => {
   const { t } = useTranslation();
   const d = useDispatch();
-  const { theme } = useSelector(({ app }) => ({ theme: app.theme }))
+  const theme = useSelector(appSelectors.selectAppTheme);
   const headerStyles = useHeaderStyles(theme);
 
 
@@ -110,14 +111,14 @@ const AddHabitScreen = ({ navigation }) => {
         containerStyle={headerStyles.header}
         style={{ height: 60 }}
         leftComponent={
-          <TouchableOpacity onPress={() => navigation.navigate('home')}>
+          <Pressable onPress={() => navigation.navigate('home')}>
             <Text numberOfLines={1} ellipsizeMode="clip" style={headerStyles.headerButton}>{t("act_cancel")}</Text>
-          </TouchableOpacity>
+          </Pressable>
         }
         rightComponent={
-          <TouchableOpacity onPress={onSubmit}>
+          <Pressable onPress={onSubmit}>
             <Text numberOfLines={1} ellipsizeMode="clip" style={{ ...headerStyles.headerButton, ...headerStyles.headerButtonRight }}>{t("act_save")}</Text>
-          </TouchableOpacity>
+          </Pressable>
         }
         centerComponent={<Text style={headerStyles.headerTitle}>{t("addt_screen")}</Text>}
         backgroundColor={state.color}
@@ -158,6 +159,7 @@ const AddHabitScreen = ({ navigation }) => {
             <ColorPicker>
               {HABIT_COLORS.map(color =>
                 <BasePressButton
+                  key={`key_pressbtn_${color}`}
                   onPress={() => { onChangeInput("color", color); setColorPicker(false); }}
                   styleObj={{
                     width: 74,

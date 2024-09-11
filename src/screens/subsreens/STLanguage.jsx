@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, Text, LogBox, TouchableOpacity } from 'react-native'
+import { View, Text, LogBox, Pressable } from 'react-native'
 import { Header as HeaderRNE } from '@rneui/themed';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -9,6 +9,7 @@ import { LANG_MASKS, getTheme } from '@constants';
 import { useTranslation } from 'react-i18next';
 import { appActions } from "actions"
 import { useHeaderStyles } from 'hooks';
+import { appSelectors } from '@redux';
 
 LogBox.ignoreLogs([
     'Non-serializable values were found in the navigation state',
@@ -17,7 +18,7 @@ LogBox.ignoreLogs([
 const STLanguage = ({ route, navigation }) => {
     const { t } = useTranslation();
     const d = useDispatch();
-    const { lang, theme } = useSelector(({ app }) => ({ lang: app.lang, theme: app.theme }));
+    const { lang, theme } = useSelector(appSelectors.selectAppThemeAndLang);
     const [state, setState] = React.useState({
         lang,
         ...route.params.state
@@ -55,9 +56,9 @@ const STLanguage = ({ route, navigation }) => {
                 containerStyle={headerStyles.header}
                 style={{ height: 60 }}
                 leftComponent={
-                    <TouchableOpacity onPress={handleGoBack}>
+                    <Pressable onPress={handleGoBack}>
                         <Text style={headerStyles.headerButton}>{t("act_back")}</Text>
-                    </TouchableOpacity>
+                    </Pressable>
                 }
 
                 centerComponent={<Text style={headerStyles.headerTitle}>{t("st_theme")}</Text>}

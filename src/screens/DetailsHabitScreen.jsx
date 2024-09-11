@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, Text, TouchableOpacity, Button } from 'react-native'
+import { View, Text, Pressable, Button } from 'react-native'
 import { Header as HeaderRNE } from '@rneui/themed';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
@@ -46,7 +46,7 @@ const DetailsHabitScreen = ({ route, navigation }) => {
       ],
       {
         cancelable: true,
-        onDismiss: () => console.log("ok")
+        onDismiss: () => {}
       })
   }
 
@@ -60,14 +60,14 @@ const DetailsHabitScreen = ({ route, navigation }) => {
         containerStyle={headerStyles.header}
         style={{ height: 60 }}
         leftComponent={
-          <TouchableOpacity  onPress={() => navigation.navigate('home')}>
+          <Pressable  onPress={() => navigation.navigate('home')}>
               <Text style={headerStyles.headerButton}>{t("act_cancel")}</Text>
-          </TouchableOpacity>
+          </Pressable>
         }
         rightComponent={
-          <TouchableOpacity onPress={() => navigation.navigate("edithabit", item)}>
+          <Pressable onPress={() => navigation.navigate("edithabit", item)}>
               <Text style={{...headerStyles.headerButton, ...headerStyles.headerButtonRight}}>Edit</Text>
-          </TouchableOpacity>
+          </Pressable>
         }
         centerComponent={<Text numberOfLines={1} ellipsizeMode='tail' style={headerStyles.headerTitle}>{item?.name}</Text>}
         backgroundColor={item?.color ? item.color : "#5fb1e7"}

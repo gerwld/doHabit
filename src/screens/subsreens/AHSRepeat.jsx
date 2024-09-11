@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, Text, TouchableOpacity, LogBox } from 'react-native'
+import { View, Text, Pressable, LogBox } from 'react-native'
 import { Header as HeaderRNE } from '@rneui/themed';
 import { useTranslation } from 'react-i18next';
 
@@ -57,9 +57,9 @@ const AHSRepeat = ({ route, navigation }) => {
         containerStyle={headerStyles.header}
         style={{ height: 60 }}
         leftComponent={
-          <TouchableOpacity onPress={handleGoBack}>
+          <Pressable onPress={handleGoBack}>
             <Text style={headerStyles.headerButton}>{t("act_back")}</Text>
-          </TouchableOpacity>
+          </Pressable>
         }
 
         centerComponent={<Text style={headerStyles.headerTitle}>{t("addt_int_title")}</Text>}
