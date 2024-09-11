@@ -41,7 +41,7 @@ const SelectList = ({ data, title, currentValue, setValue, color, theme, without
                     <Text style={select.checkmark}>{currentValue === value ?
 
                         <Icon style={{ pointerEvents: "none" }} type="antdesign" size={24} name="check" color={color ? color : "#5fb1e7"} />
-                        : ""}</Text>
+                        : null}</Text>
                 </View>
             </Pressable>
         )

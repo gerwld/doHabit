@@ -22,7 +22,6 @@ export const useHeaderStyles = (theme, isWhite = false) => {
       paddingHorizontal: 0,
       border: "none",
       flexDirection: "row",
-      borderBottomColor: themeVars.borderColor,
     },
     headerTitle: {
       maxWidth: 260,

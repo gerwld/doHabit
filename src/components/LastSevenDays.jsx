@@ -40,7 +40,7 @@ const isCurrent = (i) => i === (DAYS_COUNT - 1);
         <ParentView style={styles.parentViewInt}>
             {RANGE_ARR
                 .map((e, i) =>
-                    <Pressable onPress={() => onDayPress(timestamp - (day * e))}>
+                    <Pressable key={e + "__dayid"} onPress={() => onDayPress(timestamp - (day * e))}>
                         <TimeView style={styles.timeWiewInt} key={uuid.v4()}>
                         {(tmsArr?.filter && tmsArr?.filter(l => l === timestamp - (day * e)).length > 0) 
                         ? <Icon style={{ pointerEvents: "none" }} type="antdesign" size={24} name="check" color={color ? color : "#5fb1e7"} />
@@ -58,7 +58,7 @@ const isCurrent = (i) => i === (DAYS_COUNT - 1);
                         {moment(timestamp - (day * e))
                             .format("MMM Do")
                             .split(" ")
-                            .map(v => <T key={uuid.v4()} style={isCurrent(i) ? { color: "#5fb1e7" } : ""}>{v}</T>)}
+                            .map(v => <T key={uuid.v4()} style={isCurrent(i) ? { color: "#5fb1e7" } : null}>{v}</T>)}
                     </TimeView>)}
         </ParentView>
     )

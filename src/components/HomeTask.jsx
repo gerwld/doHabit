@@ -11,7 +11,7 @@ import { getTheme } from '@constants';
 export const HomeTask = ({ item, color, theme }) => {
   const navigation = useNavigation();
   return (
-    <LineItemView st={{height: 63}}>
+<LineItemView st={{height: 63}}>
       <Pressable style={{flex: 1}} onPress={() => navigation.navigate("habitdetails", item)} >
         <PressArea>
           <CircularProgress progress={20} size={27} strokeWidth={4} strColor={getTheme(theme).crossSymbL} color={item?.color ? item.color : "#7fcbfd"} />
