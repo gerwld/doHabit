@@ -8,10 +8,19 @@ import store from '@redux/store';
 import { useInitializeApp } from 'hooks';
 import i18n from './i18n';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import { createSelector } from 'reselect';
+import { appSelectors } from '@redux';
 
 
 function AppWithProvider({ children }) {
-  const { lang, theme } = useSelector(({ app }) => ({ lang: app.lang, theme: app.theme }));
+  
+  // const {lang, theme} = createSelector(
+  //   [selectLang, appSelectors.selectAppTheme],
+  //    (lang, theme) => ({
+  //     lang, theme
+  // }))
+
+  const lang = useSelector(appSelectors.selectAppLang)
 
   React.useEffect(() => {
     i18n.locale = lang;

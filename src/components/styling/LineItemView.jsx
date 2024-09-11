@@ -4,9 +4,10 @@ import { Platform, Switch } from 'react-native';
 import styled from 'styled-components/native';
 import { getTheme } from '@constants';
 import { useSelector } from 'react-redux';
+import { appSelectors } from '@redux';
 
 const LineItemView = ({ children, rightArrow, toggle, toggleColor, onToggle, isEnabled, pl1, st }) => {
-    const {theme} = useSelector(({app}) => ({theme: app.theme}))
+    const theme = useSelector(appSelectors.selectAppTheme);
     const LineItemViewItem = styled.View`
 padding: 0;
 align-items:center;

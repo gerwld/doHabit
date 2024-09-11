@@ -1,16 +1,16 @@
+import React from 'react'
 import { Pressable, Text } from 'react-native'
-import React, { Component } from 'react'
 import LineItemView from './styling/LineItemView'
 import { useNavigation } from '@react-navigation/native';
 import { useSelector } from 'react-redux';
 import { getTheme } from '@constants';
+import { appSelectors } from '@redux';
 
 
 
 const LineItemOptions = ({ navTo, title, value, onPress, ...rest }) => {
     const navigation = useNavigation();
-    const { theme } = useSelector(({ app }) => ({
-        theme: app?.theme}));
+    const theme = useSelector(appSelectors.selectAppTheme);
 
     const content = (
         <LineItemView pl1 rightArrow {...rest}>

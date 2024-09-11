@@ -12,16 +12,14 @@ import STLanguage from "./subsreens/STLanguage";
 import STTheme from "./subsreens/STTheme";
 import { useSelector } from "react-redux";
 import { getTheme } from "@constants";
+import { appSelectors } from "@redux";
 
 
 const Stack = createNativeStackNavigator();
 
 export const Navigation = () => {
     const { t } = useTranslation();
-    const { theme } = useSelector(({ app }) => ({ theme: app.theme }))
-
-    console.log(theme);
-
+    const theme = useSelector(appSelectors.selectAppTheme);
 
     const navTheme = DefaultTheme;
     navTheme.colors = {
@@ -53,10 +51,10 @@ export const Navigation = () => {
         <NavigationContainer>
             <Stack.Navigator>
                 <Stack.Screen name="home" component={HomeScreen} options={{ headerShown: false, title: t("home_screen") }} />
-                {/* <Stack.Screen name="habitdetails" component={DetailsHabitScreen} options={{ headerShown: false, title: "Habit Details" }} /> */}
-                {/* {addEditSubdirectories} */}
-                {/* {settingsSubdirectories} */}
-                {/* <Stack.Screen
+                <Stack.Screen name="habitdetails" component={DetailsHabitScreen} options={{ headerShown: false, title: "Habit Details" }} />
+                {addEditSubdirectories}
+                {settingsSubdirectories}
+                <Stack.Screen
                     name="tutorial"
                     component={TutorialScreen}
                     options={{
@@ -65,7 +63,7 @@ export const Navigation = () => {
                         animationTypeForReplace: 'push',
                         animation: 'fade'
                     }}
-                /> */}
+                />
             </Stack.Navigator>
         </NavigationContainer>
     )
