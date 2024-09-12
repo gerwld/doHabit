@@ -1,8 +1,8 @@
 import React from 'react'
-import { View, Text, Pressable, Button } from 'react-native'
-import { Header as HeaderRNE } from '@rneui/themed';
+import { View, Text, Pressable, Button, StyleSheet, ScrollView } from 'react-native'
+import { Header as HeaderRNE, Icon } from '@rneui/themed';
 import { useTranslation } from 'react-i18next';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { BaseView } from '@components';
 import alert from '../polyfils/alert';
@@ -10,11 +10,15 @@ import { habitsActions } from "actions";
 import { REPEAT_MASKS } from '@constants';
 import { useHeaderStyles } from 'hooks';
 import { Label, InfoBar, InfoBarItem } from "styles/crudtask"
+import { appSelectors } from '@redux';
+import { getTheme } from '../constants';
+import { CircularProgress, LineItemView } from '../components';
 
 
 const DetailsHabitScreen = ({ route, navigation }) => {
   const { t } = useTranslation();
   const d = useDispatch();
+  const theme = useSelector(appSelectors.selectAppTheme);
 
   const [item, setItem] = React.useState(null);
 
@@ -22,7 +26,6 @@ const DetailsHabitScreen = ({ route, navigation }) => {
     setItem(route.params);
   }, [route.params])
 
-  const theme = route?.params?.theme
   const headerStyles = useHeaderStyles(theme);
 
   const onPressDeleteHabit = () => {
@@ -50,7 +53,23 @@ const DetailsHabitScreen = ({ route, navigation }) => {
       })
   }
 
-
+  const styles = StyleSheet.create({
+    t: {
+      color: getTheme(theme).textColorHighlight
+    },
+    i: {
+      color: getTheme(theme).textColor
+    },
+    l: {
+      marginLeft: 15
+    },
+    item: {
+      justifyContent: "space-around", 
+      height: 180,
+      marginTop: 5,
+      marginBottom: 10
+    }
+  })
 
 
   return (
@@ -74,22 +93,45 @@ const DetailsHabitScreen = ({ route, navigation }) => {
       />
 
 
-      <View style={{ paddingTop: 14, flex: 1 }}>
+      <ScrollView style={{ paddingTop: 14, flex: 1 }}>
 
-        <InfoBar>
+      <LineItemView st={{justifyContent: "space-around", paddingVertical: 10}}>
           <InfoBarItem>
-            <Text>{item?.repeat ? REPEAT_MASKS[item.repeat] : "-"}</Text>
+            <Icon type="feather" size={24} name="repeat" color={styles.i.color} />
+            <Text style={[styles.t, styles.l]}>{item?.repeat ? REPEAT_MASKS[item.repeat] : "-"}</Text>
           </InfoBarItem>
           <InfoBarItem>
-            <Text>--:--</Text>
+          <Icon type="feather" size={24} name="clock" color={styles.i.color} />
+            <Text style={[styles.t, styles.l]}>--:--</Text>
           </InfoBarItem>
-        </InfoBar>
+          </LineItemView>
 
 
 
         <Label>{t("label_ov")}</Label>
+        <LineItemView st={{...styles.item}}>
+        <CircularProgress progress={20} size={55} strokeWidth={8} strColor={getTheme(theme).crossSymbL} color={item?.color ? item.color : "#7fcbfd"} />
+          <Text style={styles.t}>23423</Text>
+          <Text style={styles.t}>23423</Text>
+          <Text style={styles.t}>23423</Text>
+        </LineItemView>
+
+
         <Label>{t("label_hits")}</Label>
+        <LineItemView st={{...styles.item}}>
+          <Text style={styles.t}>23423</Text>
+          <Text style={styles.t}>23423</Text>
+          <Text style={styles.t}>23423</Text>
+        </LineItemView>
+
+
         <Label>{t("label_stre")}</Label>
+        <LineItemView st={{...styles.item, marginBottom: 20}}>
+          <Text style={styles.t}>23423</Text>
+          <Text style={styles.t}>23423</Text>
+          <Text style={styles.t}>23423</Text>
+        </LineItemView>
+
 
         <InfoBar>
           <Button
@@ -98,7 +140,7 @@ const DetailsHabitScreen = ({ route, navigation }) => {
           />
         </InfoBar>
 
-      </View>
+      </ScrollView>
     </BaseView>
   )
 }
