@@ -13,20 +13,25 @@
     },
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.anonymous.habitty-habits-tracker"
+      "bundleIdentifier": "com.weblxapplications.habitty-habits-tracker"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.anonymous.habittyhabitstracker"
+      "package": "com.weblxapplications.habittyhabitstracker"
     },
     "web": {
       "favicon": "./assets/favicon.png"
     },
     "plugins": [
       "expo-localization"
-    ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "2b4e9c1b-4fd7-446f-8dda-f82b4722d97e"
+      }
+    }
   }
 }

@@ -48,6 +48,7 @@ export const useHeaderStyles = (theme, isWhite = false) => {
       height: 55,
       lineHeight: 55,
       paddingLeft: 14,
+      userSelect: "none",
       color: isWhite ? themeVars.textColorHighlight : "#ffffff",
     },
     headerButtonRight: {
