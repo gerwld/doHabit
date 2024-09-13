@@ -26,7 +26,7 @@ function HomeScreen({ navigation }) {
   );
 }
 
-const LatestTasks = ({ theme }) => {
+const LatestTasks = React.memo(({ theme }) => {
   const items = useSelector(habitSelectors.selectItems)
 
   const renderItem = useCallback(
@@ -37,7 +37,7 @@ const LatestTasks = ({ theme }) => {
   );
 
   const keyExtractor = useCallback(
-    (item) => item.id.toString(), // assuming items have an 'id'
+    (item) => item.id.toString(), 
     []
   );
 
@@ -56,7 +56,7 @@ const LatestTasks = ({ theme }) => {
       </>
     );
   }
-};
+});
 
 
-export default HomeScreen
+export default React.memo(HomeScreen)

@@ -3,12 +3,18 @@ import { useDispatch } from 'react-redux';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { appActions, habitsActions } from "actions";
 import i18n from '../../i18n';
+import { LogBox } from 'react-native';
 
+LogBox.ignoreLogs([
+    'Non-serializable values were found in the navigation state',
+]);
+
+// hook initializer
 const useInitializeApp = (lang) => {
     const d = useDispatch();
 
+    // STEP 1: assign parts as functions to get state portions 
     const loadBase = async () => {
-
         try {
             const storedSet = await AsyncStorage.getItem('@settings');
             if (storedSet !== null) {
@@ -31,11 +37,14 @@ const useInitializeApp = (lang) => {
         d({ type: "SET_HABITS_INIT", payload: true });
     };
 
+    // STEP 2: call those functions
     useEffect(() => {
         loadBase();
         loadHabits();
     }, []);
 
+
+    // STEP 3: set i18n in with provider part of App
     useEffect(() => {
         i18n.locale = lang;
         i18n.changeLanguage(lang);

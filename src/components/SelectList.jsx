@@ -1,10 +1,11 @@
+import React, { useCallback } from "react"
 import { useTranslation } from "react-i18next"
 import { Text, View, Pressable, FlatList, StyleSheet } from "react-native"
 import { getTheme } from "@constants"
 import { Label } from "styles/crudtask"
 import { Icon } from "@rneui/themed"
 
-const SelectList = ({ data, title, currentValue, setValue, color, theme, withoutTranslate }) => {
+const SelectList = React.memo(({ data, title, currentValue, setValue, color, theme, withoutTranslate }) => {
     const { t } = useTranslation()
 
     const select = StyleSheet.create({
@@ -33,6 +34,10 @@ const SelectList = ({ data, title, currentValue, setValue, color, theme, without
         }
     })
 
+    const keyExtractor = useCallback((item) => {
+        return item.value
+    })
+
     const ListItem = ({ value, name, onPress, color }) => {
         return (
             <Pressable onPress={onPress}>
@@ -53,12 +58,13 @@ const SelectList = ({ data, title, currentValue, setValue, color, theme, without
 
             <FlatList
                 contentContainerStyle={{ paddingBottom: 10 }}
+                keyExtractor={keyExtractor}
                 data={data}
                 renderItem={({ item }) => <ListItem {...{ ...item, color, onPress: () => setValue(item.value) }} />
                 }
             />
         </>
     )
-}
+});
 
 export default SelectList;

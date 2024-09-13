@@ -3,7 +3,7 @@ import { View, Pressable, StyleSheet, Text } from 'react-native'
 import { Header as HeaderRNE, Icon } from '@rneui/themed';
 import { LinearGradient } from 'expo-linear-gradient';
 
-export const Header = ({ navigation, title, leftChild, rightChild }) => {
+export const Header = React.memo(({ navigation, title, leftChild, rightChild }) => {
     return (
         <HeaderRNE
             containerStyle={styles.header}
@@ -32,7 +32,7 @@ export const Header = ({ navigation, title, leftChild, rightChild }) => {
             }}
         />
     )
-}
+});
 
 const styles = StyleSheet.create({
     heading: {

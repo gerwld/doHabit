@@ -1,38 +1,24 @@
-import React from 'react'
-import { View, Text, Pressable, LogBox } from 'react-native'
-import { Header as HeaderRNE } from '@rneui/themed';
+import React, { useCallback } from 'react'
+import { View } from 'react-native'
 import { useTranslation } from 'react-i18next';
 
-import { BaseView, SelectList } from '@components';
+import { BaseView, SelectList, SettingsHeader } from '@components';
 import { REPEAT_MASKS } from '@constants';
-import { useHeaderStyles } from 'hooks';
-
-LogBox.ignoreLogs([
-  'Non-serializable values were found in the navigation state',
-]);
-
 
 const AHSRepeat = ({ route, navigation }) => {
   const { t } = useTranslation();
-  const headerStyles = useHeaderStyles(route.params.theme);
 
   const [state, setState] = React.useState({
     ...route.params.state
   });
-
   const theme = route.params.theme
+  
 
-  const onChangeInput = (name, value) => {
+  const onChangeInput = useCallback((name, value) => {
     if (name && value !== undefined) {
       setState({ ...state, [name]: value })
     }
-  }
-
-  const handleGoBack = () => {
-    // Pass data back to ScreenA using the onGoBack callback
-    route.params.onGoBack({ data: { ...state } });
-    navigation.goBack();
-  };
+  }, [])
 
   React.useEffect(() => {
     const unsubscribe = navigation.addListener('beforeRemove', (e) => {
@@ -53,17 +39,11 @@ const AHSRepeat = ({ route, navigation }) => {
   return (
 
     <BaseView>
-      <HeaderRNE
-        containerStyle={headerStyles.header}
-        style={{ height: 60 }}
-        leftComponent={
-          <Pressable onPress={handleGoBack}>
-            <Text style={headerStyles.headerButton}>{t("act_back")}</Text>
-          </Pressable>
-        }
-
-        centerComponent={<Text style={headerStyles.headerTitle}>{t("addt_int_title")}</Text>}
-        backgroundColor={state.color}
+      <SettingsHeader
+        bgColor={state.color}
+        navigation={navigation}
+        theme={theme}
+        title={t("addt_int_title")}
       />
 
       <View style={{ paddingTop: 14, flex: 1 }}>

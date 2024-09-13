@@ -1,28 +1,18 @@
-import React from 'react'
+import React, { useCallback } from 'react'
 import { useSelector } from 'react-redux';
 import { View, Text, ScrollView, StyleSheet, Pressable } from 'react-native'
 import { useTranslation } from 'react-i18next';
-import { Header as HeaderRNE } from '@rneui/themed';
 
 import { LineItemView, GapView, LineItemOptions } from '@components'
 import { LANG_MASKS, getTheme, getThemeStatusBar } from '@constants';
-import { useHeaderStyles } from 'hooks';
 import { StatusBar } from 'react-native';
 import { appSelectors } from '@redux';
+import SettingsHeader from '../components/header/SettingsHeader';
 
 
 const SettingsScreen = ({ navigation }) => {
   const { t } = useTranslation();
-  // const { theme, lang } = useSelector(({ app }) => ({
-  //   theme: app?.theme,
-  //   lang: app?.lang
-  // }))
-
   const { theme, lang } = useSelector(appSelectors.selectAppThemeAndLang)
-
-
-
-  const headerStyles = useHeaderStyles(theme, isWhite = true);
 
   const styles = StyleSheet.create({
     scrollView: {
@@ -30,9 +20,7 @@ const SettingsScreen = ({ navigation }) => {
       height: "max-height"
     },
     scrollViewContent: {
-      // flex: 1,
       backgroundColor: getTheme(theme).background,
-      //  height: "80%"
     },
     t: {
       fontSize: 16,
@@ -55,27 +43,17 @@ const SettingsScreen = ({ navigation }) => {
     }
   })
 
-  const navigateToPage = (path) => {
-    navigation.navigate(path, {
-      // onGoBack: ({ data }) => {
-      //   // Callback function to handle data from ScreenB
-      //   // setState(data);
-      // },
-    });
-  }
+  const navigateToPage = useCallback((path) => {
+    navigation.navigate(path, {});
+  });
 
 
   return (
     <View style={{ flex: 1, backgroundColor: getTheme(theme).background }}>
-      <HeaderRNE
-        containerStyle={headerStyles.header}
-        leftComponent={
-          <Pressable onPress={() => navigation.navigate('home')}>
-            <Text style={headerStyles.headerButton}>{t("act_back")}</Text>
-          </Pressable>
-        }
-        centerComponent={<Text style={headerStyles.headerTitle}>{t("st_screen")}</Text>}
-        backgroundColor={getTheme(theme).bgHighlight}
+      <SettingsHeader
+        navigation={navigation}
+        theme={theme}
+        title={t("st_screen")}
       />
 
       <ScrollView contentContainerStyle={styles.scrollViewContent}>

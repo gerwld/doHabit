@@ -1,4 +1,7 @@
-export { Header } from "./Header";
+export { Header } from "./header/Header";
+export { default as SettingsHeader } from "./header/SettingsHeader";
+
+
 export { LastSevenDays } from "./LastSevenDays";
 
 export { BaseView } from "./styling/BaseView";

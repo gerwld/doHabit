@@ -1,6 +1,5 @@
 import React from 'react'
-import { View, Text, StyleSheet, Pressable, TextInput, ScrollView } from 'react-native'
-import { Header as HeaderRNE } from '@rneui/themed';
+import { View, Text, StyleSheet, TextInput, ScrollView } from 'react-native'
 import styled from 'styled-components/native';
 import { useTranslation } from 'react-i18next';
 import uuid from 'react-native-uuid';
@@ -8,10 +7,9 @@ import { useDispatch, useSelector } from 'react-redux';
 
 
 import { Label, ColorPicker } from "styles/crudtask"
-import { BaseView, LineItemView, Modal, BasePressButton, LineItemOptions } from '@components';
+import { BaseView, LineItemView, Modal, BasePressButton, LineItemOptions, SettingsHeader } from '@components';
 import { HABIT_COLORS, getRandomItem, getTheme } from '@constants';
 import { habitsActions } from "actions";
-import { useHeaderStyles } from 'hooks';
 import { appSelectors } from '@redux';
 
 
@@ -19,7 +17,6 @@ const SetHabitScreen = ({ route, navigation, isEdit }) => {
   const { t } = useTranslation();
   const d = useDispatch();
   const theme = useSelector(appSelectors.selectAppTheme);
-  const headerStyles = useHeaderStyles(theme);
 
 
   const styles = StyleSheet.create({
@@ -117,23 +114,17 @@ const SetHabitScreen = ({ route, navigation, isEdit }) => {
   return (
 
     <BaseView>
+      <SettingsHeader
+        title={isEdit ? t("eddt_screen") : t("addt_screen")}
+        
+        leftText={t("act_cancel")}
+        rightPress={onSubmit}
+        rightText={t("act_save")}
+        bgColor={state.color}
 
-      <HeaderRNE
-        containerStyle={headerStyles.header}
-        style={{ height: 60 }}
-        leftComponent={
-          <Pressable onPress={() => navigation.navigate('home')}>
-            <Text numberOfLines={1} ellipsizeMode="clip" style={headerStyles.headerButton}>{t("act_cancel")}</Text>
-          </Pressable>
-        }
-        rightComponent={
-          <Pressable onPress={onSubmit}>
-            <Text numberOfLines={1} ellipsizeMode="clip" style={{ ...headerStyles.headerButton, ...headerStyles.headerButtonRight }}>{t("act_save")}</Text>
-          </Pressable>
-        }
-        centerComponent={<Text style={headerStyles.headerTitle}>{isEdit ? t("eddt_screen") : t("addt_screen")}</Text>}
-        backgroundColor={state.color}
+        navigation={navigation}
       />
+    
 
       {/* color picker & input */}
 

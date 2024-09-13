@@ -1,19 +1,15 @@
-import React from 'react'
-import { View, Text, LogBox, Pressable } from 'react-native'
-import { Header as HeaderRNE } from '@rneui/themed';
+import React, { useCallback } from 'react'
+import { View } from 'react-native'
 import { useDispatch, useSelector } from 'react-redux';
 
-import { BaseView, SelectList } from '@components';
-import { LANG_MASKS, getTheme } from '@constants';
+import { BaseView, SelectList, SettingsHeader } from '@components';
+import { LANG_MASKS } from '@constants';
 
 import { useTranslation } from 'react-i18next';
 import { appActions } from "actions"
-import { useHeaderStyles } from 'hooks';
 import { appSelectors } from '@redux';
 
-LogBox.ignoreLogs([
-    'Non-serializable values were found in the navigation state',
-]);
+const languagesList = Object.keys(LANG_MASKS).map(e => ({ name: LANG_MASKS[e], value: e }));
 
 const STLanguage = ({ route, navigation }) => {
     const { t } = useTranslation();
@@ -23,15 +19,12 @@ const STLanguage = ({ route, navigation }) => {
         lang,
         ...route.params.state
     });
-    const headerStyles = useHeaderStyles(theme, isWhite = true);
 
-    const onChangeInput = (name, value) => {
-        d(appActions.setLang(value))
-    }
-
-    const handleGoBack = () => {
-        navigation.goBack();
-    };
+    const onChangeInput = useCallback((_, value) => {
+        if (value !== undefined) {
+            d(appActions.setLang(value))
+        }
+      }, [])
 
     React.useEffect(() => {
         const unsubscribe = navigation.addListener('beforeRemove', (e) => {
@@ -52,17 +45,10 @@ const STLanguage = ({ route, navigation }) => {
     return (
 
         <BaseView>
-            <HeaderRNE
-                containerStyle={headerStyles.header}
-                style={{ height: 60 }}
-                leftComponent={
-                    <Pressable onPress={handleGoBack}>
-                        <Text style={headerStyles.headerButton}>{t("act_back")}</Text>
-                    </Pressable>
-                }
-
-                centerComponent={<Text style={headerStyles.headerTitle}>{t("st_theme")}</Text>}
-                backgroundColor={getTheme(theme).bgHighlight}
+            <SettingsHeader
+                navigation={navigation}
+                theme={theme}
+                title={t("st_lang")}
             />
 
             <View style={{ paddingTop: 14, flex: 1 }}>
@@ -72,7 +58,7 @@ const STLanguage = ({ route, navigation }) => {
                     currentValue={lang}
                     withoutTranslate
                     setValue={(v) => onChangeInput('lang', v)}
-                    data={Object.keys(LANG_MASKS).map(e => ({ name: LANG_MASKS[e], value: e }))}
+                    data={languagesList}
                     title={t("int_lang")}
                 />
             </View>
