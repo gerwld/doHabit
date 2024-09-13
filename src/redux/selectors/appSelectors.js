@@ -1,18 +1,14 @@
 import { createSelector } from 'reselect';
 
 // Selectors for app state
-const selectTheme = state => state.app.theme;
+export const selectAppLang = state => state.app.lang;
+export const selectAppTheme = state => state.app.theme;
 const selectLang = state => state.app.lang;
 
-export const selectAppTheme = createSelector(
-  [selectTheme],
-  theme => theme
-);
 
 export const selectAppThemeAndLang = createSelector(
-    [selectLang, selectTheme],
+    [selectLang, selectAppTheme],
      (lang, theme) => ({
       lang, theme
   }))
 
-export const selectAppLang = createSelector([selectLang], lang => lang)

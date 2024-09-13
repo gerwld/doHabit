@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, Text, StyleSheet, Pressable, TextInput } from 'react-native'
+import { View, Text, StyleSheet, Pressable, TextInput, ScrollView } from 'react-native'
 import { Header as HeaderRNE } from '@rneui/themed';
 import styled from 'styled-components/native';
 import { useTranslation } from 'react-i18next';
@@ -130,7 +130,7 @@ const EditHabitScreen = ({ route, navigation }) => {
       />
 
 
-      <View style={{ paddingTop: 14, flex: 1 }}>
+      <ScrollView style={{ paddingTop: 14, flex: 1 }}>
         <Label>{t("addt_name")}</Label>
         <View style={styles.combinedInput}>
         <TextInput
@@ -200,9 +200,7 @@ const EditHabitScreen = ({ route, navigation }) => {
           <Text style={{ fontSize: 16, color: getTheme(theme).textColorHighlight }}>{t("addt_int_title")}</Text>
         </LineItemView>
 
-      </View>
+      </ScrollView>
     </BaseView>
   )
 }
-
-export default EditHabitScreen

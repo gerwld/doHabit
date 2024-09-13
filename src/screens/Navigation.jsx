@@ -1,11 +1,9 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { NavigationContainer, DefaultTheme } from "@react-navigation/native";
 import HomeScreen from "./HomeScreen";
-import AddHabitScreen from "./AddHabitScreen";
 import { useTranslation } from "react-i18next";
 import TutorialScreen from "./TutorialScreen";
 import DetailsHabitScreen from "./DetailsHabitScreen";
-import EditHabitScreen from "./EditHabitScreen";
 import SettingsScreen from "./SettingsScreen";
 import AHSRepeat from "./subsreens/AHSRepeat";
 import STLanguage from "./subsreens/STLanguage";
@@ -13,6 +11,7 @@ import STTheme from "./subsreens/STTheme";
 import { useSelector } from "react-redux";
 import { getTheme } from "@constants";
 import { appSelectors } from "@redux";
+import SetHabitScreen from "./SetHabitScreen";
 
 
 const Stack = createNativeStackNavigator();
@@ -31,9 +30,11 @@ export const Navigation = () => {
         background: getTheme(theme).background
     };
 
+    const EditHabitScreen = (props) => <SetHabitScreen isEdit {...props}/>
+
     const addEditSubdirectories = (
         <>
-            <Stack.Screen name="addhabit" component={AddHabitScreen} options={{ headerShown: false, title: t("addt_screen") }} />
+            <Stack.Screen name="addhabit" component={SetHabitScreen} options={{ headerShown: false, title: t("addt_screen") }} />
             <Stack.Screen name="edithabit" component={EditHabitScreen} options={{ headerShown: false, title: t("addt_screen") }} />
             <Stack.Screen name="sethabit/repeat" component={AHSRepeat} options={{ headerShown: false, title: "Habit Details" }} />
         </>

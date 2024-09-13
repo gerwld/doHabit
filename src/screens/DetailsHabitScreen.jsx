@@ -133,7 +133,7 @@ const DetailsHabitScreen = ({ route, navigation }) => {
         </LineItemView>
 
 
-        <InfoBar>
+        <InfoBar style={{marginBottom: 50}}>
           <Button
             onPress={onPressDeleteHabit}
             title={t('act_delete')}

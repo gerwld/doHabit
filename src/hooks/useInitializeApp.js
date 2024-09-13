@@ -2,12 +2,13 @@ import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { appActions, habitsActions } from "actions";
+import i18n from '../../i18n';
 
-const useInitializeApp = () => {
+const useInitializeApp = (lang) => {
     const d = useDispatch();
 
     const loadBase = async () => {
-        
+
         try {
             const storedSet = await AsyncStorage.getItem('@settings');
             if (storedSet !== null) {
@@ -18,7 +19,7 @@ const useInitializeApp = () => {
         }
     };
 
-    const loadHabits = async () => {  
+    const loadHabits = async () => {
         try {
             const storedHabits = await AsyncStorage.getItem('@habits/items');
             if (storedHabits !== null) {
@@ -27,13 +28,18 @@ const useInitializeApp = () => {
         } catch (e) {
             console.error('Failed to load habits from storage', e);
         }
-        d({type: "SET_HABITS_INIT", payload: true});
+        d({ type: "SET_HABITS_INIT", payload: true });
     };
 
     useEffect(() => {
         loadBase();
         loadHabits();
     }, []);
+
+    useEffect(() => {
+        i18n.locale = lang;
+        i18n.changeLanguage(lang);
+    }, [lang])
 
 };
 

@@ -21,6 +21,8 @@ export const useHeaderStyles = (theme, isWhite = false) => {
       paddingVertical: 0,
       paddingHorizontal: 0,
       border: "none",
+      borderWidth: 0,
+      borderBottomWidth: 0,
       flexDirection: "row",
     },
     headerTitle: {

@@ -6,7 +6,8 @@ import {
 import { produce } from "immer";
 
 const initialState = {
-    lang: "en"
+    lang: "en",
+    theme: "st_theme__system"
 }
 
 export default function app(state = initialState, action) {

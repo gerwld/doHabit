@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, Text, StyleSheet, Pressable, TextInput } from 'react-native'
+import { View, Text, StyleSheet, Pressable, TextInput, ScrollView } from 'react-native'
 import { Header as HeaderRNE } from '@rneui/themed';
 import styled from 'styled-components/native';
 import { useTranslation } from 'react-i18next';
@@ -15,7 +15,7 @@ import { useHeaderStyles } from 'hooks';
 import { appSelectors } from '@redux';
 
 
-const AddHabitScreen = ({ navigation }) => {
+const SetHabitScreen = ({ route, navigation, isEdit }) => {
   const { t } = useTranslation();
   const d = useDispatch();
   const theme = useSelector(appSelectors.selectAppTheme);
@@ -46,13 +46,13 @@ const AddHabitScreen = ({ navigation }) => {
       paddingRight: 10,
       borderRadius: 0,
       fontSize: 16,
-      color:  getTheme(theme).textColorHighlight,
+      color: getTheme(theme).textColorHighlight,
       // border: `1px solid ${getTheme(theme).borderColor}`,
       borderWidth: 1,
       borderColor: `${getTheme(theme).borderColor}`,
       borderLeftColor: "transparent",
       borderRightColor: "transparent",
-    
+
     },
     settingsInputEmbeded: {
       flex: 1,
@@ -88,8 +88,13 @@ const AddHabitScreen = ({ navigation }) => {
   }
 
   const onSubmit = () => {
-    d(habitsActions.addHabit({ id: uuid.v4(), ...state, datesArray: [] }));
-    setState(initialState);
+    if (isEdit) {
+      d(habitsActions.updateHabit({ ...state }));
+    }
+    else {
+      d(habitsActions.addHabit({ id: uuid.v4(), ...state, datesArray: [] }));
+      setState(initialState);
+    }
     navigation.navigate('home')
   }
 
@@ -104,9 +109,15 @@ const AddHabitScreen = ({ navigation }) => {
     });
   }
 
+  React.useEffect(() => {
+    if (route?.params && isEdit)
+      setState({ ...state, ...route.params });
+  }, [route.params])
+
   return (
 
     <BaseView>
+
       <HeaderRNE
         containerStyle={headerStyles.header}
         style={{ height: 60 }}
@@ -120,17 +131,17 @@ const AddHabitScreen = ({ navigation }) => {
             <Text numberOfLines={1} ellipsizeMode="clip" style={{ ...headerStyles.headerButton, ...headerStyles.headerButtonRight }}>{t("act_save")}</Text>
           </Pressable>
         }
-        centerComponent={<Text style={headerStyles.headerTitle}>{t("addt_screen")}</Text>}
+        centerComponent={<Text style={headerStyles.headerTitle}>{isEdit ? t("eddt_screen") : t("addt_screen")}</Text>}
         backgroundColor={state.color}
       />
 
       {/* color picker & input */}
 
-      <View style={{ paddingTop: 14, flex: 1 }}>
+      <ScrollView style={{ paddingTop: 14, flex: 1 }}>
         <Label>{t("addt_name")}</Label>
         <View style={styles.combinedInput}>
           <TextInput
-            style={[styles.settingsInput, styles.settingsInputEmbeded, {borderWidth: 0}]}
+            style={[styles.settingsInput, styles.settingsInputEmbeded, { borderWidth: 0 }]}
             onChangeText={(v) => onChangeInput("name", v)}
             value={state.name}
             placeholder={t("addt_name_placeholder")}
@@ -196,10 +207,10 @@ const AddHabitScreen = ({ navigation }) => {
           <Text style={{ fontSize: 16, color: getTheme(theme).textColorHighlight }}>{t("addt_int_title")}</Text>
         </LineItemView>
 
-      </View>
+      </ScrollView>
     </BaseView>
   )
 }
 
 
-export default AddHabitScreen
+export default SetHabitScreen
