@@ -1,4 +1,4 @@
-package com.anonymous.habittyhabitstracker
+package com.weblxapplications.habittyhabitstracker
 
 import android.app.Application
 import android.content.res.Configuration

@@ -111,7 +111,7 @@ android {
 
     namespace 'com.anonymous.habittyhabitstracker'
     defaultConfig {
-        applicationId 'com.anonymous.habittyhabitstracker'
+        applicationId 'com.weblxapplications.habittyhabitstracker'
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
