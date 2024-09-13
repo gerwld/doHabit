@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { View, Text, ScrollView, StyleSheet, Pressable } from 'react-native'
 import { useTranslation } from 'react-i18next';
 
-import { LineItemView, GapView, LineItemOptions } from '@components'
+import { LineItemView, GapView, LineItemOptions, Segment } from '@components'
 import { LANG_MASKS, getTheme, getThemeStatusBar } from '@constants';
 import { StatusBar } from 'react-native';
 import { appSelectors } from '@redux';
@@ -23,7 +23,7 @@ const SettingsScreen = ({ navigation }) => {
       backgroundColor: getTheme(theme).background,
     },
     t: {
-      fontSize: 16,
+      fontSize: 17,
       color: getTheme(theme).textColorHighlight,
     },
     copyright: {
@@ -39,7 +39,7 @@ const SettingsScreen = ({ navigation }) => {
     },
     copyrightText: {
       color: getTheme(theme).crossSymb,
-      fontSize: 16,
+      fontSize: 18,
     }
   })
 
@@ -57,50 +57,52 @@ const SettingsScreen = ({ navigation }) => {
       />
 
       <ScrollView contentContainerStyle={styles.scrollViewContent}>
-        <GapView />
         <View style={{ flex: 1, justifyContent: "flex-start", height: "100%", minHeight: 390 }}>
-          <Pressable onPress={() => navigation.replace("tutorial")}>
+          <GapView />
+
+          <Segment>
+            <Pressable onPress={() => navigation.replace("tutorial")}>
+              <LineItemView pl1 isFirstItem rightArrow>
+                <Text style={styles.t}>{t("st_tutorial")}</Text>
+              </LineItemView>
+            </Pressable>
+
             <LineItemView pl1 rightArrow>
-              <Text style={styles.t}>{t("st_tutorial")}</Text>
+              <Text style={styles.t}>{t("st_support")}</Text>
             </LineItemView>
-          </Pressable>
 
-          <LineItemView pl1 rightArrow>
-            <Text style={styles.t}>{t("st_support")}</Text>
-          </LineItemView>
+            <LineItemOptions
+              onPress={() => navigateToPage("settings/theme")}
+              title={t("st_theme")}
+              value={t(theme + "")} />
 
-
-          <LineItemOptions
-            onPress={() => navigateToPage("settings/theme")}
-            title={t("st_theme")}
-            value={t(theme + "")} />
-
-
-          <LineItemOptions
-            onPress={() => navigateToPage("settings/language")}
-            title={t("st_lang")}
-            value={LANG_MASKS[lang]} />
+            <LineItemOptions
+              onPress={() => navigateToPage("settings/language")}
+              title={t("st_lang")}
+              value={LANG_MASKS[lang]} />
+          </Segment>
 
           <GapView />
 
-          <LineItemView pl1 rightArrow>
-            <Text style={styles.t}>{t("st_feat")}</Text>
-          </LineItemView>
+          <Segment>
+            <LineItemView pl1 isFirstItem rightArrow>
+              <Text style={styles.t}>{t("st_feat")}</Text>
+            </LineItemView>
 
-
-          <LineItemView pl1 rightArrow>
-            <Text style={styles.t}>{t("st_rate")}</Text>
-          </LineItemView>
+            <LineItemView pl1 rightArrow>
+              <Text style={styles.t}>{t("st_rate")}</Text>
+            </LineItemView>
+          </Segment>
         </View>
 
-      </ScrollView>
+      </ScrollView >
 
       <View style={styles.copyright} >
         <Text style={styles.copyrightText}>© weblxapplications.com</Text>
         <Text style={styles.copyrightText}>{new Date().getFullYear()}</Text>
       </View>
       <StatusBar translucent barStyle={getThemeStatusBar(theme, true)} />
-    </View>
+    </View >
   )
 }
 

@@ -27,10 +27,12 @@ const SelectList = React.memo(({ data, title, currentValue, setValue, color, the
             lineHeight: 48,
             paddingLeft: 18,
             paddingRight: 10,
-            color: getTheme(theme).textColor,
+            color: getTheme(theme).textColorHighlight,
         },
         checkmark: {
-            marginRight: 10
+            marginRight: 10,
+            alignItems: "center",
+            justifyContent: "center"
         }
     })
 
@@ -43,10 +45,12 @@ const SelectList = React.memo(({ data, title, currentValue, setValue, color, the
             <Pressable onPress={onPress}>
                 <View style={select.item}>
                     <Text style={select.text}>{withoutTranslate ? name : t(value + "")}</Text>
-                    <Text style={select.checkmark}>{currentValue === value ?
-
-                        <Icon style={{ pointerEvents: "none" }} type="antdesign" size={24} name="check" color={color ? color : "#5fb1e7"} />
-                        : null}</Text>
+                    {currentValue === value  
+                   ? 
+                   (<View style={select.checkmark}>
+                        <Icon style={{ pointerEvents: "none", height: 24 }} type="antdesign" size={24} name="check" color={color ? color : "#5fb1e7"} />
+                    </View>)
+                    : null}
                 </View>
             </Pressable>
         )

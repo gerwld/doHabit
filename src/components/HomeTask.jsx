@@ -10,7 +10,7 @@ import { getTheme } from '@constants';
 export const HomeTask = React.memo(({ item, color, theme }) => {
   const navigation = useNavigation();
   return (
-<LineItemView st={{height: 63}}>
+<LineItemView st={{height: 56}}>
       <Pressable style={{flex: 1}} onPress={() => navigation.navigate("habitdetails", item)} >
         <PressArea>
           <CircularProgress progress={20} size={27} strokeWidth={4} strColor={getTheme(theme).crossSymbL} color={item?.color ? item.color : "#7fcbfd"} />
@@ -24,8 +24,8 @@ export const HomeTask = React.memo(({ item, color, theme }) => {
 
 const PressArea = styled.View`
   flex: 1;
-  min-height:55px;
+  min-height:50px;
   align-items: center;
   flex-direction: row;
-  padding: 10px 3px 10px 12px;
+  padding: 8px 3px 8px 12px;
 `

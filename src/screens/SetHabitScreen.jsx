@@ -116,7 +116,7 @@ const SetHabitScreen = ({ route, navigation, isEdit }) => {
     <BaseView>
       <SettingsHeader
         title={isEdit ? t("eddt_screen") : t("addt_screen")}
-        
+
         leftText={t("act_cancel")}
         rightPress={onSubmit}
         rightText={t("act_save")}

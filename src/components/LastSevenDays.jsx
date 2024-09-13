@@ -77,7 +77,7 @@ const TimeView = styled.View`
 
 const styles = StyleSheet.create({
     timeWiewInt: {
-        minHeight: 55,
+        minHeight: 50,
         width: 33,
         alignItems: "center",
         justifyContent: "center",

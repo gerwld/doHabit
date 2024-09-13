@@ -14,5 +14,5 @@ export { default as Modal } from "./Modal";
 export { default as SelectList } from "./SelectList";
 export { default as ScrollPages } from "./ScrollPages";
 export { BasePressButton } from "./styling/BasePressButton";
-
+export { default as Segment } from "./styling/Segment";
 
