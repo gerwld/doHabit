@@ -3,9 +3,10 @@ import { View, Text, StyleSheet } from 'react-native'
 import { getTheme } from '@constants';
 import {ScrollPages} from '@components'
 import { useSelector } from 'react-redux'
+import { appSelectors } from '@redux';
 
 const TutorialScreen = () => {
-    const { theme} = useSelector(({app}) => ({theme: app.theme}))
+    const theme = useSelector(appSelectors.selectAppTheme);
     const styles = StyleSheet.create({
         screen: {
             flex: 1,
