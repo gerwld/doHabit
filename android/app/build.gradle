@@ -109,7 +109,7 @@ android {
     buildToolsVersion rootProject.ext.buildToolsVersion
     compileSdk rootProject.ext.compileSdkVersion
 
-    namespace "com.habittyhabitstracker"
+    namespace 'com.weblxapplications.habittyhabitstracker'
     defaultConfig {
         applicationId 'com.weblxapplications.habittyhabitstracker'
         minSdkVersion rootProject.ext.minSdkVersion
