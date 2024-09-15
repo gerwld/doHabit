@@ -1,6 +1,9 @@
 {
   "build": {
     "development": {
+      "ios": {
+        "cocoapods": "1.11.2"
+      },
       "developmentClient": true,
       "distribution": "internal"
     },
