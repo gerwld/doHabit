@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react'
+import React, { useCallback, useRef } from 'react'
 import { View, Text, StyleSheet, TextInput, ScrollView } from 'react-native'
 import styled from 'styled-components/native';
 import { useTranslation } from 'react-i18next';
@@ -15,6 +15,7 @@ import alert from '../polyfils/alert';
 
 
 const SetHabitScreen = ({ route, navigation, isEdit }) => {
+  const focusInputRef = useRef(null);
   const { t } = useTranslation();
   const d = useDispatch();
   const theme = useSelector(appSelectors.selectAppTheme);
@@ -133,6 +134,16 @@ const SetHabitScreen = ({ route, navigation, isEdit }) => {
       setState({ ...state, ...route.params });
   }, [route.params])
 
+  React.useEffect(() => {
+    const timer = setTimeout(() => {
+      if (focusInputRef.current) {
+        focusInputRef.current.focus();  // Focus on TextInput after delay
+      }
+    }, 550);  
+
+    return () => clearTimeout(timer); 
+  }, []);
+
   return (
 
     <BaseView>
@@ -154,6 +165,7 @@ const SetHabitScreen = ({ route, navigation, isEdit }) => {
         <Label>{t("addt_name")}</Label>
         <View style={styles.combinedInput}>
           <TextInput
+            ref={focusInputRef}
             style={[styles.settingsInput, styles.settingsInputEmbeded, { borderWidth: 0 }]}
             onChangeText={(v) => onChangeInput("name", v)}
             value={state.name}
