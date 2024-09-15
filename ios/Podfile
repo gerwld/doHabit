@@ -7,7 +7,7 @@ podfile_properties = JSON.parse(File.read(File.join(__dir__, 'Podfile.properties
 ENV['RCT_NEW_ARCH_ENABLED'] = podfile_properties['newArchEnabled'] == 'true' ? '1' : '0'
 ENV['EX_DEV_CLIENT_NETWORK_INSPECTOR'] = podfile_properties['EX_DEV_CLIENT_NETWORK_INSPECTOR']
 
-use_autolinking_method_symbol = ('use' + '_expo' + '_modules!').to_sym
+use_autolinking_method_symbol = ('use' + '_native' + '_modules!').to_sym
 origin_autolinking_method = self.method(use_autolinking_method_symbol)
 self.define_singleton_method(use_autolinking_method_symbol) do |*args|
   if ENV['EXPO_UNSTABLE_CORE_AUTOLINKING'] == '1'
@@ -36,7 +36,7 @@ prepare_react_native_project!
 
 target 'habittyhabitstracker' do
   use_expo_modules!
-  config = use_expo_modules!
+  config = use_native_modules!
 
   use_frameworks! :linkage => podfile_properties['ios.useFrameworks'].to_sym if podfile_properties['ios.useFrameworks']
   use_frameworks! :linkage => ENV['USE_FRAMEWORKS'].to_sym if ENV['USE_FRAMEWORKS']
@@ -48,11 +48,6 @@ target 'habittyhabitstracker' do
     :app_path => "#{Pod::Config.instance.installation_root}/..",
     :privacy_file_aggregation_enabled => podfile_properties['apple.privacyManifestAggregationEnabled'] != 'false',
   )
-
-#   use_react_native!(
-#   :path => config[:reactNativePath],
-#   :hermes_enabled => podfile_properties&.fetch('expo.jsEngine', nil) == nil || podfile_properties&.fetch('expo.jsEngine', nil) == 'hermes',
-# )
 
   post_install do |installer|
     react_native_post_install(
