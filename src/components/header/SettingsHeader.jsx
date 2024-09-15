@@ -40,7 +40,7 @@ const SettingsHeader = React.memo(({
             }
             rightComponent={
                 rightComponent ? rightComponent : 
-                    <Pressable onPress={rightPress}>
+                    <Pressable onPress={rightPress} style={{opacity: rightPress === null ? 0.6 : 1}}>
                         <Text style={[headerStyles.headerButton, headerStyles.headerButtonRight, s.textColor]}>{rightText}</Text>
                     </Pressable>
             }

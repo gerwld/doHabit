@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useCallback } from 'react'
 import { View, Text, StyleSheet, TextInput, ScrollView } from 'react-native'
 import styled from 'styled-components/native';
 import { useTranslation } from 'react-i18next';
@@ -10,13 +10,15 @@ import { Label, ColorPicker } from "styles/crudtask"
 import { BaseView, LineItemView, Modal, BasePressButton, LineItemOptions, SettingsHeader } from '@components';
 import { HABIT_COLORS, getRandomItem, getTheme } from '@constants';
 import { habitsActions } from "actions";
-import { appSelectors } from '@redux';
+import { appSelectors, habitSelectors } from '@redux';
+import alert from '../polyfils/alert';
 
 
 const SetHabitScreen = ({ route, navigation, isEdit }) => {
   const { t } = useTranslation();
   const d = useDispatch();
   const theme = useSelector(appSelectors.selectAppTheme);
+  const items = useSelector(habitSelectors.selectItems);
 
 
   const styles = StyleSheet.create({
@@ -84,15 +86,35 @@ const SetHabitScreen = ({ route, navigation, isEdit }) => {
     }
   }
 
+  const onSubmitCheckName = useCallback((name) => {
+    return !!items.find(e => e.name === name)
+  }, [items])
+
   const onSubmit = () => {
     if (isEdit) {
       d(habitsActions.updateHabit({ ...state }));
+      navigation.navigate('home')
     }
     else {
+      if(onSubmitCheckName(state.name)) {
+        
+    alert(
+      `Habit with provided name already exist.`,
+      "",
+      [
+        {
+          text: 'Ok',
+          style: 'Ok',
+        },
+      ],
+      {})
+      } 
+      else {
       d(habitsActions.addHabit({ id: uuid.v4(), ...state, datesArray: [] }));
       setState(initialState);
+      navigation.navigate('home')
+      }
     }
-    navigation.navigate('home')
   }
 
   const navigateToSetRepeat = () => {
@@ -118,7 +140,7 @@ const SetHabitScreen = ({ route, navigation, isEdit }) => {
         title={isEdit ? t("eddt_screen") : t("addt_screen")}
 
         leftText={t("act_cancel")}
-        rightPress={onSubmit}
+        rightPress={state.name?.length ? onSubmit : null}
         rightText={t("act_save")}
         bgColor={state.color}
 
