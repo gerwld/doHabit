@@ -35,7 +35,7 @@ border-top-width: ${isFirstItem ? 0 : 1};
                     style={{ marginRight: 10 }}
                     trackColor={{ false: '#d7dcde', true: (toggleColor ? toggleColor : '#81b0ff') }}
                     thumbColor={"#ffffff"}
-                    ios_backgroundColor="#eff2f3"
+                    ios_backgroundColor={getTheme(theme).thumbBackground}
                     onValueChange={onToggle ? onToggle : null}
                     value={isEnabled}
                     {...Platform.select({

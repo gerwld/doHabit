@@ -27,7 +27,7 @@
       <dict>
         <key>CFBundleURLSchemes</key>
         <array>
-          <string>com.weblxapplications.habitty-habits-tracker</string>
+          <string>com.weblxapp.habittyhabitstracker</string>
         </array>
       </dict>
     </array>

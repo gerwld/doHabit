@@ -1,9 +1,10 @@
-import React, { useCallback, useRef } from 'react'
-import { View, Text, StyleSheet, TextInput, ScrollView, InteractionManager } from 'react-native'
+import React, { useCallback, useRef, useState } from 'react'
+import { View, Text, StyleSheet, TextInput, ScrollView, InteractionManager, Pressable, Platform } from 'react-native'
 import styled from 'styled-components/native';
 import { useTranslation } from 'react-i18next';
 import uuid from 'react-native-uuid';
 import { useDispatch, useSelector } from 'react-redux';
+import Animated, { BounceIn, BounceOut, FadeIn, FadeOut } from 'react-native-reanimated';
 
 
 import { Label, ColorPicker } from "styles/crudtask"
@@ -12,14 +13,26 @@ import { HABIT_COLORS, getRandomItem, getTheme } from '@constants';
 import { habitsActions } from "actions";
 import { appSelectors, habitSelectors } from '@redux';
 import alert from '../polyfils/alert';
+import RNDateTimePicker from '@react-native-community/datetimepicker';
 
+const date = new Date();
 
 const SetHabitScreen = ({ route, navigation, isEdit }) => {
+
   const focusInputRef = useRef(null);
   const { t } = useTranslation();
   const d = useDispatch();
   const theme = useSelector(appSelectors.selectAppTheme);
   const items = useSelector(habitSelectors.selectItems);
+
+  const [date, setDate] = useState(new Date())
+  const [open, setOpen] = useState(false)
+
+
+  const uses24HourClock = (date) => {
+    const timeString = date.toLocaleTimeString([], { hour: 'numeric' });
+    return !timeString.includes('AM') && !timeString.includes('PM');
+  };
 
 
   const styles = StyleSheet.create({
@@ -74,7 +87,7 @@ const SetHabitScreen = ({ route, navigation, isEdit }) => {
     color: getRandomItem(HABIT_COLORS),
     name: "",
     notification: "",
-    remind: true,
+    remind: false,
     repeat: "every-day"
   };
   const [state, setState] = React.useState(initialState);
@@ -97,23 +110,23 @@ const SetHabitScreen = ({ route, navigation, isEdit }) => {
       navigation.navigate('home')
     }
     else {
-      if(onSubmitCheckName(state.name)) {
-        
-    alert(
-      `Habit with provided name already exist.`,
-      "",
-      [
-        {
-          text: 'Ok',
-          style: 'Ok',
-        },
-      ],
-      {})
-      } 
+      if (onSubmitCheckName(state.name)) {
+
+        alert(
+          `Habit with provided name already exist.`,
+          "",
+          [
+            {
+              text: 'Ok',
+              style: 'Ok',
+            },
+          ],
+          {})
+      }
       else {
-      d(habitsActions.addHabit({ id: uuid.v4(), ...state, datesArray: [] }));
-      setState(initialState);
-      navigation.navigate('home')
+        d(habitsActions.addHabit({ id: uuid.v4(), ...state, datesArray: [] }));
+        setState(initialState);
+        navigation.navigate('home')
       }
     }
   }
@@ -122,7 +135,7 @@ const SetHabitScreen = ({ route, navigation, isEdit }) => {
     navigation.navigate('sethabit/repeat', {
       state,
       theme,
-      onGoBack: ({data}) => {        
+      onGoBack: ({ data }) => {
         // Callback function to handle data from ScreenB
         setState(data);
       },
@@ -135,13 +148,17 @@ const SetHabitScreen = ({ route, navigation, isEdit }) => {
   }, [route.params])
 
   React.useEffect(() => {
-    const timer = setTimeout(() => {
-      if (focusInputRef.current) {
-        focusInputRef.current.focus();  // Focus on TextInput after delay
-      }
-    }, 550);  
+    let timer;
+    const isAddOnMobile = !isEdit && (Platform.OS === "ios" || Platform.OS === "android");
+    if (isAddOnMobile) {
+      timer = setTimeout(() => {
+        if (focusInputRef.current) {
+          focusInputRef.current.focus();  // Focus on TextInput after delay
+        }
+      }, 550);
+    }
 
-    return () => clearTimeout(timer); 
+    return () => clearTimeout(timer);
   }, []);
 
   return (
@@ -157,7 +174,7 @@ const SetHabitScreen = ({ route, navigation, isEdit }) => {
 
         navigation={navigation}
       />
-    
+
 
       {/* color picker & input */}
 
@@ -222,15 +239,34 @@ const SetHabitScreen = ({ route, navigation, isEdit }) => {
           placeholderTextColor="#9ba2a7"
         />
 
+
         <Label style={{ marginBottom: 7 }}>{t("label_reg")}</Label>
         <LineItemOptions
           onPress={navigateToSetRepeat}
           title={t("addt_repeat")}
           value={t(state.repeat)} />
 
-        <LineItemView pl1 toggle toggleColor={state.color} isEnabled={state.remind} onToggle={(v) => onChangeInput("remind", v)}>
-          <Text style={{ fontSize: 16, color: getTheme(theme).textColorHighlight }}>{t("addt_int_title")}</Text>
-        </LineItemView>
+        {Platform.OS === "ios" || Platform.OS === "android"
+          ? <>
+            <LineItemView pl1 toggle toggleColor={state.color} isEnabled={state.remind} onToggle={(v) => onChangeInput("remind", v)}>
+              <Text style={{ fontSize: 16, color: getTheme(theme).textColorHighlight }}>{t("addt_remind")}</Text>
+            </LineItemView>
+          </>
+          : null}
+
+        {state.remind
+          ? <Animated.View entering={FadeIn.duration(300)} exiting={FadeOut.duration(300)} style={{ backgroundColor: "#fff" }}>
+            <RNDateTimePicker 
+            style={{backgroundColor: getTheme(theme).bgHighlight,}}
+              is24Hour={uses24HourClock(date)} 
+              themeVariant={theme.split("__")[1]}
+              // onChange={}
+              value={state.remindDate ? remindDate : date} 
+              mode="time" 
+              display="spinner" 
+              />
+          </Animated.View>
+          : null}
 
       </ScrollView>
     </BaseView>

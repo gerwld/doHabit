@@ -70,6 +70,7 @@ yarn-error.*
 *.pem
 *.app
 *.tar.gz
+*.ipa
 
 # local env files
 .env*.local

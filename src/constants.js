@@ -12,7 +12,8 @@ const THEMEV = {
         textColor: "#50677a",
         textColorHighlight: "#000",
         textColorRevert: "#fff",
-        crossSymb: "#a5bbd3"
+        crossSymb: "#a5bbd3",
+        thumbBackground: "#eff2f3"
     },
     "st_theme__dark": {
         background: "#000000",
@@ -22,6 +23,7 @@ const THEMEV = {
         textColorHighlight: "#fff",
         textColorRevert: "#fff",
         crossSymb: "#45474b",
+        thumbBackground: "#45474b"
     }
 }
 
