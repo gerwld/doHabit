@@ -74,7 +74,7 @@ const SettingsScreen = ({ navigation }) => {
             <LineItemOptions
               onPress={() => navigateToPage("settings/theme")}
               title={t("st_theme")}
-              value={t(theme + "")} />
+              value={t(theme.theme + "")} />
 
             <LineItemOptions
               onPress={() => navigateToPage("settings/language")}

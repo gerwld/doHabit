@@ -69,7 +69,7 @@ const STTheme = ({ route, navigation }) => {
                 <SelectList
                     theme={theme}
                     style={{ flex: 1 }}
-                    currentValue={theme}
+                    currentValue={theme.theme}
                     setValue={(v) => onChangeInput('theme', v)}
                     data={Object.keys(THEMES_MASKS).map(e => ({ name: THEMES_MASKS[e], value: e }))}
                     title={t("int_theme")}

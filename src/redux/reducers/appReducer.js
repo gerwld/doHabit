@@ -1,13 +1,15 @@
 import {
     SET_LANG,
     APP_INITIALIZE,
-    SET_THEME
+    SET_THEME,
+    SET_THEME_SYSTEM
 } from "actions/appActions";
 import { produce } from "immer";
 
 const initialState = {
     lang: "en",
-    theme: "st_theme__system"
+    theme: "st_theme__system",
+    system_theme: null
 }
 
 export default function app(state = initialState, action) {
@@ -22,6 +24,9 @@ export default function app(state = initialState, action) {
                 break;
             case SET_THEME:
                 draft.theme = action.payload;
+                break;
+            case SET_THEME_SYSTEM:                
+                draft.system_theme = action.payload;
                 break;
             default:
                 return state;

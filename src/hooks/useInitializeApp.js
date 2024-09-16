@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { appActions, habitsActions } from "actions";
 import i18n from '../../i18n';
-import { LogBox } from 'react-native';
+import { LogBox, useColorScheme } from 'react-native';
 
 LogBox.ignoreLogs([
     'Non-serializable values were found in the navigation state',
@@ -43,12 +43,17 @@ const useInitializeApp = (lang) => {
         loadHabits();
     }, []);
 
-
     // STEP 3: set i18n in with provider part of App
     useEffect(() => {
         i18n.locale = lang;
         i18n.changeLanguage(lang);
     }, [lang])
+
+    // STEP 4: initialize system kind of theme (scheme)
+    const payload = useColorScheme();
+    useEffect(() => {
+        d(appActions.setSystemTheme(payload))
+    }, [payload])
 
 };
 

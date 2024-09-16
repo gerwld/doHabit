@@ -57,9 +57,31 @@ const getRandomItem = (arr) => {
     return arr[randomIndex];
 };
 
-const getTheme = (theme) => {
+
+// Function to get the current device theme
+// export const getCurrentTheme = () => {
+//   if (Platform.OS === 'web') {
+//     // For web, use window.matchMedia
+//     const darkModeMediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+//     return darkModeMediaQuery.matches ? 'dark' : 'light';
+//   } else {
+//     // For iOS and Android, use Appearance
+//     const colorScheme = Appearance.getColorScheme();
+//     return colorScheme === 'dark' ? 'dark' : 'light';
+//   }
+// };
+
+
+const getTheme = (th) => {
+    const theme = th?.theme;
+    const system_theme = th?.system_theme;
     if (theme === "st_theme__dark") return THEMEV["st_theme__dark"]
     if (theme === "st_theme__light") return THEMEV["st_theme__light"]
+    
+    else if (theme === "st_theme__system") {
+        if(system_theme === "dark")  return THEMEV["st_theme__dark"]
+        else return THEMEV["st_theme__light"]
+    } 
     return THEMEV["st_theme__light"]
 }
 
