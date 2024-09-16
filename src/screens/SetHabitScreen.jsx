@@ -1,5 +1,5 @@
 import React, { useCallback, useRef, useState } from 'react'
-import { View, Text, StyleSheet, TextInput, ScrollView, InteractionManager, Pressable, Platform } from 'react-native'
+import { View, Text, StyleSheet, TextInput, ScrollView, InteractionManager, Pressable, Platform, SafeAreaView, KeyboardAvoidingView } from 'react-native'
 import styled from 'styled-components/native';
 import { useTranslation } from 'react-i18next';
 import uuid from 'react-native-uuid';
@@ -15,7 +15,7 @@ import { appSelectors, habitSelectors } from '@redux';
 import alert from '../polyfils/alert';
 import RNDateTimePicker from '@react-native-community/datetimepicker';
 
-const DEFAULT_TIME = "12:00"
+const DEFAULT_TIME = "11:00"
 
 const SetHabitScreen = ({ route, navigation, isEdit }) => {
   const date = new Date();
@@ -106,7 +106,7 @@ const SetHabitScreen = ({ route, navigation, isEdit }) => {
 
       // case remind. if enabled and no prev value = set 12, else null
         if(name === "remind") {
-          let remindTime = state?.remindTime ? state.remindTime : "12:00"
+          let remindTime = state?.remindTime ? state.remindTime : DEFAULT_TIME
           if (!value) remindTime = null;
           setState({ ...state, [name]: value, remindTime })        
         }
@@ -195,8 +195,14 @@ const SetHabitScreen = ({ route, navigation, isEdit }) => {
 
 
       {/* color picker & input */}
-
-      <ScrollView style={{ paddingTop: 14, flex: 1 }}>
+      <KeyboardAvoidingView
+    style={{flex: 1}}
+    behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+  >
+      <ScrollView 
+      keyboardDismissMode="none"
+      keyboardShouldPersistTaps="handled"
+      style={{ paddingTop: 14, flex: 1 }}>
         <Label>{t("addt_name")}</Label>
         <View style={styles.combinedInput}>
           <TextInput
@@ -288,7 +294,10 @@ const SetHabitScreen = ({ route, navigation, isEdit }) => {
           </Animated.View>
           : null}
 
+<View style={{paddingBottom: 40}}/>
       </ScrollView>
+
+      </KeyboardAvoidingView>
     </BaseView>
   )
 }
