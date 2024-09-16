@@ -1,5 +1,5 @@
 import React, { useCallback, useRef } from 'react'
-import { View, Text, StyleSheet, TextInput, ScrollView } from 'react-native'
+import { View, Text, StyleSheet, TextInput, ScrollView, InteractionManager } from 'react-native'
 import styled from 'styled-components/native';
 import { useTranslation } from 'react-i18next';
 import uuid from 'react-native-uuid';
@@ -122,7 +122,7 @@ const SetHabitScreen = ({ route, navigation, isEdit }) => {
     navigation.navigate('sethabit/repeat', {
       state,
       theme,
-      onGoBack: ({ data }) => {
+      onGoBack: ({data}) => {        
         // Callback function to handle data from ScreenB
         setState(data);
       },
@@ -131,7 +131,7 @@ const SetHabitScreen = ({ route, navigation, isEdit }) => {
 
   React.useEffect(() => {
     if (route?.params && isEdit)
-      setState({ ...state, ...route.params });
+      setState({ ...state, ...route.params.data });
   }, [route.params])
 
   React.useEffect(() => {

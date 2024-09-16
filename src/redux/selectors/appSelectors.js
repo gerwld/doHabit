@@ -3,12 +3,12 @@ import { createSelector } from 'reselect';
 // Selectors for app state
 export const selectAppLang = state => state.app.lang;
 export const selectAppTheme = state => state.app.theme;
-const selectLang = state => state.app.lang;
-
+export const isHabitsInit = s => s.habits.isInit
 
 export const selectAppThemeAndLang = createSelector(
-    [selectLang, selectAppTheme],
+    [selectAppLang, selectAppTheme],
      (lang, theme) => ({
       lang, theme
   }))
+
 

@@ -13,14 +13,14 @@
     },
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.weblxapplications.habitty-habits-tracker"
+      "bundleIdentifier": "com.weblxapp.habittyhabitstracker"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.weblxapplications.habittyhabitstracker"
+      "package": "com.weblxapp.habittyhabitstracker"
     },
     "web": {
       "favicon": "./assets/favicon.png"

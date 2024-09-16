@@ -1,19 +1,14 @@
 import React, { useCallback } from 'react'
-import { Text, FlatList, StatusBar, StyleSheet, View, Dimensions } from 'react-native';
+import { Text, FlatList, StatusBar, StyleSheet, View } from 'react-native';
 import { Header, BaseView, LastSevenDays, HomeTask } from '@components';
 import { useSelector } from 'react-redux';
 import { getTheme } from '@constants';
 import { getThemeStatusBar } from '../constants';
-import { habitSelectors } from '@redux';
-
-
-const windowHeight = Dimensions.get('window').height;
+import { habitSelectors, appSelectors } from '@redux';
 
 function HomeScreen({ navigation }) {
-  const { isInit, theme } = useSelector(({ habits, app }) => ({
-    theme: app.theme,
-    isInit: habits.isInit
-  }))
+  const theme = useSelector(appSelectors.selectAppTheme)
+  const isInit = useSelector(appSelectors.isHabitsInit)
 
   if (!isInit) return <Text>Loader...</Text>
 
@@ -47,7 +42,7 @@ const LatestTasks = React.memo(({ theme }) => {
     begin: {
       justifyContent: "center",
       alignItems: "center",
-      height: windowHeight - 200,
+      height: "80%",
       opacity: 0.5
     },
     beginText: {

@@ -20,6 +20,12 @@ const AHSRepeat = ({ route, navigation }) => {
     }
   }, [])
 
+  const handleGoBack = () => {
+    // Pass data back to ScreenA using the onGoBack callback
+    route.params.onGoBack({ data: { ...state } });
+    navigation.goBack();
+  };
+
   React.useEffect(() => {
     const unsubscribe = navigation.addListener('beforeRemove', (e) => {
       e.preventDefault();
@@ -41,6 +47,7 @@ const AHSRepeat = ({ route, navigation }) => {
     <BaseView>
       <SettingsHeader
         bgColor={state.color}
+        onGoBack={handleGoBack}
         navigation={navigation}
         theme={theme}
         title={t("addt_int_title")}

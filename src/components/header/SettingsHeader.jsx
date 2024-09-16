@@ -10,6 +10,7 @@ const SettingsHeader = React.memo(({
     theme,
     navigation,
     title,
+    onGoBack,
     leftComponent,
     rightComponent,
     leftText,
@@ -34,7 +35,12 @@ const SettingsHeader = React.memo(({
             containerStyle={headerStyles.header}
             leftComponent={
                 leftComponent ? leftComponent :
-                    <Pressable onPress={() => navigation.goBack()}>
+                    <Pressable onPress={() => {
+                        if(onGoBack) {
+                            onGoBack()
+                        }
+                        else navigation.goBack()
+                        }}>
                         <Text style={[headerStyles.headerButton, s.textColor]}>{leftText ? leftText : t("act_back")}</Text>
                     </Pressable>
             }

@@ -1,6 +1,8 @@
 
 import { configureStore } from "@reduxjs/toolkit"
-import { habits, app } from "."
+
+import { default as habits } from "./reducers/habitsReducer"
+import { default as app } from "./reducers/appReducer"
 
 const store = configureStore({
     reducer: {
