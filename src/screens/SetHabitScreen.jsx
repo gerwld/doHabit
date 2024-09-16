@@ -179,7 +179,7 @@ const SetHabitScreen = ({ route, navigation, isEdit }) => {
           <Label>{t("addt_name")}</Label>
           <View style={styles.combinedInput}>
             <TextInput
-              keyboardAppearance={theme.split("__")[1]}
+              keyboardAppearance={getTheme(theme).label}
               ref={focusInputRef}
               style={[styles.settingsInput, styles.settingsInputEmbeded, { borderWidth: 0 }]}
               onChangeText={(v) => onChangeInput("name", v)}
@@ -230,7 +230,7 @@ const SetHabitScreen = ({ route, navigation, isEdit }) => {
 
           <Label>{t("addt_notif")}</Label>
           <TextInput
-            keyboardAppearance={theme.split("__")[1]}
+            keyboardAppearance={getTheme(theme).label}
             style={styles.settingsInput}
             onChangeText={(v) => onChangeInput("notification", v)}
             value={state.notification}
@@ -304,7 +304,7 @@ const SelectDate = ({ isVisible, theme, value, onChangeInput, remind }) => {
           <RNDateTimePicker
             style={{ backgroundColor: getTheme(theme).bgHighlight, }}
             is24Hour={uses24HourClock(date)}
-            themeVariant={theme.split("__")[1]}
+            themeVariant={getTheme(theme).label}
             onChange={onTimeSelect}
             timeZoneName={'GMT0'}
             value={new Date("2024-09-16T" + (value ? value + ":00.000Z" : `${DEFAULT_TIME}:00.000Z`))}

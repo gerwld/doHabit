@@ -6,6 +6,7 @@ const THEMES_MASKS = {
 
 const THEMEV = {
     "st_theme__light": {
+        label: "light",
         background: "#f0f2f7",
         bgHighlight: "#ffffff",
         borderColor: "#e5e5ea",
@@ -13,9 +14,10 @@ const THEMEV = {
         textColorHighlight: "#000",
         textColorRevert: "#fff",
         crossSymb: "#a5bbd3",
-        thumbBackground: "#eff2f3"
+        thumbBackground: "#eff2f3",
     },
     "st_theme__dark": {
+        label: "dark",
         background: "#000000",
         bgHighlight: "#242424",
         borderColor: "#000",
@@ -77,7 +79,7 @@ const getTheme = (th) => {
     const system_theme = th?.system_theme;
     if (theme === "st_theme__dark") return THEMEV["st_theme__dark"]
     if (theme === "st_theme__light") return THEMEV["st_theme__light"]
-    
+
     else if (theme === "st_theme__system") {
         if(system_theme === "dark")  return THEMEV["st_theme__dark"]
         else return THEMEV["st_theme__light"]
@@ -85,20 +87,21 @@ const getTheme = (th) => {
     return THEMEV["st_theme__light"]
 }
 
-const getThemeStatusBar = (theme, isReversed) => {
+const getThemeStatusBar = (th, isReversed) => {
+    const theme = getTheme(th).label;
     if (isReversed) switch (theme) {
-        case "st_theme__dark":
+        case "dark":
             return "light-content"
-        case "st_theme__light":
+        case "light":
             return "dark-content"
         default:
             return "dark-content"
     }
 
     else switch (theme) {
-        case "st_theme__dark":
+        case "dark":
             return "dark-content"
-        case "st_theme__light":
+        case "light":
             return "light-content"
         default:
             return "light-content"
