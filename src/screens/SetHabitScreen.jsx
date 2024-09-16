@@ -4,7 +4,7 @@ import styled from 'styled-components/native';
 import { useTranslation } from 'react-i18next';
 import uuid from 'react-native-uuid';
 import { useDispatch, useSelector } from 'react-redux';
-import Animated, { FadeIn, FadeOut } from 'react-native-reanimated';
+import Animated, { FadeIn, FadeOut, useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated';
 
 
 import { Label, ColorPicker } from "styles/crudtask"
@@ -31,14 +31,14 @@ const SetHabitScreen = ({ route, navigation, isEdit }) => {
     repeat: "every-day"
   }
 
-  const [state, setState] = React.useState({...initialState});
+  const [state, setState] = React.useState({ ...initialState });
   const [isColorPicker, setColorPicker] = React.useState(false);
   const theme = useSelector(appSelectors.selectAppTheme);
   const items = useSelector(habitSelectors.selectItems);
 
   const onChangeInput = (name, value) => {
     if (name && value !== undefined) {
-      
+
       // case "remind, remindTime" part. if enabled and no prev value = set 12, else null
       if (name === "remind") {
         let remindTime = state?.remindTime ? state.remindTime : DEFAULT_TIME
@@ -253,6 +253,7 @@ const SetHabitScreen = ({ route, navigation, isEdit }) => {
               </LineItemView>
 
               <SelectDate
+                remind={state.remind}
                 theme={theme}
                 value={state.remindTime}
                 onChangeInput={onChangeInput}
@@ -260,7 +261,7 @@ const SetHabitScreen = ({ route, navigation, isEdit }) => {
             </>
             : null}
 
-          <View style={{ paddingBottom: 40 }} />
+          <View style={{ paddingBottom: 20 }} />
         </ScrollView>
 
       </KeyboardAvoidingView>
@@ -268,8 +269,7 @@ const SetHabitScreen = ({ route, navigation, isEdit }) => {
   )
 }
 
-
-const SelectDate = ({ isVisible, theme, value, onChangeInput }) => {
+const SelectDate = ({ isVisible, theme, value, onChangeInput, remind }) => {
   const date = new Date();
 
   const uses24HourClock = (date) => {
@@ -284,10 +284,23 @@ const SelectDate = ({ isVisible, theme, value, onChangeInput }) => {
       console.log(time, date);
     }
   }
+
+  const height = useSharedValue(220);
+
+  const animatedProps = useAnimatedStyle(() => ({
+    height: height.value,
+    overflow: 'hidden'
+  }));
+
+  React.useEffect(() => {
+    const value = remind ? 220 : 0
+    height.value = withTiming(value, {duration: 300})
+  }, [remind])
+
   return (
-    <>
+    <Animated.View style={animatedProps}>
       {isVisible
-        ? <Animated.View entering={FadeIn.duration(300)} exiting={FadeOut.duration(300)} style={{ backgroundColor: "#fff" }}>
+        ? <Animated.View entering={FadeIn.duration(200)} exiting={FadeOut.duration(300)}>
           <RNDateTimePicker
             style={{ backgroundColor: getTheme(theme).bgHighlight, }}
             is24Hour={uses24HourClock(date)}
@@ -300,7 +313,7 @@ const SelectDate = ({ isVisible, theme, value, onChangeInput }) => {
           />
         </Animated.View>
         : null}
-    </>
+    </Animated.View>
   )
 }
 
