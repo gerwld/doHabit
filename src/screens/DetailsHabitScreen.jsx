@@ -91,7 +91,7 @@ const DetailsHabitScreen = ({ route, navigation }) => {
           </InfoBarItem>
           <InfoBarItem>
             <Icon type="feather" size={24} name="clock" color={styles.i.color} />
-            <Text style={[styles.t, styles.l]}>--:--</Text>
+            <Text style={[styles.t, styles.l]}>{item?.remindTime ? item?.remindTime : "--:--"}</Text>
           </InfoBarItem>
         </LineItemView>
 

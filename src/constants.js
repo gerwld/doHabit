@@ -83,6 +83,24 @@ const getThemeStatusBar = (theme, isReversed) => {
     }
 }
 
+function getTimeFromTimestamp(timestamp) {
+    const date = new Date(timestamp);
+
+    // Extract hours and minutes
+    const hours = date.getUTCHours().toString().padStart(2, '0');
+    const minutes = date.getUTCMinutes().toString().padStart(2, '0');
+
+    return `${hours}:${minutes}`;
+}
+
 module.exports = {
-    THEMES_MASKS, REPEAT_MASKS, LANG_MASKS, HABIT_COLORS, THEMEV, getRandomItem, getTheme, getThemeStatusBar
+    THEMES_MASKS, 
+    REPEAT_MASKS, 
+    LANG_MASKS, 
+    HABIT_COLORS, 
+    THEMEV, 
+    getRandomItem, 
+    getTheme, 
+    getThemeStatusBar, 
+    getTimeFromTimestamp
 }

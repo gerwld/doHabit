@@ -9,23 +9,23 @@ import Animated, { BounceIn, BounceOut, FadeIn, FadeOut } from 'react-native-rea
 
 import { Label, ColorPicker } from "styles/crudtask"
 import { BaseView, LineItemView, Modal, BasePressButton, LineItemOptions, SettingsHeader } from '@components';
-import { HABIT_COLORS, getRandomItem, getTheme } from '@constants';
+import { HABIT_COLORS, getRandomItem, getTheme, getTimeFromTimestamp } from '@constants';
 import { habitsActions } from "actions";
 import { appSelectors, habitSelectors } from '@redux';
 import alert from '../polyfils/alert';
 import RNDateTimePicker from '@react-native-community/datetimepicker';
 
-const date = new Date();
+const DEFAULT_TIME = "12:00"
 
 const SetHabitScreen = ({ route, navigation, isEdit }) => {
-
+  const date = new Date();
   const focusInputRef = useRef(null);
   const { t } = useTranslation();
   const d = useDispatch();
   const theme = useSelector(appSelectors.selectAppTheme);
   const items = useSelector(habitSelectors.selectItems);
 
-  const [date, setDate] = useState(new Date())
+  // const [date, setDate] = useState(new Date())
   const [open, setOpen] = useState(false)
 
 
@@ -34,6 +34,13 @@ const SetHabitScreen = ({ route, navigation, isEdit }) => {
     return !timeString.includes('AM') && !timeString.includes('PM');
   };
 
+  const onTimeSelect = (_, payload) => {
+    const time = getTimeFromTimestamp(payload);
+    if(time) {
+      onChangeInput("remindTime", time);
+      console.log(time, date);
+    }
+  }
 
   const styles = StyleSheet.create({
     combinedInput: {
@@ -90,13 +97,22 @@ const SetHabitScreen = ({ route, navigation, isEdit }) => {
     remind: false,
     repeat: "every-day"
   };
-  const [state, setState] = React.useState(initialState);
+  const [state, setState] = React.useState({...initialState});
   const [isColorPicker, setColorPicker] = React.useState(false);
 
 
   const onChangeInput = (name, value) => {
     if (name && value !== undefined) {
-      setState({ ...state, [name]: value })
+
+      // case remind. if enabled and no prev value = set 12, else null
+        if(name === "remind") {
+          let remindTime = state?.remindTime ? state.remindTime : "12:00"
+          if (!value) remindTime = null;
+          setState({ ...state, [name]: value, remindTime })        
+        }
+
+        // else default case
+        else setState({ ...state, [name]: value })
     }
   }
 
@@ -144,8 +160,10 @@ const SetHabitScreen = ({ route, navigation, isEdit }) => {
 
   React.useEffect(() => {
     if (route?.params && isEdit)
-      setState({ ...state, ...route.params.data });
+      setState({ ...state, ...route.params });
   }, [route.params])
+
+  React.useEffect(() => {}, [state]);
 
   React.useEffect(() => {
     let timer;
@@ -248,7 +266,7 @@ const SetHabitScreen = ({ route, navigation, isEdit }) => {
 
         {Platform.OS === "ios" || Platform.OS === "android"
           ? <>
-            <LineItemView pl1 toggle toggleColor={state.color} isEnabled={state.remind} onToggle={(v) => onChangeInput("remind", v)}>
+            <LineItemView pl1 toggle toggleColor={state.color} isEnabled={state.remind} onToggle={(v) => {onChangeInput("remind", v);}}>
               <Text style={{ fontSize: 16, color: getTheme(theme).textColorHighlight }}>{t("addt_remind")}</Text>
             </LineItemView>
           </>
@@ -257,11 +275,13 @@ const SetHabitScreen = ({ route, navigation, isEdit }) => {
         {state.remind
           ? <Animated.View entering={FadeIn.duration(300)} exiting={FadeOut.duration(300)} style={{ backgroundColor: "#fff" }}>
             <RNDateTimePicker 
-            style={{backgroundColor: getTheme(theme).bgHighlight,}}
+              style={{backgroundColor: getTheme(theme).bgHighlight,}}
               is24Hour={uses24HourClock(date)} 
               themeVariant={theme.split("__")[1]}
-              // onChange={}
-              value={state.remindDate ? remindDate : date} 
+              onChange={onTimeSelect}
+              // timeZoneOffsetInMinutes={0}
+              timeZoneName={'GMT0'}
+              value={new Date("2024-09-16T" + (state.remindTime ? state.remindTime + ":00.000Z" : `${DEFAULT_TIME}:00.000Z`))} 
               mode="time" 
               display="spinner" 
               />
