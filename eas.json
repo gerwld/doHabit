@@ -2,7 +2,11 @@
   "build": {
     "development": {
       "ios": {
-        "cocoapods": "1.11.2"
+        "cocoapods": "1.11.2",
+        "cache": {
+          "key": "my-project-cache-key",
+          "paths": ["node_modules", "ios/Pods"]
+        }
       },
       "developmentClient": true,
       "distribution": "internal"
@@ -10,7 +14,11 @@
     "preview": {
       "distribution": "internal",
       "ios": {
-        "simulator": true
+        "simulator": true,
+        "cache": {
+          "key": "my-project-preview-cache-key",
+          "paths": ["node_modules", "ios/Pods"]
+        }
       }
     }
   },
