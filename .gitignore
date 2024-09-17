@@ -64,6 +64,7 @@ web-build/
 npm-debug.*
 yarn-debug.*
 yarn-error.*
+Payload/
 
 # macOS
 .DS_Store

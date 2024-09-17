@@ -22,12 +22,11 @@ border: 3.6px solid ${pl1 ? getTheme(theme).borderColor : "transparent"};
 border-left-width: 0;
 border-right-width: 0;
 border-bottom-width: 0;
-border-top-width: ${isFirstItem ? 0 : 1};
 `;
 
 
     return (
-        <LineItemViewItem style={{ paddingLeft: pl1 ? 18 : 0, paddingRight: pl1 ? 6 : 0, marginBottom: pl1 ? -1 : 7, ...st }}>
+        <LineItemViewItem style={{ borderTopWidth: isFirstItem ? 0 : 1, paddingLeft: pl1 ? 18 : 0, paddingRight: pl1 ? 6 : 0, marginBottom: pl1 ? -1 : 7, ...st }}>
             {children}
             {rightArrow ? <Icon style={{ marginHorizontal: 5 }} type="entypo" size={18} name="chevron-thin-right" color="#ccd1db" /> : null}
             {toggle ?
