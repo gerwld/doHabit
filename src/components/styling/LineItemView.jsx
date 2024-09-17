@@ -28,7 +28,9 @@ border-bottom-width: 0;
     return (
         <LineItemViewItem style={{ borderTopWidth: isFirstItem ? 0 : 1, paddingLeft: pl1 ? 18 : 0, paddingRight: pl1 ? 6 : 0, marginBottom: pl1 ? -1 : 7, ...st }}>
             {leftIcon ? <View style={{height: 34, width: 34, marginRight: 10}}>{leftIcon}</View> : ""}
-            <View style={{flex: 1, flexDirection: "row"}}>{children}</View>
+            {leftIcon ? <View style={{flex: 1, flexDirection: "row"}}>{children}</View> : children}
+
+
             {rightArrow ? <Icon style={{ marginHorizontal: 5 }} type="entypo" size={18} name="chevron-thin-right" color="#ccd1db" /> : null}
             {toggle ?
                 <Switch
