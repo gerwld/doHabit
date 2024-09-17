@@ -1,12 +1,12 @@
 import React from 'react'
 import { Icon } from '@rneui/base';
-import { Platform, Switch } from 'react-native';
+import { Platform, Switch, View, Text } from 'react-native';
 import styled from 'styled-components/native';
 import { getTheme } from '@constants';
 import { useSelector } from 'react-redux';
 import { appSelectors } from '@redux';
 
-const LineItemView = ({ isFirstItem, children, rightArrow, toggle, toggleColor, onToggle, isEnabled, pl1, st }) => {
+const LineItemView = ({ isFirstItem, leftIcon, children, rightArrow, toggle, toggleColor, onToggle, isEnabled, pl1, st }) => {
     const theme = useSelector(appSelectors.selectAppTheme);
     const LineItemViewItem = styled.View`
 padding: 0;
@@ -27,7 +27,8 @@ border-bottom-width: 0;
 
     return (
         <LineItemViewItem style={{ borderTopWidth: isFirstItem ? 0 : 1, paddingLeft: pl1 ? 18 : 0, paddingRight: pl1 ? 6 : 0, marginBottom: pl1 ? -1 : 7, ...st }}>
-            {children}
+            {leftIcon ? <View style={{height: 34, width: 34, marginRight: 10}}>{leftIcon}</View> : ""}
+            <View style={{flex: 1, flexDirection: "row"}}>{children}</View>
             {rightArrow ? <Icon style={{ marginHorizontal: 5 }} type="entypo" size={18} name="chevron-thin-right" color="#ccd1db" /> : null}
             {toggle ?
                 <Switch

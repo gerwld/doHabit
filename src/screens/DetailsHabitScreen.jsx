@@ -1,9 +1,8 @@
 import React, { useCallback } from 'react'
-import { Text, Button, StyleSheet, ScrollView } from 'react-native'
+import { Text, Button, StyleSheet, ScrollView, Alert } from 'react-native'
 import { Icon } from '@rneui/themed';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
-
 
 import alert from '../polyfils/alert';
 import { habitsActions } from "actions";
@@ -11,6 +10,7 @@ import { REPEAT_MASKS, getTheme, uses24HourClock, convertTo12HourFormat } from '
 import { Label, InfoBar, InfoBarItem } from "styles/crudtask"
 import { appSelectors } from '@redux';
 import { CircularProgress, LineItemView, SettingsHeader, BaseView } from '@components';
+import CalendarPicker from 'react-native-calendar-picker';
 
 
 const DetailsHabitScreen = ({ route, navigation }) => {
@@ -70,6 +70,10 @@ const DetailsHabitScreen = ({ route, navigation }) => {
       height: 180,
       marginTop: 5,
       marginBottom: 10
+    },
+    itemFlexible: {
+      marginTop: 5,
+      marginBottom: 10
     }
   })
 
@@ -104,7 +108,7 @@ const DetailsHabitScreen = ({ route, navigation }) => {
 
 
         <Label>{t("label_ov")}</Label>
-        <LineItemView st={{ ...styles.item }}>
+        <LineItemView st={{ ...styles.item, paddingTop: 25 }}>
           <CircularProgress progress={20} size={55} strokeWidth={8} strColor={getTheme(theme).crossSymbL} color={item?.color ? item.color : "#7fcbfd"} />
           <Text style={styles.t}>23423</Text>
           <Text style={styles.t}>23423</Text>
@@ -113,10 +117,26 @@ const DetailsHabitScreen = ({ route, navigation }) => {
 
 
         <Label>{t("label_hits")}</Label>
-        <LineItemView st={{ ...styles.item }}>
-          <Text style={styles.t}>23423</Text>
-          <Text style={styles.t}>23423</Text>
-          <Text style={styles.t}>23423</Text>
+        <LineItemView st={{ ...styles.itemFlexible }}>
+        <CalendarPicker 
+        // customDatesStyles={}
+        textStyle={{
+          color: getTheme(theme).textColor,
+          fontSize: 17
+          }} 
+
+        // onDateChange={()=> console.log("date")}
+        startFromMonday={uses24HourClock(new Date())}
+        selectedDayStyle={{}}
+        selectedDayTextStyle={{color: getTheme(theme).textColor}}
+        todayBackgroundColor={"#ffffff3f"}
+        todayStyle={{color: "red"}}
+        
+     
+        scrollDecelarationRate="" 
+        scrollable={true} />
+      
+    
         </LineItemView>
 
 

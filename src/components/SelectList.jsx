@@ -48,7 +48,6 @@ const SelectList = React.memo(({ data, title, currentValue, setValue, color, the
     })
 
     const ListItem = ({ value, mask, name, onPress, color }) => {
-        console.log();
         
         return (
             <Pressable onPress={onPress}>

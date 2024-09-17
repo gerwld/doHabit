@@ -11,7 +11,8 @@
         "hooks": ["src/hooks"],
         "styles": ["src/styles"],
         "@polyfils": ["src/polyfils"],
-        "@constants": ["src/constants.js"]
+        "@constants": ["src/constants.js"],
+        "@icons": ["./assets/svg/icons_svgr"]
       }
     },
     "exclude": ["node_modules"]

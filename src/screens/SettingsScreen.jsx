@@ -6,6 +6,8 @@ import { useTranslation } from 'react-i18next';
 import { LineItemView, GapView, LineItemOptions, Segment, SettingsHeader } from '@components'
 import { LANG_MASKS, getTheme, getThemeStatusBar } from '@constants';
 import { appSelectors } from '@redux';
+import { Feature, Lang, Rateapp, Support, Theme, Tutorial } from '@icons';
+
 
 
 const SettingsScreen = ({ navigation }) => {
@@ -45,6 +47,7 @@ const SettingsScreen = ({ navigation }) => {
     navigation.navigate(path, {});
   });
 
+  
 
   return (
     <View style={{ flex: 1, backgroundColor: getTheme(theme).background }}>
@@ -57,24 +60,25 @@ const SettingsScreen = ({ navigation }) => {
       <ScrollView contentContainerStyle={styles.scrollViewContent}>
         <View style={{ flex: 1, justifyContent: "flex-start", height: "100%", minHeight: 390 }}>
           <GapView />
-
           <Segment>
             <Pressable onPress={() => navigation.replace("tutorial")}>
-              <LineItemView pl1 isFirstItem rightArrow>
+              <LineItemView leftIcon={<Tutorial/>} pl1 isFirstItem rightArrow>
                 <Text style={styles.t}>{t("st_tutorial")}</Text>
               </LineItemView>
             </Pressable>
 
-            <LineItemView pl1 rightArrow>
+            <LineItemView leftIcon={<Support/>} pl1 rightArrow>
               <Text style={styles.t}>{t("st_support")}</Text>
             </LineItemView>
 
             <LineItemOptions
+              leftIcon={<Theme/>}
               onPress={() => navigateToPage("settings/theme")}
               title={t("st_theme")}
               value={t(theme.theme + "")} />
 
             <LineItemOptions
+              leftIcon={<Lang/>}
               onPress={() => navigateToPage("settings/language")}
               title={t("st_lang")}
               value={LANG_MASKS[lang].mask} />
@@ -83,11 +87,11 @@ const SettingsScreen = ({ navigation }) => {
           <GapView />
 
           <Segment>
-            <LineItemView pl1 isFirstItem rightArrow>
+            <LineItemView leftIcon={<Feature/>} pl1 isFirstItem rightArrow>
               <Text style={styles.t}>{t("st_feat")}</Text>
             </LineItemView>
 
-            <LineItemView pl1 rightArrow>
+            <LineItemView leftIcon={<Rateapp/>} pl1 rightArrow>
               <Text style={styles.t}>{t("st_rate")}</Text>
             </LineItemView>
           </Segment>
