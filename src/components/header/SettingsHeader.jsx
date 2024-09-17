@@ -50,7 +50,8 @@ const SettingsHeader = React.memo(({
                         <Text style={[headerStyles.headerButton, headerStyles.headerButtonRight, s.textColor]}>{rightText}</Text>
                     </Pressable>
             }
-            centerComponent={<Text style={[headerStyles.headerTitle, s.textColor]}>{title}</Text>}
+            centerComponent={
+            <Text style={[headerStyles.headerTitle, s.textColor]}>{title}</Text>}
             backgroundColor={s.backgroundColor}
         />
     )

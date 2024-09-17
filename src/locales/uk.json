@@ -1,4 +1,5 @@
 {
+  "app_title": "Мої звички",
   "st_screen": "Налаштування",
   "st_tutorial": "Інструкція",
   "st_support": "Підтримка",
@@ -9,7 +10,6 @@
   "st_theme__light": "Світла",
   "st_theme__dark": "Темна",
   "st_theme__system": "Системна",
-
   "addt_screen": "Додати звичку",
   "addt_name": "Назва",
   "addt_name_placeholder": "Назва звички",
@@ -17,23 +17,31 @@
   "addt_notif_placeholder": "Чи ви ... сьогодні?",
   "addt_int_title": "Інтервали повторення",
   "addt_repeat": "Нагадати мені",
-
   "eddt_screen": "Редагувати звичку",
-
   "act_back": "Назад",
   "act_edit": "Змінити",
   "act_cancel": "Назад",
   "act_save": "Зберегти",
   "act_delete": "Видалити",
-  
   "every-day": "Щодня",
   "every-week": "Щотижня",
   "3-times-week": "3 рази на тиждень",
   "5-times-week": "5 разів на тиждень",
-
   "label_reg": "Регулярність",
   "label_ov": "Огляд",
   "label_hist": "Історія",
   "label_stre": "Сила звички",
-  "int_lang": "Мова інтерфейсу"
+  "int_lang": "Мова інтерфейсу",
+  "month_0": "Січень",
+  "month_1": "Лютий",
+  "month_2": "Березень",
+  "month_3": "Квітень",
+  "month_4": "Травень",
+  "month_5": "Червень",
+  "month_6": "Липень",
+  "month_7": "Серпень",
+  "month_8": "Вересень",
+  "month_9": "Жовтень",
+  "month_10": "Листопад",
+  "month_11": "Грудень"
 }

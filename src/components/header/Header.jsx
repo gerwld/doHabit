@@ -3,7 +3,8 @@ import { View, Pressable, StyleSheet, Text } from 'react-native'
 import { Header as HeaderRNE, Icon } from '@rneui/themed';
 import { LinearGradient } from 'expo-linear-gradient';
 
-export const Header = React.memo(({ navigation, title, leftChild, rightChild }) => {
+
+export const Header = React.memo(({ navigation, leftChild, rightChild }) => {
     return (
         <HeaderRNE
             containerStyle={styles.header}
@@ -23,7 +24,11 @@ export const Header = React.memo(({ navigation, title, leftChild, rightChild }) 
                     </View>
                 </Pressable>
             }
-            centerComponent={<Text style={styles.headerTitle}>{title ? title : "Habitty"}</Text>}
+            centerComponent={
+            <View style={styles.centerComponent}>
+                <Text style={styles.headerTitle}>Habitty</Text>
+            </View>
+        }
             ViewComponent={LinearGradient} // Required for gradient
             linearGradientProps={{
                 colors: ['#7fcbfd', '#3c95d0'],
@@ -61,16 +66,20 @@ const styles = StyleSheet.create({
         userSelect: "none",
     },
     headerTitle: {
-        minHeight: 55,
-        lineHeight: 55,
         color: "white",
-        fontSize: 21,
+        fontSize: 22,
         fontWeight: 'bold',
         alignItems: "center",
         justifyContent: "center",
         pointerEvents: "none",
         userSelect: "none",
-    }
+    },
+
+    centerComponent: {
+        height: 55,
+        justifyContent: "center",
+        alignItems:"center"
+    },
 });
 
 

@@ -8,6 +8,7 @@ import { Appearance } from 'react-native';
 import { getLocales } from 'expo-localization';
 import { LANG_MASKS } from '@constants';
 
+
 LogBox.ignoreLogs([
     'Non-serializable values were found in the navigation state',
 ]);

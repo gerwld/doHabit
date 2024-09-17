@@ -36,12 +36,6 @@ const REPEAT_MASKS = {
     "5-times-week": "5 times per week",
 }
 
-// const LANG_MASKS = {
-//     "en": "English",
-//     "pl": "Polish",
-//     "uk": "Ukrainian",
-// }
-
 const LANG_MASKS = {
     "en": {
         orig: "English",
