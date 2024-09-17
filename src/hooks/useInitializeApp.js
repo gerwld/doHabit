@@ -6,7 +6,7 @@ import i18n from '../../i18n';
 import { LogBox, useColorScheme } from 'react-native';
 import { Appearance } from 'react-native';
 import { getLocales } from 'expo-localization';
-import { LANG_MASKS } from '../constants';
+import { LANG_MASKS } from '@constants';
 
 LogBox.ignoreLogs([
     'Non-serializable values were found in the navigation state',
@@ -64,16 +64,17 @@ const useInitializeApp = (lang) => {
         };
     
         // Determine the language to use
-        let locale_set = lang;
+        let locale_set = lang; // lang = appReducer.lang
     
         if (!locale_set || !languagesList.includes(locale_set)) { 
             locale_set = getValidLanguage([...userPreferredLanguages, 'en']);
             d(appActions.setLang(locale_set));
         }
 
-    
-        i18n.locale = locale_set;
-        i18n.changeLanguage(locale_set);
+        if(i18n.locale !== locale_set) {
+            i18n.locale = locale_set;
+            i18n.changeLanguage(locale_set);
+        }
     }, [lang]);
     
 
