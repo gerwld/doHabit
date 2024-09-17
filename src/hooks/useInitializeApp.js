@@ -4,6 +4,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { appActions, habitsActions } from "actions";
 import i18n from '../../i18n';
 import { LogBox, useColorScheme } from 'react-native';
+import { Appearance } from 'react-native';
 
 LogBox.ignoreLogs([
     'Non-serializable values were found in the navigation state',
@@ -18,7 +19,9 @@ const useInitializeApp = (lang) => {
         try {
             const storedSet = await AsyncStorage.getItem('@settings');
             if (storedSet !== null) {
-                d(appActions.initializeApp(JSON.parse(storedSet)));
+                let set = JSON.parse(storedSet);
+                delete set.system_theme;
+                d(appActions.initializeApp());
             }
         } catch (e) {
             console.error('Failed to load settings from storage', e);
@@ -51,10 +54,14 @@ const useInitializeApp = (lang) => {
 
     // STEP 4: initialize system kind of theme (scheme)
     const payload = useColorScheme();
+    const colorScheme = Appearance.getColorScheme();
     useEffect(() => {
+        console.log(payload, colorScheme);
+        
         d(appActions.setSystemTheme(payload))
-    }, [payload])
+    }, [payload, colorScheme])
 
+    
 };
 
 export default useInitializeApp;

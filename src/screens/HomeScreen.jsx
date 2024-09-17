@@ -63,11 +63,12 @@ const LatestTasks = React.memo(({ theme }) => {
     <>
       <LastSevenDays {...{ theme }} />
       <FlatList
-        contentContainerStyle={{ paddingBottom: 10 }}
+        contentContainerStyle={{ paddingBottom: 60 }}
         data={items}
         renderItem={renderItem}
         keyExtractor={keyExtractor}
       />
+      {/* <View  */}
     </>
   );
 });

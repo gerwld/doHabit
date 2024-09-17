@@ -55,9 +55,7 @@ const SettingsScreen = ({ navigation }) => {
         theme={theme}
         title={t("st_screen")}
       />
-
-      <Text>{JSON.stringify(theme)}</Text>
-
+      
       <ScrollView contentContainerStyle={styles.scrollViewContent}>
         <View style={{ flex: 1, justifyContent: "flex-start", height: "100%", minHeight: 390 }}>
           <GapView />
