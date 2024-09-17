@@ -36,10 +36,25 @@ const REPEAT_MASKS = {
     "5-times-week": "5 times per week",
 }
 
+// const LANG_MASKS = {
+//     "en": "English",
+//     "pl": "Polish",
+//     "uk": "Ukrainian",
+// }
+
 const LANG_MASKS = {
-    "en": "English",
-    "pl": "Polish",
-    "uk": "Ukrainian",
+    "en": {
+        orig: "English",
+        mask: "English"
+    },
+    "pl": {
+        orig: "Polish",
+        mask: "Polski"
+    },
+    "uk": {
+        orig: "Ukrainian",
+        mask: "Українська"
+    },
 }
 
 const HABIT_COLORS = [
@@ -65,9 +80,9 @@ const getTheme = (th) => {
     if (theme === "st_theme__dark") return THEMEV["st_theme__dark"]
     if (theme === "st_theme__light") return THEMEV["st_theme__light"]
     if (theme === "st_theme__system") {
-        if(system_theme === "dark")  return THEMEV["st_theme__dark"]
+        if (system_theme === "dark") return THEMEV["st_theme__dark"]
         else return THEMEV["st_theme__light"]
-    } 
+    }
     return THEMEV["st_theme__light"]
 }
 
@@ -112,17 +127,17 @@ function convertTo12HourFormat(time24) {
 const uses24HourClock = (date) => {
     const timeString = date.toLocaleTimeString([], { hour: 'numeric' });
     return !timeString.includes('AM') && !timeString.includes('PM');
-  };
+};
 
 module.exports = {
-    THEMES_MASKS, 
-    REPEAT_MASKS, 
-    LANG_MASKS, 
-    HABIT_COLORS, 
-    THEMEV, 
-    getRandomItem, 
-    getTheme, 
-    getThemeStatusBar, 
+    THEMES_MASKS,
+    REPEAT_MASKS,
+    LANG_MASKS,
+    HABIT_COLORS,
+    THEMEV,
+    getRandomItem,
+    getTheme,
+    getThemeStatusBar,
     getTimeFromTimestamp,
     uses24HourClock,
     convertTo12HourFormat

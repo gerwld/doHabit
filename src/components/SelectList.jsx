@@ -24,9 +24,16 @@ const SelectList = React.memo(({ data, title, currentValue, setValue, color, the
         },
         text: {
             fontSize: 16,
-            lineHeight: 48,
             paddingLeft: 18,
             paddingRight: 10,
+            color: getTheme(theme).textColorHighlight,
+        },
+        maskText: {
+            fontSize: 12,
+            opacity: 0.6,
+            paddingLeft: 18,
+            paddingRight: 10,
+            paddingTop: 2,
             color: getTheme(theme).textColorHighlight,
         },
         checkmark: {
@@ -40,11 +47,16 @@ const SelectList = React.memo(({ data, title, currentValue, setValue, color, the
         return item.value
     })
 
-    const ListItem = ({ value, name, onPress, color }) => {
+    const ListItem = ({ value, mask, name, onPress, color }) => {
+        console.log();
+        
         return (
             <Pressable onPress={onPress}>
                 <View style={select.item}>
-                    <Text style={select.text}>{withoutTranslate ? name : t(value + "")}</Text>
+                    <View style={{flexDirection: "column", alignItems: "flex-start", justifyContent: "center"}}>
+                        <Text style={select.text}>{withoutTranslate ? name : t(value + "")}</Text>
+                        {mask ? <Text style={select.maskText}>{mask}</Text> : null}
+                    </View>
                     {currentValue === value  
                    ? 
                    (<View style={select.checkmark}>

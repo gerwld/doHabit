@@ -1,13 +1,11 @@
 import React, { useCallback } from 'react'
 import { useSelector } from 'react-redux';
-import { View, Text, ScrollView, StyleSheet, Pressable } from 'react-native'
+import { View, Text, ScrollView, StyleSheet, Pressable, StatusBar } from 'react-native'
 import { useTranslation } from 'react-i18next';
 
-import { LineItemView, GapView, LineItemOptions, Segment } from '@components'
+import { LineItemView, GapView, LineItemOptions, Segment, SettingsHeader } from '@components'
 import { LANG_MASKS, getTheme, getThemeStatusBar } from '@constants';
-import { StatusBar } from 'react-native';
 import { appSelectors } from '@redux';
-import SettingsHeader from '../components/header/SettingsHeader';
 
 
 const SettingsScreen = ({ navigation }) => {
@@ -79,7 +77,7 @@ const SettingsScreen = ({ navigation }) => {
             <LineItemOptions
               onPress={() => navigateToPage("settings/language")}
               title={t("st_lang")}
-              value={LANG_MASKS[lang]} />
+              value={LANG_MASKS[lang].mask} />
           </Segment>
 
           <GapView />
