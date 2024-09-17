@@ -5,6 +5,7 @@ const SvgSupport = (props) => (
     xmlns="http://www.w3.org/2000/svg"
     xmlSpace="preserve"
     viewBox="0 0 21.8 21.8"
+    style={{height: 34, width: 34}}
     {...props}
   >
     <Path
