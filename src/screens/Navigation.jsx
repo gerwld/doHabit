@@ -53,8 +53,8 @@ export const Navigation = () => {
             <Stack.Navigator>
                 <Stack.Screen name="home" component={HomeScreen} options={{ headerShown: false, title: t("home_screen") }} />
                 <Stack.Screen name="habitdetails" component={DetailsHabitScreen} options={{ headerShown: false, title: "Habit Details" }} />
-                {addEditSubdirectories}
                 {settingsSubdirectories}
+                {addEditSubdirectories}
                 <Stack.Screen
                     name="tutorial"
                     component={TutorialScreen}

@@ -276,7 +276,6 @@ const SelectDate = ({ isVisible, theme, value, onChangeInput, remind }) => {
     const time = getTimeFromTimestamp(payload);
     if (time) {
       onChangeInput("remindTime", time);
-      console.log(time, date);
     }
   }
 

@@ -5,6 +5,8 @@ import { appActions, habitsActions } from "actions";
 import i18n from '../../i18n';
 import { LogBox, useColorScheme } from 'react-native';
 import { Appearance } from 'react-native';
+import { getLocales } from 'expo-localization';
+import { LANG_MASKS } from '../constants';
 
 LogBox.ignoreLogs([
     'Non-serializable values were found in the navigation state',
@@ -21,7 +23,7 @@ const useInitializeApp = (lang) => {
             if (storedSet !== null) {
                 let set = JSON.parse(storedSet);
                 delete set.system_theme;
-                d(appActions.initializeApp());
+                d(appActions.initializeApp(set));
             }
         } catch (e) {
             console.error('Failed to load settings from storage', e);
@@ -48,16 +50,37 @@ const useInitializeApp = (lang) => {
 
     // STEP 3: set i18n in with provider part of App
     useEffect(() => {
-        i18n.locale = lang;
-        i18n.changeLanguage(lang);
-    }, [lang])
+        const languagesList = Object.keys(LANG_MASKS);
+        const userPreferredLanguages = getLocales().map(e => e.languageCode);
+    
+        // Function to get the first valid language from the list
+        const getValidLanguage = (languages) => {
+            for (const lang of languages) {
+                if (languagesList.includes(lang)) {
+                    return lang;
+                }
+            }
+            return 'en'; // Default fallback language
+        };
+    
+        // Determine the language to use
+        let locale_set = lang;
+    
+        if (!locale_set || !languagesList.includes(locale_set)) { 
+            locale_set = getValidLanguage([...userPreferredLanguages, 'en']);
+            d(appActions.setLang(locale_set));
+        }
+
+    
+        i18n.locale = locale_set;
+        i18n.changeLanguage(locale_set);
+    }, [lang]);
+    
 
     // STEP 4: initialize system kind of theme (scheme)
     const payload = useColorScheme();
     const colorScheme = Appearance.getColorScheme();
-    useEffect(() => {
-        console.log(payload, colorScheme);
-        
+    useEffect(() => {        
         d(appActions.setSystemTheme(payload))
     }, [payload, colorScheme])
 
