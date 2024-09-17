@@ -7,7 +7,7 @@ import {
 import { produce } from "immer";
 
 const initialState = {
-    lang: "en",
+    lang: null,
     theme: "st_theme__system",
     system_theme: null
 }

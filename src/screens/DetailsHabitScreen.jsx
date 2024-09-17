@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import alert from '../polyfils/alert';
 import { habitsActions } from "actions";
-import { REPEAT_MASKS, getTheme } from '@constants';
+import { REPEAT_MASKS, getTheme, uses24HourClock, convertTo12HourFormat } from '@constants';
 import { Label, InfoBar, InfoBarItem } from "styles/crudtask"
 import { appSelectors } from '@redux';
 import { CircularProgress, LineItemView, SettingsHeader, BaseView } from '@components';
@@ -19,6 +19,12 @@ const DetailsHabitScreen = ({ route, navigation }) => {
   const theme = useSelector(appSelectors.selectAppTheme);
 
   const [item, setItem] = React.useState(null);
+  const time = item?.remindTime;
+
+  const  twelveOr24Time = (time) => {
+    if(uses24HourClock(new Date())) return time;
+    return convertTo12HourFormat(time);
+  }
 
   React.useEffect(() => {
     setItem(route.params);
@@ -91,7 +97,7 @@ const DetailsHabitScreen = ({ route, navigation }) => {
           </InfoBarItem>
           <InfoBarItem>
             <Icon type="feather" size={24} name="clock" color={styles.i.color} />
-            <Text style={[styles.t, styles.l]}>{item?.remindTime ? item?.remindTime : "--:--"}</Text>
+            <Text style={[styles.t, styles.l]}>{time ? twelveOr24Time(time) : "--:--"}</Text>
           </InfoBarItem>
         </LineItemView>
 

@@ -7,7 +7,6 @@ import { REPEAT_MASKS } from '@constants';
 
 const AHSRepeat = ({ route, navigation }) => {
   const { t } = useTranslation();
-
   const [state, setState] = React.useState({
     ...route.params.state
   });
@@ -25,18 +24,6 @@ const AHSRepeat = ({ route, navigation }) => {
     route.params.onGoBack({ data: { ...state } });
     navigation.goBack();
   };
-
-  React.useEffect(() => {
-    const unsubscribe = navigation.addListener('beforeRemove', (e) => {
-      e.preventDefault();
-      if (route.params?.onGoBack) {
-        route.params.onGoBack({ data: { ...state } });
-      }
-      navigation.dispatch(e.data.action);
-    });
-
-    return unsubscribe;
-  }, [navigation, route.params, state]);
 
   React.useEffect(() => {
     setState({ ...state, ...route.params.state });

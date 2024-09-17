@@ -9,38 +9,18 @@ import { useTranslation } from 'react-i18next';
 import { appActions } from "actions"
 import { appSelectors } from '@redux';
 
-const languagesList = Object.keys(LANG_MASKS).map(e => ({ name: LANG_MASKS[e], value: e }));
-
-const STLanguage = ({ route, navigation }) => {
+const STLanguage = ({ navigation }) => {
     const { t } = useTranslation();
     const d = useDispatch();
     const { lang, theme } = useSelector(appSelectors.selectAppThemeAndLang);
-    const [state, setState] = React.useState({
-        lang,
-        ...route.params.state
-    });
+
+    const languagesList = useCallback(Object.keys(LANG_MASKS).map(e => ({ name: LANG_MASKS[e], value: e })), [LANG_MASKS]);
 
     const onChangeInput = useCallback((_, value) => {
         if (value !== undefined) {
             d(appActions.setLang(value))
         }
       }, [])
-
-    React.useEffect(() => {
-        const unsubscribe = navigation.addListener('beforeRemove', (e) => {
-            e.preventDefault();
-            if (route.params?.onGoBack) {
-                route.params.onGoBack({ data: { ...state } });
-            }
-            navigation.dispatch(e.data.action);
-        });
-
-        return unsubscribe;
-    }, [navigation, route.params, state]);
-
-    React.useEffect(() => {
-        setState({ ...state, ...route.params.state });
-    }, [route.params])
 
     return (
 

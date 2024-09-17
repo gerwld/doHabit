@@ -15,14 +15,10 @@ LogBox.ignoreLogs([
     'Non-serializable values were found in the navigation state',
 ]);
 
-const STTheme = ({ route, navigation }) => {
+const STTheme = ({ navigation }) => {    
     const {t} = useTranslation();
     const d = useDispatch();
     const theme = useSelector(appSelectors.selectAppTheme);
-    const [state, setState] = React.useState({
-        theme,
-        ...route.params.state
-    });
     const headerStyles = useHeaderStyles(theme, isWhite = true);
 
     const onChangeInput = (name, value) => {
@@ -32,22 +28,6 @@ const STTheme = ({ route, navigation }) => {
     const handleGoBack = () => {
         navigation.goBack();
     };
-
-    React.useEffect(() => {
-        const unsubscribe = navigation.addListener('beforeRemove', (e) => {
-            e.preventDefault();
-            if (route.params?.onGoBack) {
-                route.params.onGoBack({ data: { ...state } });
-            }
-            navigation.dispatch(e.data.action);
-        });
-
-        return unsubscribe;
-    }, [navigation, route.params, state]);
-
-    React.useEffect(() => {
-        setState({ ...state, ...route.params.state });
-    }, [route.params])
 
     return (
 

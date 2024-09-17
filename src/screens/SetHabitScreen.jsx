@@ -9,7 +9,7 @@ import Animated, { FadeIn, FadeOut, useAnimatedStyle, useSharedValue, withTiming
 
 import { Label, ColorPicker } from "styles/crudtask"
 import { BaseView, LineItemView, Modal, BasePressButton, LineItemOptions, SettingsHeader } from '@components';
-import { HABIT_COLORS, getRandomItem, getTheme, getTimeFromTimestamp } from '@constants';
+import { HABIT_COLORS, getRandomItem, getTheme, getTimeFromTimestamp, uses24HourClock } from '@constants';
 import { habitsActions } from "actions";
 import { appSelectors, habitSelectors } from '@redux';
 import alert from '../polyfils/alert';
@@ -255,7 +255,7 @@ const SetHabitScreen = ({ route, navigation, isEdit }) => {
               <SelectDate
                 remind={state.remind}
                 theme={theme}
-                value={state.remindTime}
+                value={state?.remindTime}
                 onChangeInput={onChangeInput}
                 isVisible={state.remind} />
             </>
@@ -269,13 +269,8 @@ const SetHabitScreen = ({ route, navigation, isEdit }) => {
   )
 }
 
-const SelectDate = ({ isVisible, theme, value, onChangeInput, remind }) => {
+const SelectDate = ({ isVisible, theme, value, onChangeInput, remind }) => {  
   const date = new Date();
-
-  const uses24HourClock = (date) => {
-    const timeString = date.toLocaleTimeString([], { hour: 'numeric' });
-    return !timeString.includes('AM') && !timeString.includes('PM');
-  };
 
   const onTimeSelect = (_, payload) => {
     const time = getTimeFromTimestamp(payload);
