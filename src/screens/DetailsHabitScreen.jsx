@@ -9,7 +9,7 @@ import { habitsActions } from "actions";
 import { REPEAT_MASKS, getTheme, uses24HourClock, convertTo12HourFormat } from '@constants';
 import { Label, InfoBar, InfoBarItem } from "styles/crudtask"
 import { appSelectors } from '@redux';
-import { CircularProgress, LineItemView, SettingsHeader, BaseView } from '@components';
+import { CircularProgress, LineItemView, STHeader, BaseView } from '@components';
 import CalendarPicker from 'react-native-calendar-picker';
 
 
@@ -80,7 +80,7 @@ const DetailsHabitScreen = ({ route, navigation }) => {
 
   return (
     <BaseView>
-      <SettingsHeader
+      <STHeader
         title={item?.name}
 
         leftText={t("act_back")}

@@ -3,7 +3,7 @@ import { View, Text, Pressable, LogBox } from 'react-native'
 import { Header as HeaderRNE, Icon } from '@rneui/themed';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { BaseView, SelectList } from '@components';
+import { BaseView, SelectList, STHeader } from '@components';
 import { THEMES_MASKS, getTheme } from '@constants';
 
 import { useTranslation } from 'react-i18next';
@@ -32,17 +32,10 @@ const STTheme = ({ navigation }) => {
     return (
 
         <BaseView>
-            <HeaderRNE
-                containerStyle={headerStyles.header}
-                style={{ height: 60 }}
-                leftComponent={
-                    <Pressable onPress={handleGoBack}>
-                            <Text style={headerStyles.headerButton}>{t("act_back")}</Text>
-                    </Pressable>
-                }
-
-                centerComponent={<Text style={headerStyles.headerTitle}>{t("st_theme")}</Text>}
-                backgroundColor={getTheme(theme).bgHighlight}
+           <STHeader
+                navigation={navigation}
+                theme={theme}
+                title={t("st_theme")}
             />
 
             <View style={{ paddingTop: 14, flex: 1 }}>

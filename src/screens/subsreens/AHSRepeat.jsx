@@ -2,7 +2,7 @@ import React, { useCallback } from 'react'
 import { View } from 'react-native'
 import { useTranslation } from 'react-i18next';
 
-import { BaseView, SelectList, SettingsHeader } from '@components';
+import { BaseView, SelectList, STHeader } from '@components';
 import { REPEAT_MASKS } from '@constants';
 
 const AHSRepeat = ({ route, navigation }) => {
@@ -32,7 +32,7 @@ const AHSRepeat = ({ route, navigation }) => {
   return (
 
     <BaseView>
-      <SettingsHeader
+      <STHeader
         bgColor={state.color}
         onGoBack={handleGoBack}
         navigation={navigation}

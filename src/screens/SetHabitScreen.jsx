@@ -8,7 +8,7 @@ import Animated, { FadeIn, FadeOut, useAnimatedStyle, useSharedValue, withTiming
 
 
 import { Label, ColorPicker } from "styles/crudtask"
-import { BaseView, LineItemView, Modal, BasePressButton, LineItemOptions, SettingsHeader } from '@components';
+import { BaseView, LineItemView, Modal, BasePressButton, LineItemOptions, STHeader } from '@components';
 import { HABIT_COLORS, getRandomItem, getTheme, getTimeFromTimestamp, uses24HourClock } from '@constants';
 import { habitsActions } from "actions";
 import { appSelectors, habitSelectors } from '@redux';
@@ -153,7 +153,7 @@ const SetHabitScreen = ({ route, navigation, isEdit }) => {
   return (
 
     <BaseView>
-      <SettingsHeader
+      <STHeader
         title={isEdit ? t("eddt_screen") : t("addt_screen")}
 
         leftText={t("act_cancel")}

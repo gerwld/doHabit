@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react'
 import { Text, FlatList, StatusBar, StyleSheet, View } from 'react-native';
-import { Header, BaseView, LastSevenDays, HomeTask } from '@components';
+import { HomeHeader, BaseView, LastSevenDays, HomeTask } from '@components';
 import { useSelector } from 'react-redux';
 import { getTheme } from '@constants';
 import { getThemeStatusBar } from '../constants';
@@ -15,7 +15,7 @@ function HomeScreen({ navigation }) {
 
   return (
     <BaseView>
-      <Header {...{ navigation }} />
+      <HomeHeader {...{ navigation }} />
       <LatestTasks {...{ theme }} />
 
       <StatusBar translucent barStyle={getThemeStatusBar(theme)} />

@@ -6,7 +6,7 @@ import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context'
 
 const HEADER_HEIGHT_SAFE = 55;
 
-export const Header = React.memo(({ navigation, leftChild, rightChild }) => {
+export const HomeHeader = React.memo(({ navigation, leftChild, rightChild }) => {
     const insets = useSafeAreaInsets();
 
     const styles = StyleSheet.create({
@@ -58,7 +58,7 @@ export const Header = React.memo(({ navigation, leftChild, rightChild }) => {
     });
     
     return (
-        <View style={styles.header}>
+    <View style={styles.header}>
         <LinearGradient
             colors={['#7fcbfd', '#3c95d0']}
             start={{ x: 0.2, y: 0.5 }}

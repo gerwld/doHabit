@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { View, Text, ScrollView, StyleSheet, Pressable, StatusBar } from 'react-native'
 import { useTranslation } from 'react-i18next';
 
-import { LineItemView, GapView, LineItemOptions, Segment, SettingsHeader } from '@components'
+import { LineItemView, GapView, LineItemOptions, Segment, STHeader } from '@components'
 import { LANG_MASKS, getTheme, getThemeStatusBar } from '@constants';
 import { appSelectors } from '@redux';
 import { Feature, Lang, Rateapp, Support, Theme, Tutorial } from '@icons';
@@ -51,7 +51,7 @@ const SettingsScreen = ({ navigation }) => {
 
   return (
     <View style={{ flex: 1, backgroundColor: getTheme(theme).background }}>
-      <SettingsHeader
+      <STHeader
         navigation={navigation}
         theme={theme}
         title={t("st_screen")}

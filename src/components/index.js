@@ -1,5 +1,5 @@
-export { Header } from "./header/Header";
-export { default as SettingsHeader } from "./header/SettingsHeader";
+export { HomeHeader } from "./header/HomeHeader";
+export { default as STHeader } from "./header/STHeader";
 
 
 export { LastSevenDays } from "./LastSevenDays";

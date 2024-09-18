@@ -2,7 +2,7 @@ import React, { useCallback } from 'react'
 import { View } from 'react-native'
 import { useDispatch, useSelector } from 'react-redux';
 
-import { BaseView, SelectList, SettingsHeader } from '@components';
+import { BaseView, SelectList, STHeader } from '@components';
 import { LANG_MASKS } from '@constants';
 
 import { useTranslation } from 'react-i18next';
@@ -26,7 +26,7 @@ const STLanguage = ({ navigation }) => {
     return (
 
         <BaseView>
-            <SettingsHeader
+            <STHeader
                 navigation={navigation}
                 theme={theme}
                 title={t("st_lang")}

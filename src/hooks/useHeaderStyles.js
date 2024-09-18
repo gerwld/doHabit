@@ -1,55 +1,69 @@
 import { StyleSheet } from 'react-native';
 import { getTheme } from "../constants";
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+
+const HEADER_HEIGHT_SAFE = 55;
 
 export const useHeaderStyles = (theme, isWhite = false) => {
+  const insets = useSafeAreaInsets();
   const themeVars = getTheme(theme);
 
   const headerStyles = StyleSheet.create({
-    headerLeft: {
-      flexDirection: 'row',
-      alignItems: 'center',
-    },
-    headerRight: {
-      flexDirection: 'row',
-      alignItems: 'center',
-    },
-
     header: {
-      justifyContent: "space-between",
-      padding: 0,
-      minHeight: 55,
-      paddingVertical: 0,
-      paddingHorizontal: 0,
-      border: "none",
-      borderWidth: 0,
-      borderBottomWidth: 0,
-      flexDirection: "row",
+        width: "100%",
+        height: insets.top + HEADER_HEIGHT_SAFE,
+        maxHeight: insets.top + HEADER_HEIGHT_SAFE,
+        minHeight: insets.top + HEADER_HEIGHT_SAFE,
+        padding: 0,
+        alignItems: "center",
+        borderBottomWidth: 0,
+    },
+    headerContent: {
+        width: "100%",
+        height: HEADER_HEIGHT_SAFE,
+        maxHeight: HEADER_HEIGHT_SAFE,
+        minHeight: HEADER_HEIGHT_SAFE,
+        flex: 1,
+        flexDirection: 'row',
+        alignItems: "flex-start",
+        justifyContent: 'space-between',
+        paddingHorizontal: 2,
+    },
+    headerButton: {
+        flexShrink: 0,
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center',
+        height: 55,
+        width: 55,
     },
     headerTitle: {
-      maxWidth: 260,
-      minHeight: 55,
-      lineHeight: 55,
-      flex: 1,
-      color: isWhite ? themeVars.textColorHighlight : "#ffffff",
-      textAlign: "center",
-      fontSize: 19,
-      fontWeight: 'bold',
-      alignItems: "center",
-      justifyContent: "center",
-      pointerEvents: "none",
-      userSelect: "none",
+        color: 'white',
+        fontSize: 22,
+        fontWeight: 'bold',
     },
-  
-    headerButton: {
-      textAlign: "left",
-      width: 108,
-      flex: 2,
-      maxHeight: 55,
-      maxWidth: 140,
-      fontSize: 18,
-      height: 55,
-      lineHeight: 55,
+    leftComponent: {
       paddingLeft: 14,
+      height: 55,
+      justifyContent: "center",
+        flex: 1,
+    },
+    rightComponent: {
+      height: 55,
+      justifyContent: "center",
+      flex: 1,
+      alignItems: 'flex-end',
+  },
+    centerComponent: {
+        height: 55,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+ 
+    headerButton: {
+      fontSize: 19,
+      textAlign: "left",
+      // lineHeight: HEADER_HEIGHT_SAFE,
       userSelect: "none",
       color: isWhite ? themeVars.textColorHighlight : "#ffffff",
     },
@@ -57,7 +71,7 @@ export const useHeaderStyles = (theme, isWhite = false) => {
       textAlign: "right",
       paddingRight: 14,
     }
-  });
+});
 
   return headerStyles;
 };
