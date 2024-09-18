@@ -16,6 +16,7 @@ export const useHeaderStyles = (theme, isWhite = false) => {
         minHeight: insets.top + HEADER_HEIGHT_SAFE,
         padding: 0,
         alignItems: "center",
+        justifyContent: "flex-end",
         borderBottomWidth: 0,
     },
     headerContent: {

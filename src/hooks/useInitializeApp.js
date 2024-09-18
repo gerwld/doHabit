@@ -82,10 +82,11 @@ const useInitializeApp = (lang) => {
     // STEP 4: initialize system kind of theme (scheme)
     const payload = useColorScheme();
     const colorScheme = Appearance.getColorScheme();
+    console.log(payload, colorScheme);
+    
     useEffect(() => {        
         d(appActions.setSystemTheme(payload))
     }, [payload, colorScheme])
-
     
 };
 

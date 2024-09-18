@@ -6,7 +6,8 @@
     "android": "expo run:android",
     "ios": "expo run:ios",
     "web": "expo start --web",
-    "ios:loc": "eas build --platform ios --local --profile preview"
+    "ios:loc": "eas build --platform ios --local --profile preview",
+    "android:loc": "eas build --platform android --local --profile preview"
   },
   "dependencies": {
     "@expo/metro-runtime": "~3.2.3",

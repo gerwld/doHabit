@@ -72,6 +72,7 @@ Payload/
 *.app
 *.tar.gz
 *.ipa
+*.apk
 
 # local env files
 .env*.local

@@ -1,6 +1,7 @@
 import React from 'react';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { Provider,  useSelector } from 'react-redux';
+import { StatusBar } from 'expo-status-bar';
 
 import { Navigation } from 'screens/Navigation';
 import withTranslation from 'hocs/withTranslation';
@@ -22,6 +23,7 @@ export default withTranslation(function RootComponent() {
       <GestureHandlerRootView style={{ flex: 1 }}>
       <AppWithProvider>
         <Navigation />
+        <StatusBar translucent style="dark" />
       </AppWithProvider>
       </GestureHandlerRootView>
     </Provider>
