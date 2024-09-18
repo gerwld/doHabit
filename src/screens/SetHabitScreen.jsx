@@ -15,6 +15,7 @@ import { appSelectors, habitSelectors } from '@redux';
 import alert from '../polyfils/alert';
 import RNDateTimePicker from '@react-native-community/datetimepicker';
 import { useInputFocusOnInit } from '../hooks';
+import Toggle from '../components/Toggle';
 
 const DEFAULT_TIME = "11:00"
 
@@ -171,6 +172,7 @@ const SetHabitScreen = ({ route, navigation, isEdit }) => {
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
       >
         <ScrollView
+          overScrollMode='always'
           ref={ref => { this.scrollView = ref }}
           onContentSizeChange={() => this.scrollView.scrollToEnd({ animated: true })}
           keyboardDismissMode="none"
@@ -248,16 +250,16 @@ const SetHabitScreen = ({ route, navigation, isEdit }) => {
           {Platform.OS === "ios" || Platform.OS === "android"
             ?
             <>
-              <LineItemView pl1 toggle toggleColor={state.color} isEnabled={state.remind} onToggle={(v) => { onChangeInput("remind", v); }}>
-                <Text style={{ fontSize: 16, color: getTheme(theme).textColorHighlight }}>{t("addt_remind")}</Text>
-              </LineItemView>
+            <LineItemView pl1 toggle toggleColor={state.color} isEnabled={state.remind} onToggle={(v) => { onChangeInput("remind", v); }}>
+              <Text style={{ fontSize: 16, color: getTheme(theme).textColorHighlight }}>{t("addt_remind")}</Text>
+            </LineItemView>
 
-              <SelectDate
+              {/* <SelectDate
                 remind={state.remind}
                 theme={theme}
                 value={state?.remindTime}
                 onChangeInput={onChangeInput}
-                isVisible={state.remind} />
+                isVisible={state.remind} /> */}
             </>
             : null}
 

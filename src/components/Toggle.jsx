@@ -17,9 +17,7 @@ const Toggle = props => {
   });
 
   const {value, toggleColor, backgroundColor, style, onToggle, labelStyle, label} = props;  
-
   const offColor = backgroundColor;
-
   const color = value ? toggleColor : offColor;
 
   animatedValue.setValue(value ? 0 : 1);
@@ -53,7 +51,7 @@ const Toggle = props => {
 
 Toggle.defaultProps = {
   toggleColor: '#4cd137',
-  offColor: '#ecf0f1',
+  backgroundColor: '#ecf0f1',
   label: '',
   onToggle: () => {},
   style: {},
@@ -72,7 +70,8 @@ const styles = StyleSheet.create({
     width: 50,
     height: 30,
     marginLeft: 3,
-    paddingLeft: 2,
+    paddingLeft: 3,
+    paddingLeft: 2.5,
     borderRadius: 15,
     justifyContent: 'center',
   },

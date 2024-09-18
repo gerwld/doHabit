@@ -5,6 +5,7 @@ import styled from 'styled-components/native';
 import { getTheme } from '@constants';
 import { useSelector } from 'react-redux';
 import { appSelectors } from '@redux';
+import Toggle from '../Toggle';
 
 const LineItemView = ({ isFirstItem, leftIcon, children, rightArrow, toggle, toggleColor, onToggle, isEnabled, pl1, st }) => {
     const theme = useSelector(appSelectors.selectAppTheme);
@@ -33,11 +34,12 @@ border-bottom-width: 0;
 
             {rightArrow ? <Icon style={{ marginHorizontal: 5 }} type="entypo" size={18} name="chevron-thin-right" color="#ccd1db" /> : null}
             {toggle ?
-                <Switch
+            Platform.OS === "ios" 
+            ?    <Switch
                     style={{ marginRight: 10 }}
                     trackColor={{ false: '#d7dcde', true: (toggleColor ? toggleColor : '#81b0ff') }}
                     thumbColor={"#ffffff"}
-                    ios_backgroundColor={getTheme(theme).thumbBackground}
+                    ios_backgroundColor={getTheme(theme).thumbBackgroundIos}
                     onValueChange={onToggle ? onToggle : null}
                     value={isEnabled}
                     {...Platform.select({
@@ -46,6 +48,13 @@ border-bottom-width: 0;
                         }
                     })}
                 />
+            : <Toggle
+                style={{ marginRight: 10 }}
+                toggleColor={(toggleColor ? toggleColor : '#81b0ff')}
+                backgroundColor={getTheme(theme).thumbBackground}
+                onToggle={() => onToggle(!isEnabled)}
+                value={isEnabled}
+            />
                 : null}
         </LineItemViewItem>
     );

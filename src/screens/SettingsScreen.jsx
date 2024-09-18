@@ -57,7 +57,7 @@ const SettingsScreen = ({ navigation }) => {
         title={t("st_screen")}
       />
 
-      <ScrollView contentContainerStyle={styles.scrollViewContent}>
+      <ScrollView overScrollMode='always' contentContainerStyle={styles.scrollViewContent}>
         <View style={{ flex: 1, justifyContent: "flex-start", height: "100%", minHeight: 390 }}>
           <GapView />
           <Segment>

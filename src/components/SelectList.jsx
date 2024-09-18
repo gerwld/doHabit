@@ -1,6 +1,6 @@
 import React, { useCallback } from "react"
 import { useTranslation } from "react-i18next"
-import { Text, View, Pressable, FlatList, StyleSheet } from "react-native"
+import { Text, View, Pressable, FlatList, StyleSheet, Platform } from "react-native"
 import { getTheme } from "@constants"
 import { Label } from "styles/crudtask"
 import { Icon } from "@rneui/themed"
@@ -75,6 +75,12 @@ const SelectList = React.memo(({ data, title, currentValue, setValue, color, the
                 contentContainerStyle={{ paddingBottom: 10 }}
                 keyExtractor={keyExtractor}
                 data={data}
+                {...(Platform.OS === 'android'
+                    ? { 
+                        overScrollMode: 'always', 
+                        scrollEnabled: true
+                      }
+                    : { bounces: true })}
                 renderItem={({ item }) => <ListItem {...{ ...item, color, onPress: () => setValue(item.value) }} />
                 }
             />

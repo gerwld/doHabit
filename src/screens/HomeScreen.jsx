@@ -1,5 +1,5 @@
 import React, { useCallback } from 'react'
-import { Text, FlatList, StatusBar, StyleSheet, View } from 'react-native';
+import { Text, FlatList, StatusBar, StyleSheet, View, Platform } from 'react-native';
 import { HomeHeader, BaseView, LastSevenDays, HomeTask } from '@components';
 import { useSelector } from 'react-redux';
 import { getTheme } from '@constants';
@@ -67,6 +67,12 @@ const LatestTasks = React.memo(({ theme }) => {
         data={items}
         renderItem={renderItem}
         keyExtractor={keyExtractor}
+        {...(Platform.OS === 'android'
+          ? { 
+              overScrollMode: 'always', 
+              scrollEnabled: true
+            }
+          : { bounces: true })}
       />
       {/* <View  */}
     </>
