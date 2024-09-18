@@ -68,10 +68,8 @@ export const HomeHeader = React.memo(({ navigation, leftChild, rightChild }) => 
             <SafeAreaView style={styles.headerContent}>
                 <View style={styles.leftComponent}>
                     {leftChild ? leftChild : (
-                        <Pressable onPress={() => navigation.navigate('settings')}>
-                            <View style={styles.headerButton}>
+                        <Pressable style={styles.headerButton} onPress={() => navigation.navigate('settings')}>
                                 <Icon type="antdesign" size={31} name="setting" color="white" />
-                            </View>
                         </Pressable>
                     )}
                 </View>
@@ -80,10 +78,8 @@ export const HomeHeader = React.memo(({ navigation, leftChild, rightChild }) => 
                 </View>
                 <View style={styles.rightComponent}>
                     {rightChild ? rightChild : (
-                        <Pressable onPress={() => navigation.navigate('addhabit')}>
-                            <View style={styles.headerButton}>
+                        <Pressable style={styles.headerButton} onPress={() => navigation.navigate('addhabit')}>
                                 <Icon type="antdesign" size={29} name="plus" color="white" />
-                            </View>
                         </Pressable>
                     )}
                 </View>

@@ -33,14 +33,18 @@ const STHeader = React.memo(({
             <SafeAreaView style={headerStyles.headerContent}>
 
                 {leftComponent ? leftComponent :
+                <View style={[headerStyles.leftComponent]}>
                     <Pressable
-                        style={headerStyles.leftComponent}
+                        style={headerStyles.componentPressable}
                         onPress={() => {
                             if (onGoBack) onGoBack()
                             else navigation.goBack()
                         }}>
-                        <Text style={[headerStyles.headerButton, s.textColor]}>{leftText ? leftText : t("act_back")}</Text>
-                    </Pressable>}
+                        <Text 
+                        numberOfLines={1} ellipsizeMode='tail'
+                        style={[headerStyles.headerButton, s.textColor]}>{leftText ? leftText : t("act_back")}</Text>
+                    </Pressable>
+                </View>}
 
 
                 <View style={headerStyles.centerComponent}>
@@ -48,11 +52,17 @@ const STHeader = React.memo(({
                 </View>
 
                 {rightComponent ? rightComponent :
-                    <Pressable
-                        onPress={rightPress}
-                        style={[headerStyles.rightComponent, { opacity: rightPress === null ? 0.6 : 1 }]}>
-                        <Text style={[headerStyles.headerButton, headerStyles.headerButtonRight, s.textColor]}>{rightText}</Text>
-                    </Pressable>}
+                    rightText
+                        ? <View style={[headerStyles.rightComponent]}>
+                            <Pressable
+                                onPress={rightPress}
+                                style={[headerStyles.componentPressable, headerStyles.componentPressableRight, { opacity: rightPress === null ? 0.6 : 1 }]}>
+                                <Text 
+                                numberOfLines={1} ellipsizeMode="tail"
+                                style={[headerStyles.headerButton, s.textColor]}>{rightText}</Text>
+                            </Pressable>
+                        </View>
+                        : <View style={headerStyles.rightComponent} />}
 
             </SafeAreaView>
         </View>

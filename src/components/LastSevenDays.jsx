@@ -68,7 +68,7 @@ export const LastSevenDays = React.memo(({ isHabit, habitID, color }) => {
 
                     return <TimeView key={`key_dayitem_${iterationDay}`}>
                         <T key={`key_dayitem${iterationDay}__part1`} style={activeStyle}>{currentMonthMask}</T>
-                        <T key={`key_dayitem${iterationDay}__part2`} style={[activeStyle, { fontSize: 17 }]}>{iterationDay}</T>
+                        <T key={`key_dayitem${iterationDay}__part2`} style={[activeStyle, { fontSize: 17, lineHeight: 19 }]}>{iterationDay}</T>
                     </TimeView>
                 })
             }
