@@ -139,7 +139,7 @@ const PageButtonIc = styled.Pressable`
     align-items:center;
     justify-content:center;
     background-color: #8080804f;
-    border-radius: 50%;
+    border-radius: 50px;
     pointer-events: none;
     user-select: none;
 `

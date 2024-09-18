@@ -133,7 +133,7 @@ const DetailsHabitScreen = ({ route, navigation }) => {
         todayStyle={{color: "red"}}
         
      
-        scrollDecelarationRate="" 
+        
         scrollable={true} />
       
     
