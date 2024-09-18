@@ -12,6 +12,7 @@ import { useSelector } from "react-redux";
 import { getTheme } from "@constants";
 import { appSelectors } from "@redux";
 import SetHabitScreen from "./SetHabitScreen";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 
 
 const Stack = createNativeStackNavigator();
@@ -49,6 +50,7 @@ export const Navigation = () => {
     )
 
     return (
+        <GestureHandlerRootView style={{flex: 1, backgroundColor: getTheme(theme).background || "white"}}>
         <NavigationContainer>
             <Stack.Navigator>
                 <Stack.Screen name="home" component={HomeScreen} options={{ headerShown: false, title: t("home_screen") }} />
@@ -67,6 +69,7 @@ export const Navigation = () => {
                 />
             </Stack.Navigator>
         </NavigationContainer>
+        </GestureHandlerRootView>
     )
 }
 
