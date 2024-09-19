@@ -1,28 +1,27 @@
 import React from 'react'
-import { View, Text, Pressable, LogBox } from 'react-native'
-import { Header as HeaderRNE, Icon } from '@rneui/themed';
+import { View, LogBox } from 'react-native'
 import { useDispatch, useSelector } from 'react-redux';
 
 import { BaseView, SelectList, STHeader } from '@components';
-import { THEMES_MASKS, getTheme } from '@constants';
+import { THEMES_MASKS } from '@constants';
 
 import { useTranslation } from 'react-i18next';
 import { appActions } from "actions"
-import { useHeaderStyles } from 'hooks';
 import { appSelectors } from '@redux';
 
 LogBox.ignoreLogs([
     'Non-serializable values were found in the navigation state',
 ]);
 
-const STTheme = ({ navigation }) => {    
+const STTheme = (({ navigation }) => {  
+    
     const {t} = useTranslation();
     const d = useDispatch();
     const theme = useSelector(appSelectors.selectAppTheme);
-    const headerStyles = useHeaderStyles(theme, isWhite = true);
+    const [localValue, setLocalValue] = React.useState(theme.theme);  
 
     const onChangeInput = (name, value) => {
-        d(appActions.setTheme(value))
+        d(appActions.setTheme(value))        
     }
 
     const handleGoBack = () => {
@@ -34,7 +33,6 @@ const STTheme = ({ navigation }) => {
         <BaseView>
            <STHeader
                 navigation={navigation}
-                theme={theme}
                 title={t("st_theme")}
             />
 
@@ -51,7 +49,7 @@ const STTheme = ({ navigation }) => {
 
         </BaseView>
     )
-}
+});
 
 
 

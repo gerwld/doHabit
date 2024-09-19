@@ -2,16 +2,13 @@ import React from 'react'
 import { Pressable, Text } from 'react-native'
 import LineItemView from './styling/LineItemView'
 import { useNavigation } from '@react-navigation/native';
-import { useSelector } from 'react-redux';
-import { getTheme } from '@constants';
-import { appSelectors } from '@redux';
+import { useCurrentTheme } from 'hooks';
 
 
 
-const LineItemOptions = ({ navTo, title, value, onPress, ...rest }) => {
+const LineItemOptions = React.memo(({ navTo, title, value, onPress, ...rest }) => {
     const navigation = useNavigation();
-    const theme = useSelector(appSelectors.selectAppTheme);
-    const themeColors = React.useMemo(() => getTheme(theme), [theme]);
+    const [themeColors] = useCurrentTheme();
 
     const content = (
         <LineItemView pl1 rightArrow {...rest}>
@@ -33,6 +30,6 @@ const LineItemOptions = ({ navTo, title, value, onPress, ...rest }) => {
     )
 
     return content;
-}
+});
 
 export default LineItemOptions

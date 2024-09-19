@@ -1,10 +1,11 @@
 import React, { useCallback, useMemo } from 'react'
-import { Text, FlatList, StatusBar, StyleSheet, View, Platform } from 'react-native';
+import { Text, FlatList, StatusBar, StyleSheet, View, Platform, SafeAreaView } from 'react-native';
 import { HomeHeader, BaseView, LastSevenDays, HomeTask } from '@components';
 import { useSelector } from 'react-redux';
-import { getTheme } from '@constants';
-import { getThemeStatusBar } from '../constants';
+import { getThemeStatusBar } from '@constants';
 import { habitSelectors, appSelectors } from '@redux';
+import { useCurrentTheme } from 'hooks';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 const styles = StyleSheet.create({
   begin: {
@@ -22,14 +23,14 @@ function HomeScreen({ navigation }) {
   const theme = useSelector(appSelectors.selectAppTheme)
   const isInit = useSelector(appSelectors.isHabitsInit)
 
-  if (!isInit) return <Text>Loader...</Text>
+  if (!isInit) return <SafeAreaProvider><SafeAreaView><Text>Loader...</Text></SafeAreaView></SafeAreaProvider>
 
   const statusBarStyle = getThemeStatusBar(theme);
 
   return (
     <BaseView>
       <HomeHeader navigation={navigation} />
-      <LatestTasks theme={theme} />
+      <LatestTasks />
       <StatusBar translucent barStyle={statusBarStyle} />
     </BaseView>
   );
@@ -43,8 +44,8 @@ export default React.memo(HomeScreen);
 
 
 
-const LatestTasks = React.memo(({ theme }) => {
-  const themeColors = React.useMemo(() => getTheme(theme), [theme]);
+const LatestTasks = (() => {
+  const [themeColors] = useCurrentTheme();
   const items = useSelector(habitSelectors.selectItems);
 
   const renderItem = useCallback(
@@ -69,17 +70,17 @@ const LatestTasks = React.memo(({ theme }) => {
     );
   }
 
-  const flatListProps = useMemo(() => ({
+  const flatListProps = {
     contentContainerStyle: { paddingBottom: 60 },
     data: items,
     renderItem,
     keyExtractor,
     ...(Platform.OS === 'android' ? { overScrollMode: 'always', scrollEnabled: true } : { bounces: true }),
-  }), [items, renderItem, keyExtractor]);
+  };
 
   return (
     <>
-      <LastSevenDays theme={theme} />
+      <LastSevenDays />
       <FlatList
         {...flatListProps}
       />

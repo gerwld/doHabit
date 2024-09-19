@@ -1,14 +1,14 @@
 import { StyleSheet } from 'react-native';
-import { getTheme } from "../constants";
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import React from 'react';
+import useCurrentTheme from './useCurrentTheme';
 
 const HEADER_HEIGHT_SAFE = 55;
-const GAP_BETWEEN_SCREEN_BORDERS = "9%";
+const GAP_BETWEEN_SCREEN_BORDERS = 14;
 
 export const useHeaderStyles = (theme, isWhite = false) => {
   const insets = useSafeAreaInsets();
-  const themeColors = React.useMemo(() => getTheme(theme), [theme]);
+  const [themeColors] = useCurrentTheme();
 
   
 

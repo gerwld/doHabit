@@ -1,8 +1,7 @@
 import React from 'react'
 import { View, Text, Pressable, SafeAreaView } from 'react-native'
-import { useHeaderStyles } from 'hooks';
+import { useCurrentTheme, useHeaderStyles } from 'hooks';
 import { useTranslation } from 'react-i18next';
-import { getTheme } from '@constants';
 
 
 const STHeader = React.memo(({
@@ -20,7 +19,7 @@ const STHeader = React.memo(({
 }) => {
     const { t } = useTranslation();
     const headerStyles = useHeaderStyles(theme, isWhite = true);
-    const themeColors = React.useMemo(() => getTheme(theme), [theme]);
+    const [themeColors] = useCurrentTheme();
 
     // header styles based on it's background color. if duotone then 
     // from headerStyles hook preset, otherways - white text and color bg

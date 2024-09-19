@@ -12,7 +12,7 @@ import { habitsActions } from "actions";
 import { useHeaderStyles } from 'hooks';
 import { appSelectors } from '@redux';
 
-
+// ITS DELETED DO NOT EDIT TS
 
 
 const EditHabitScreen = ({ route, navigation }) => {
@@ -20,9 +20,8 @@ const EditHabitScreen = ({ route, navigation }) => {
   const d = useDispatch();
 
 
-  const theme = useSelector(appSelectors.selectAppTheme);
-  const themeColors = React.useMemo(() => getTheme(theme), [theme]);
-  const headerStyles = useHeaderStyles(theme);
+  const [themeColors] = useCurrentTheme();
+  const headerStyles = useHeaderStyles();
 
   const initialState = {
     name: "",

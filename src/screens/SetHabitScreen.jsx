@@ -9,12 +9,12 @@ import Animated, { FadeIn, FadeOut, useAnimatedStyle, useSharedValue, withTiming
 
 import { Label, ColorPicker } from "styles/crudtask"
 import { BaseView, LineItemView, Modal, BasePressButton, LineItemOptions, STHeader } from '@components';
-import { HABIT_COLORS, getRandomItem, getTheme, getTimeFromTimestamp, uses24HourClock } from '@constants';
+import { HABIT_COLORS, getRandomItem, getTimeFromTimestamp, uses24HourClock } from '@constants';
 import { habitsActions } from "actions";
-import { appSelectors, habitSelectors } from '@redux';
+import { habitSelectors } from '@redux';
 import alert from '../polyfils/alert';
 import RNDateTimePicker from '@react-native-community/datetimepicker';
-import { useInputFocusOnInit } from '../hooks';
+import { useCurrentTheme, useInputFocusOnInit } from 'hooks';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 const DEFAULT_TIME = "11:00"
@@ -34,8 +34,8 @@ const SetHabitScreen = React.memo(({ route, navigation, isEdit }) => {
 
   const [state, setState] = React.useState({ ...initialState });
   const [isColorPicker, setColorPicker] = React.useState(false);
-  const theme = useSelector(appSelectors.selectAppTheme);
-  const themeColors = React.useMemo(() => getTheme(theme), [theme]);
+  const [themeColors] = useCurrentTheme();
+  
   const items = useSelector(habitSelectors.selectItems);
 
   const onChangeInput = useCallback((name, value) => {
@@ -86,7 +86,6 @@ const SetHabitScreen = React.memo(({ route, navigation, isEdit }) => {
   const navigateToSetRepeat = () => {
     navigation.navigate('sethabit/repeat', {
       state,
-      theme,
       onGoBack: ({ data }) => {
         // Callback function to handle data from ScreenB
         setState(data);
@@ -247,6 +246,8 @@ const SetHabitScreen = React.memo(({ route, navigation, isEdit }) => {
             placeholderTextColor="#9ba2a7"
           />
 
+          
+
 
           <Label style={{ marginBottom: 7 }}>{t("label_reg")}</Label>
           <LineItemOptions
@@ -277,6 +278,8 @@ const SetHabitScreen = React.memo(({ route, navigation, isEdit }) => {
     </BaseView>
   )
 });
+
+
 
 const SelectDate = ({ isVisible, theme, value, onChangeInput, remind }) => {  
   const date = new Date();

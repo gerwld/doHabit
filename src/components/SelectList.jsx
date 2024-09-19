@@ -1,13 +1,13 @@
 import React, { useCallback } from "react"
 import { useTranslation } from "react-i18next"
 import { Text, View, Pressable, FlatList, StyleSheet, Platform } from "react-native"
-import { getTheme } from "@constants"
 import { Label } from "styles/crudtask"
 import { Icon } from "@rneui/themed"
+import { useCurrentTheme } from "hooks"
 
 const SelectList = React.memo(({ data, title, currentValue, setValue, color, theme, withoutTranslate }) => {
     const { t } = useTranslation()
-    const themeColors = React.useMemo(() => getTheme(theme), [theme]);
+    const [themeColors] = useCurrentTheme();
 
     const select = StyleSheet.create({
         item: {

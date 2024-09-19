@@ -8,7 +8,7 @@ import {
 import { produce } from "immer";
 
 const initialState = {
-    isInit: false,
+    isInit: true,
     items: []
     // items: [ // data sample
     //     { id: '9a7a37e2-807c-4835-bdee-8ecfb6f4237e', name: 'Test task 1', notification: '1', remind: true, repeat: 'every-day', datesArray: [] },

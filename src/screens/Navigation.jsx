@@ -8,20 +8,17 @@ import SettingsScreen from "./SettingsScreen";
 import AHSRepeat from "./subsreens/AHSRepeat";
 import STLanguage from "./subsreens/STLanguage";
 import STTheme from "./subsreens/STTheme";
-import { useSelector } from "react-redux";
-import { getTheme } from "@constants";
-import { appSelectors } from "@redux";
 import SetHabitScreen from "./SetHabitScreen";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import React from "react";
+import { useCurrentTheme } from "hooks";
 
 
 const Stack = createNativeStackNavigator();
 
 export const Navigation = () => {
     const { t } = useTranslation();
-    const theme = useSelector(appSelectors.selectAppTheme);
-    const themeColors = React.useMemo(() => getTheme(theme), [theme]);
+    const [themeColors] = useCurrentTheme();
 
     const navTheme = DefaultTheme;
     navTheme.colors = {

@@ -1,31 +1,30 @@
 import React, { useCallback } from 'react'
-import { Text, Button, StyleSheet, ScrollView, Alert } from 'react-native'
+import { Text, Button, StyleSheet, ScrollView } from 'react-native'
 import { Icon } from '@rneui/themed';
 import { useTranslation } from 'react-i18next';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
 import alert from '../polyfils/alert';
 import { habitsActions } from "actions";
-import { REPEAT_MASKS, getTheme, uses24HourClock, convertTo12HourFormat } from '@constants';
+import { REPEAT_MASKS, uses24HourClock, convertTo12HourFormat } from '@constants';
 import { Label, InfoBar, InfoBarItem } from "styles/crudtask"
-import { appSelectors } from '@redux';
 import { CircularProgress, LineItemView, STHeader, BaseView } from '@components';
 import CalendarPicker from 'react-native-calendar-picker';
+import { useCurrentTheme } from 'hooks';
 
 
-const DetailsHabitScreen = ({ route, navigation }) => {
+const DetailsHabitScreen = React.memo(({ route, navigation }) => {
   const { t } = useTranslation();
   const d = useDispatch();
-  const theme = useSelector(appSelectors.selectAppTheme);
-  const themeColors = React.useMemo(() => getTheme(theme), [theme]);
+  const [themeColors] = useCurrentTheme();
 
   const [item, setItem] = React.useState(null);
   const time = item?.remindTime;
 
-  const  twelveOr24Time = (time) => {
+  const twelveOr24Time = useCallback((time) => {
     if(uses24HourClock(new Date())) return time;
     return convertTo12HourFormat(time);
-  }
+  }, [time])
 
   React.useEffect(() => {
     setItem(route.params);
@@ -159,6 +158,6 @@ const DetailsHabitScreen = ({ route, navigation }) => {
       </ScrollView>
     </BaseView>
   )
-}
+});
 
 export default DetailsHabitScreen

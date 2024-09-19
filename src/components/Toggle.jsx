@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import * as React from 'react';
 import {
   Animated,
   Easing,
@@ -9,40 +9,32 @@ import {
 } from 'react-native';
 
 const Toggle = React.memo((props) => {
-  const animatedValue = React.useRef(new Animated.Value(0)).current;
+  const animatedValue = new Animated.Value(0);
 
-  // Destructure props
-  const { value, toggleColor, backgroundColor, style, onToggle, labelStyle, label } = props;
-
-  // Define the animation for the toggle movement
-  const moveToggle = useCallback(animatedValue.interpolate({
+  const moveToggle = animatedValue.interpolate({
     inputRange: [0, 1],
     outputRange: [0, 20],
-  }));
+  });
 
-  // Handle animation effect when `value` prop changes
-  React.useEffect(() => {
-    Animated.timing(animatedValue, {
-      toValue: value ? 1 : 0,
-      duration: 200, // Duration can be adjusted as needed
-      easing: Easing.linear,
-      useNativeDriver: false,
-    }).start();
-  }, [value, animatedValue]);
-
-  // Determine the color of the toggle container
+  const {value, toggleColor, backgroundColor, style, onToggle, labelStyle, label} = props;  
   const offColor = backgroundColor;
   const color = value ? toggleColor : offColor;
 
-  React.useEffect(() => {
-    console.log('updated');
-  },[])
+  animatedValue.setValue(value ? 0 : 1);
+
+  Animated.timing(animatedValue, {
+    toValue: value ? 1 : 0,
+    duration: 0,
+    easing: Easing.linear,
+    useNativeDriver: false,
+  }).start();
 
   return (
     <View style={styles.container}>
       {!!label && <Text style={[styles.label, labelStyle]}>{label}</Text>}
-      <Pressable onPress={typeof onToggle === 'function' ? onToggle : undefined}>
-        <View style={[styles.toggleContainer, style, { backgroundColor: color }]}>
+
+      <Pressable onPress={typeof onToggle === 'function' && onToggle}>
+        <View style={[styles.toggleContainer, style, {backgroundColor: color}]}>
           <Animated.View
             style={[
               styles.toggleWheelStyle,
@@ -57,6 +49,16 @@ const Toggle = React.memo((props) => {
   );
 });
 
+Toggle.defaultProps = {
+  toggleColor: '#4cd137',
+  backgroundColor: '#ecf0f1',
+  label: '',
+  onToggle: () => {},
+  style: {},
+  value: false,
+  labelStyle: {},
+};
+
 export default Toggle;
 
 const styles = StyleSheet.create({
@@ -68,7 +70,6 @@ const styles = StyleSheet.create({
     width: 50,
     height: 30,
     marginLeft: 3,
-    paddingLeft: 3,
     paddingLeft: 2.5,
     borderRadius: 15,
     justifyContent: 'center',

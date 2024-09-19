@@ -5,7 +5,10 @@
         "cocoapods": "1.11.2",
         "cache": {
           "key": "my-project-cache-key",
-          "paths": ["node_modules", "ios/Pods"]
+          "paths": [
+            "node_modules",
+            "ios/Pods"
+          ]
         }
       },
       "developmentClient": true,
@@ -16,14 +19,42 @@
       "android": {
         "cache": {
           "key": "my-project-preview-cache-key",
-          "paths": ["node_modules", "ios/Pods"]
+          "paths": [
+            "node_modules",
+            "ios/Pods"
+          ]
         }
       },
       "ios": {
         "simulator": true,
         "cache": {
           "key": "my-project-preview-cache-key",
-          "paths": ["node_modules", "ios/Pods"]
+          "paths": [
+            "node_modules",
+            "ios/Pods"
+          ]
+        }
+      }
+    },
+    "production": {
+      "distribution": "internal",
+      "android": {
+        "cache": {
+          "key": "my-project-preview-cache-key",
+          "paths": [
+            "node_modules",
+            "ios/Pods"
+          ]
+        }
+      },
+      "ios": {
+        "simulator": true,
+        "cache": {
+          "key": "my-project-preview-cache-key",
+          "paths": [
+            "node_modules",
+            "ios/Pods"
+          ]
         }
       }
     }

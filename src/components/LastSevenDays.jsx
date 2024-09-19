@@ -6,9 +6,9 @@ import { useTranslation } from 'react-i18next';
 import * as Haptics from 'expo-haptics';
 
 import { useDispatch, useSelector } from 'react-redux';
-import { appSelectors, habitSelectors } from '@redux';
+import { habitSelectors } from '@redux';
 import { habitsActions } from "actions";
-import { getTheme } from '@constants';
+import { useCurrentTheme } from "hooks";
 
 
 
@@ -25,13 +25,12 @@ export const LastSevenDays = React.memo(({ isHabit, habitID, color }) => {
     const { t } = useTranslation();
     const d = useDispatch();
     const item = useSelector(state => habitSelectors.selectItemById(state, habitID));
-    const theme = useSelector(appSelectors.selectAppTheme);
 
     const currentDay = useCallback(DATE.getDate(), [TIMESTAMP]);
     const currentMonth = useCallback((DATE.getMonth())); // Months are 0-indexed    
     const currentMonthMask = t("month_" + currentMonth).substring(0, 3)
     const tmsArr = item?.datesArray;
-    const themeColors = React.useMemo(() => getTheme(theme), [theme]);
+    const [themeColors] = useCurrentTheme();
     
 
 

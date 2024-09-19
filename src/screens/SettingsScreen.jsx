@@ -4,16 +4,17 @@ import { View, Text, ScrollView, StyleSheet, Pressable, StatusBar } from 'react-
 import { useTranslation } from 'react-i18next';
 
 import { LineItemView, GapView, LineItemOptions, Segment, STHeader } from '@components'
-import { LANG_MASKS, getTheme, getThemeStatusBar } from '@constants';
+import { LANG_MASKS, getThemeStatusBar } from '@constants';
 import { appSelectors } from '@redux';
 import { Feature, Lang, Rateapp, Support, Theme, Tutorial } from '@icons';
+import { useCurrentTheme } from 'hooks';
 
 
 
 const SettingsScreen = ({ navigation }) => {
   const { t } = useTranslation();
   const { theme, lang } = useSelector(appSelectors.selectAppThemeAndLang)
-  const themeColors = React.useMemo(() => getTheme(theme), [theme]);
+  const [themeColors] = useCurrentTheme();
 
   const styles = StyleSheet.create({
     scrollView: {
@@ -54,7 +55,6 @@ const SettingsScreen = ({ navigation }) => {
     <View style={{ flex: 1, backgroundColor: themeColors.background }}>
       <STHeader
         navigation={navigation}
-        theme={theme}
         title={t("st_screen")}
       />
 

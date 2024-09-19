@@ -1,12 +1,10 @@
 import React from 'react'
 import { View, Text, StyleSheet } from 'react-native'
-import { getTheme } from '@constants';
+import { useCurrentTheme } from 'hooks';
 import {ScrollPages} from '@components'
-import { useSelector } from 'react-redux'
-import { appSelectors } from '@redux';
 
 const TutorialScreen = () => {
-    const theme = useSelector(appSelectors.selectAppTheme);
+    const [themeColors] = useCurrentTheme();
     const styles = StyleSheet.create({
         screen: {
             flex: 1,
@@ -18,7 +16,7 @@ const TutorialScreen = () => {
             fontSize: 24,
             fontWeight: "bold",
             textAlign: "center",
-            color: getTheme(theme).textColor,
+            color: themeColors.textColor,
             marginBottom: 10
         },
         description: {

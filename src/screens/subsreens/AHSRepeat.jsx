@@ -36,7 +36,6 @@ const AHSRepeat = ({ route, navigation }) => {
         bgColor={state.color}
         onGoBack={handleGoBack}
         navigation={navigation}
-        theme={theme}
         title={t("addt_int_title")}
       />
 

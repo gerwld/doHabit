@@ -1,32 +1,35 @@
-import { Text, Pressable } from 'react-native'
+import { Text, Pressable, StyleSheet, View } from 'react-native'
 import React from 'react'
 import LineItemView from './styling/LineItemView'
 import { LastSevenDays } from './LastSevenDays'
 import CircularProgress from './CircularProgress'
 import { useNavigation } from '@react-navigation/native'
-import styled from 'styled-components/native'
-import { getTheme } from '@constants';
+import { useCurrentTheme } from "hooks";
 
-export const HomeTask = React.memo(({ item, color, theme }) => {
+export const HomeTask = React.memo(({ item, color }) => {
   const navigation = useNavigation();
-  const themeColors = React.useMemo(() => getTheme(theme), [theme]);
+  const [themeColors] = useCurrentTheme();
   return (
     <LineItemView st={{ height: 56 }}>
       <Pressable style={{ flex: 1 }} onPress={() => navigation.navigate("habitdetails", item)} >
-        <PressArea>
+        <View style={styles.pressArea}>
           <CircularProgress progress={20} size={27} strokeWidth={4} strColor={themeColors.crossSymbL} color={item?.color ? item.color : "#7fcbfd"} />
           <Text numberOfLines={2} ellipsizeMode='tail' style={{ fontSize: 16, flex: 1, marginLeft: 10, marginRight: 5, userSelect: "none", color: color ?? "#50677a" }}>{item.name}</Text>
-        </PressArea>
+        </View>
       </Pressable>
       <LastSevenDays {...{ isHabit: true, habitID: item.id, color: item.color }} />
     </LineItemView>
   )
 })
 
-const PressArea = styled.View`
-  flex: 1;
-  min-height:50px;
-  align-items: center;
-  flex-direction: row;
-  padding: 8px 3px 8px 12px;
-`
+const styles = StyleSheet.create({
+  pressArea: {
+    flex: 1,
+    minHeight:50,
+    alignItems: "center",
+    flexDirection: "row",
+    paddingVertical: 8,
+    paddingRight: 3,
+    paddingLeft: 12,
+  }
+})
