@@ -18,7 +18,6 @@ const STTheme = (({ navigation }) => {
     const {t} = useTranslation();
     const d = useDispatch();
     const theme = useSelector(appSelectors.selectAppTheme);
-    const [localValue, setLocalValue] = React.useState(theme.theme);  
 
     const onChangeInput = (name, value) => {
         d(appActions.setTheme(value))        

@@ -60,7 +60,7 @@ const SetHabitScreen = React.memo(({ route, navigation, isEdit }) => {
 
   const onSubmit = useCallback(() => {
     if (isEdit) {
-      d(habitsActions.updateHabit({ ...state }));
+      d(habitsActions.updateHabit({...state}));
       navigation.navigate('home')
     }
     else {

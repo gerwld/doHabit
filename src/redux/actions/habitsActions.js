@@ -16,6 +16,7 @@ const addHabit = (payload) => async (dispatch, getState) => {
   await dispatch({
     type: ADD_HABIT,
     payload,
+    id: payload.id
   });
 
   await setHabitsToAsyncStorage(getState);
@@ -25,6 +26,7 @@ const updateHabit = (payload) => async (dispatch, getState) => {
   await dispatch({
     type: UPD_HABIT,
     payload,
+    id: payload.id
   });
 
   await setHabitsToAsyncStorage(getState);

@@ -82,7 +82,7 @@ const SettingsScreen = ({ navigation }) => {
               leftIcon={<Lang/>}
               onPress={() => navigateToPage("settings/language")}
               title={t("st_lang")}
-              value={LANG_MASKS[lang].mask} />
+              value={LANG_MASKS[lang]?.mask} />
           </Segment>
 
           <GapView />

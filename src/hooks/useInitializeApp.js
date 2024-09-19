@@ -46,7 +46,7 @@ const useInitializeApp = (lang) => {
     // STEP 2: call those functions
     useEffect(() => {
         loadBase();
-        loadHabits();
+        // loadHabits();
     }, []);
 
     // STEP 3: set i18n in with provider part of App

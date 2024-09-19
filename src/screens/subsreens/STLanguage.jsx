@@ -13,7 +13,7 @@ const STLanguage = ({ navigation }) => {
     const { t } = useTranslation();
     const d = useDispatch();
     const { lang, theme } = useSelector(appSelectors.selectAppThemeAndLang);
-    const languagesList = useCallback(Object.keys(LANG_MASKS).map(e => ({value: e, name: LANG_MASKS[e].orig, mask: LANG_MASKS[e].mask})));
+    const languagesList = useCallback(Object.keys(LANG_MASKS).map(e => ({value: e, name: LANG_MASKS[e].orig, mask: LANG_MASKS[e]?.mask})));
     
 
     const onChangeInput = useCallback((_, value) => {
