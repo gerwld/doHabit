@@ -7,16 +7,17 @@ import { Icon } from "@rneui/themed"
 
 const SelectList = React.memo(({ data, title, currentValue, setValue, color, theme, withoutTranslate }) => {
     const { t } = useTranslation()
+    const themeColors = React.useMemo(() => getTheme(theme), [theme]);
 
     const select = StyleSheet.create({
         item: {
             flexDirection: "row",
             justifyContent: "space-between",
             alignItems: "center",
-            backgroundColor: getTheme(theme).bgHighlight,
+            backgroundColor: themeColors.bgHighlight,
             
             borderWidth: 1,
-            borderColor: `${getTheme(theme).borderColor}`,
+            borderColor: `${themeColors.borderColor}`,
             borderLeftColor: "transparent",
             borderRightColor: "transparent",
             minHeight: 54,
@@ -26,7 +27,7 @@ const SelectList = React.memo(({ data, title, currentValue, setValue, color, the
             fontSize: 16,
             paddingLeft: 18,
             paddingRight: 10,
-            color: getTheme(theme).textColorHighlight,
+            color: themeColors.textColorHighlight,
         },
         maskText: {
             fontSize: 12,
@@ -34,7 +35,7 @@ const SelectList = React.memo(({ data, title, currentValue, setValue, color, the
             paddingLeft: 18,
             paddingRight: 10,
             paddingTop: 2,
-            color: getTheme(theme).textColorHighlight,
+            color: themeColors.textColorHighlight,
         },
         checkmark: {
             marginRight: 10,

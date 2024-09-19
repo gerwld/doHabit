@@ -21,6 +21,7 @@ const EditHabitScreen = ({ route, navigation }) => {
 
 
   const theme = useSelector(appSelectors.selectAppTheme);
+  const themeColors = React.useMemo(() => getTheme(theme), [theme]);
   const headerStyles = useHeaderStyles(theme);
 
   const initialState = {
@@ -67,10 +68,10 @@ const EditHabitScreen = ({ route, navigation }) => {
       alignItems: "center",
       marginTop: 7,
       marginBottom: 14,
-      backgroundColor: getTheme(theme).bgHighlight,
-      border: `1px solid ${getTheme(theme).borderColor}`,
+      backgroundColor: themeColors.bgHighlight,
+      border: `1px solid ${themeColors.borderColor}`,
       borderWidth: 1,
-      borderColor: `${getTheme(theme).borderColor}`,
+      borderColor: `${themeColors.borderColor}`,
       borderLeftColor: "transparent",
       borderRightColor: "transparent"
     },
@@ -78,16 +79,16 @@ const EditHabitScreen = ({ route, navigation }) => {
       height: 55,
       marginTop: 7,
       marginBottom: 14,
-      backgroundColor: getTheme(theme).bgHighlight,
+      backgroundColor: themeColors.bgHighlight,
       paddingVertical: 12,
       paddingLeft: 15,
       paddingRight: 10,
       borderRadius: 0,
       fontSize: 16,
-      color:  getTheme(theme).textColorHighlight,
-      // border: `1px solid ${getTheme(theme).borderColor}`,
+      color:  themeColors.textColorHighlight,
+      // border: `1px solid ${themeColors.borderColor}`,
       borderWidth: 1,
-      borderColor: `${getTheme(theme).borderColor}`,
+      borderColor: `${themeColors.borderColor}`,
       borderLeftColor: "transparent",
       borderRightColor: "transparent",
     
@@ -102,8 +103,8 @@ const EditHabitScreen = ({ route, navigation }) => {
 
   const ModalContent = styled.View`
   width: 300px;
-  background:${getTheme(theme).bgHighlight};
-  color: ${getTheme(theme).textColorHighlight};
+  background:${themeColors.bgHighlight};
+  color: ${themeColors.textColorHighlight};
   padding: 20px;
   border-radius: 10px;
 `
@@ -197,7 +198,7 @@ const EditHabitScreen = ({ route, navigation }) => {
           value={t(state.repeat)} />
 
         <LineItemView pl1 toggle toggleColor={state.color} isEnabled={state.remind} onToggle={(v) => onChangeInput("remind", v)}>
-          <Text style={{ fontSize: 16, color: getTheme(theme).textColorHighlight }}>{t("addt_int_title")}</Text>
+          <Text style={{ fontSize: 16, color: themeColors.textColorHighlight }}>{t("addt_int_title")}</Text>
         </LineItemView>
 
       </ScrollView>

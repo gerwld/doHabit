@@ -7,19 +7,20 @@ import { useSelector } from 'react-redux';
 import { appSelectors } from '@redux';
 import Toggle from '../Toggle';
 
-const LineItemView = ({ isFirstItem, leftIcon, children, rightArrow, toggle, toggleColor, onToggle, isEnabled, pl1, st }) => {
+const LineItemView = React.memo(({ isFirstItem, leftIcon, children, rightArrow, toggle, toggleColor, onToggle, isEnabled, pl1, st }) => {
     const theme = useSelector(appSelectors.selectAppTheme);
+    const themeColors = React.useMemo(() => getTheme(theme), [theme]);
     const LineItemViewItem = styled.View`
 padding: 0;
 align-items:center;
 justify-content:space-between;
-background-color: ${getTheme(theme).bgHighlight};
+background-color: ${themeColors.bgHighlight};
 min-height: 55px;
 min-width: 100%;
 border-radius: 0;
 margin:  0 0 7px;
 flex-direction: row;
-border: 3.6px solid ${pl1 ? getTheme(theme).borderColor : "transparent"};
+border: 3.6px solid ${pl1 ? themeColors.borderColor : "transparent"};
 border-left-width: 0;
 border-right-width: 0;
 border-bottom-width: 0;
@@ -39,7 +40,7 @@ border-bottom-width: 0;
                     style={{ marginRight: 10 }}
                     trackColor={{ false: '#d7dcde', true: (toggleColor ? toggleColor : '#81b0ff') }}
                     thumbColor={"#ffffff"}
-                    ios_backgroundColor={getTheme(theme).thumbBackgroundIos}
+                    ios_backgroundColor={themeColors.thumbBackgroundIos}
                     onValueChange={onToggle ? onToggle : null}
                     value={isEnabled}
                     {...Platform.select({
@@ -51,7 +52,7 @@ border-bottom-width: 0;
             : <Toggle
                 style={{ marginRight: 10 }}
                 toggleColor={(toggleColor ? toggleColor : '#81b0ff')}
-                backgroundColor={getTheme(theme).thumbBackground}
+                backgroundColor={themeColors.thumbBackground}
                 onToggle={() => onToggle(!isEnabled)}
                 value={isEnabled}
             />
@@ -59,7 +60,7 @@ border-bottom-width: 0;
         </LineItemViewItem>
     );
 
-}
+});
 
 
 

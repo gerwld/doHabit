@@ -6,7 +6,7 @@ const Modal = ({ isOpen, withInput, children, ...rest }) => {
     const content = withInput ? (
         <KeyboardAvoidingView
             style={styles.modalWindow}
-            behavior={Platform.OS === 'ios'}
+            behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
         >
             {children}
         </KeyboardAvoidingView>)

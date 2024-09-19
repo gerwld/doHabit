@@ -13,6 +13,7 @@ import { Feature, Lang, Rateapp, Support, Theme, Tutorial } from '@icons';
 const SettingsScreen = ({ navigation }) => {
   const { t } = useTranslation();
   const { theme, lang } = useSelector(appSelectors.selectAppThemeAndLang)
+  const themeColors = React.useMemo(() => getTheme(theme), [theme]);
 
   const styles = StyleSheet.create({
     scrollView: {
@@ -20,11 +21,11 @@ const SettingsScreen = ({ navigation }) => {
       height: "max-height"
     },
     scrollViewContent: {
-      backgroundColor: getTheme(theme).background,
+      backgroundColor: themeColors.background,
     },
     t: {
       fontSize: 17,
-      color: getTheme(theme).textColorHighlight,
+      color: themeColors.textColorHighlight,
     },
     copyright: {
       width: "100%",
@@ -38,7 +39,7 @@ const SettingsScreen = ({ navigation }) => {
       zIndex: -1
     },
     copyrightText: {
-      color: getTheme(theme).crossSymb,
+      color: themeColors.crossSymb,
       fontSize: 18,
     }
   })
@@ -50,7 +51,7 @@ const SettingsScreen = ({ navigation }) => {
   
 
   return (
-    <View style={{ flex: 1, backgroundColor: getTheme(theme).background }}>
+    <View style={{ flex: 1, backgroundColor: themeColors.background }}>
       <STHeader
         navigation={navigation}
         theme={theme}

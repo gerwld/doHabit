@@ -1,5 +1,5 @@
 import React, { useCallback, useRef } from 'react'
-import { View, Text, StyleSheet, TextInput, ScrollView, Platform, KeyboardAvoidingView } from 'react-native'
+import { View, Text, StyleSheet, TextInput, ScrollView, Platform, KeyboardAvoidingView, TouchableWithoutFeedback } from 'react-native'
 import styled from 'styled-components/native';
 import { useTranslation } from 'react-i18next';
 import uuid from 'react-native-uuid';
@@ -15,11 +15,11 @@ import { appSelectors, habitSelectors } from '@redux';
 import alert from '../polyfils/alert';
 import RNDateTimePicker from '@react-native-community/datetimepicker';
 import { useInputFocusOnInit } from '../hooks';
-import Toggle from '../components/Toggle';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 const DEFAULT_TIME = "11:00"
 
-const SetHabitScreen = ({ route, navigation, isEdit }) => {
+const SetHabitScreen = React.memo(({ route, navigation, isEdit }) => {
   const focusInputRef = useRef(null);
   const { t } = useTranslation();
   const d = useDispatch();
@@ -35,9 +35,10 @@ const SetHabitScreen = ({ route, navigation, isEdit }) => {
   const [state, setState] = React.useState({ ...initialState });
   const [isColorPicker, setColorPicker] = React.useState(false);
   const theme = useSelector(appSelectors.selectAppTheme);
+  const themeColors = React.useMemo(() => getTheme(theme), [theme]);
   const items = useSelector(habitSelectors.selectItems);
 
-  const onChangeInput = (name, value) => {
+  const onChangeInput = useCallback((name, value) => {
     if (name && value !== undefined) {
 
       // case "remind, remindTime" part. if enabled and no prev value = set 12, else null
@@ -50,15 +51,14 @@ const SetHabitScreen = ({ route, navigation, isEdit }) => {
       // else default case
       else setState({ ...state, [name]: value })
     }
-  }
+  }, [state]);
 
 
   const onSubmitCheckName = useCallback((name) => {
     return !!items.find(e => e.name === name)
   }, [items])
 
-  const onSubmit = () => {
-
+  const onSubmit = useCallback(() => {
     if (isEdit) {
       d(habitsActions.updateHabit({ ...state }));
       navigation.navigate('home')
@@ -81,7 +81,7 @@ const SetHabitScreen = ({ route, navigation, isEdit }) => {
         navigation.navigate('home')
       }
     }
-  }
+  })
 
   const navigateToSetRepeat = () => {
     navigation.navigate('sethabit/repeat', {
@@ -110,10 +110,10 @@ const SetHabitScreen = ({ route, navigation, isEdit }) => {
       alignItems: "center",
       marginTop: 7,
       marginBottom: 14,
-      backgroundColor: getTheme(theme).bgHighlight,
-      border: `1px solid ${getTheme(theme).borderColor}`,
+      backgroundColor: themeColors.bgHighlight,
+      border: `1px solid ${themeColors.borderColor}`,
       borderWidth: 1,
-      borderColor: `${getTheme(theme).borderColor}`,
+      borderColor: `${themeColors.borderColor}`,
       borderLeftColor: "transparent",
       borderRightColor: "transparent"
     },
@@ -121,16 +121,16 @@ const SetHabitScreen = ({ route, navigation, isEdit }) => {
       height: 55,
       marginTop: 7,
       marginBottom: 14,
-      backgroundColor: getTheme(theme).bgHighlight,
+      backgroundColor: themeColors.bgHighlight,
       paddingVertical: 12,
       paddingLeft: 15,
       paddingRight: 10,
       borderRadius: 0,
       fontSize: 16,
-      color: getTheme(theme).textColorHighlight,
-      // border: `1px solid ${getTheme(theme).borderColor}`,
+      color: themeColors.textColorHighlight,
+      // border: `1px solid ${themeColors.borderColor}`,
       borderWidth: 1,
-      borderColor: `${getTheme(theme).borderColor}`,
+      borderColor: `${themeColors.borderColor}`,
       borderLeftColor: "transparent",
       borderRightColor: "transparent",
 
@@ -145,8 +145,8 @@ const SetHabitScreen = ({ route, navigation, isEdit }) => {
 
   const ModalContent = styled.View`
   width: 300px;
-  background:${getTheme(theme).bgHighlight};
-  color: ${getTheme(theme).textColorHighlight};
+  background:${themeColors.bgHighlight};
+  color: ${themeColors.textColorHighlight};
   padding: 20px;
   border-radius: 10px;
 `
@@ -181,7 +181,7 @@ const SetHabitScreen = ({ route, navigation, isEdit }) => {
           <Label>{t("addt_name")}</Label>
           <View style={styles.combinedInput}>
             <TextInput
-              keyboardAppearance={getTheme(theme).label}
+              keyboardAppearance={themeColors.label}
               ref={focusInputRef}
               style={[styles.settingsInput, styles.settingsInputEmbeded, { borderWidth: 0 }]}
               onChangeText={(v) => onChangeInput("name", v)}
@@ -207,32 +207,39 @@ const SetHabitScreen = ({ route, navigation, isEdit }) => {
             />
           </View>
 
-          <Modal isOpen={isColorPicker}>
-            <ModalContent>
-              <ColorPicker>
-                {HABIT_COLORS.map(color =>
-                  <BasePressButton
-                    key={`key_pressbtn_${color}`}
-                    onPress={() => { onChangeInput("color", color); setColorPicker(false); }}
-                    styleObj={{
-                      width: 74,
-                      height: 74,
-                      borderRadius: 50,
-                      paddingVertical: 0,
-                      paddingHorizontal: 0,
-                    }}
-                    title=" "
-                    backgroundColor={color}
-                  />)}
-              </ColorPicker>
-            </ModalContent>
-          </Modal>
+
+          <Modal isOpen={isColorPicker} transparent>
+          <TouchableWithoutFeedback onPress={() => setColorPicker(false)}>
+            <View style={{ flex: 1, justifyContent: "center" }}>
+              <SafeAreaView>
+                <ModalContent>
+                  <ColorPicker>
+                    {HABIT_COLORS.map(color =>
+                      <BasePressButton
+                        key={`key_pressbtn_${color}`}
+                        onPress={() => { onChangeInput("color", color); setColorPicker(false); }}
+                        styleObj={{
+                          width: 74,
+                          height: 74,
+                          borderRadius: 50,
+                          paddingVertical: 0,
+                          paddingHorizontal: 0,
+                        }}
+                        title=" "
+                        backgroundColor={color}
+                      />)}
+                  </ColorPicker>
+                </ModalContent>
+                </SafeAreaView>
+            </View>
+          </TouchableWithoutFeedback>
+        </Modal>
 
           {/* color picker end */}
 
           <Label>{t("addt_notif")}</Label>
           <TextInput
-            keyboardAppearance={getTheme(theme).label}
+            keyboardAppearance={themeColors.label}
             style={styles.settingsInput}
             onChangeText={(v) => onChangeInput("notification", v)}
             value={state.notification}
@@ -251,7 +258,7 @@ const SetHabitScreen = ({ route, navigation, isEdit }) => {
             ?
             <>
             <LineItemView pl1 toggle toggleColor={state.color} isEnabled={state.remind} onToggle={(v) => { onChangeInput("remind", v); }}>
-              <Text style={{ fontSize: 16, color: getTheme(theme).textColorHighlight }}>{t("addt_remind")}</Text>
+              <Text style={{ fontSize: 16, color: themeColors.textColorHighlight }}>{t("addt_remind")}</Text>
             </LineItemView>
 
               {/* <SelectDate
@@ -269,7 +276,7 @@ const SetHabitScreen = ({ route, navigation, isEdit }) => {
       </KeyboardAvoidingView>
     </BaseView>
   )
-}
+});
 
 const SelectDate = ({ isVisible, theme, value, onChangeInput, remind }) => {  
   const date = new Date();
@@ -298,9 +305,9 @@ const SelectDate = ({ isVisible, theme, value, onChangeInput, remind }) => {
       {isVisible
         ? <Animated.View entering={FadeIn.duration(200)} exiting={FadeOut.duration(300)}>
           <RNDateTimePicker
-            style={{ backgroundColor: getTheme(theme).bgHighlight, }}
+            style={{ backgroundColor: themeColors.bgHighlight, }}
             is24Hour={uses24HourClock(date)}
-            themeVariant={getTheme(theme).label}
+            themeVariant={themeColors.label}
             onChange={onTimeSelect}
             timeZoneName={'GMT0'}
             value={new Date("2024-09-16T" + (value ? value + ":00.000Z" : `${DEFAULT_TIME}:00.000Z`))}

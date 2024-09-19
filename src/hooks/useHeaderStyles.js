@@ -1,13 +1,14 @@
 import { StyleSheet } from 'react-native';
 import { getTheme } from "../constants";
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import React from 'react';
 
 const HEADER_HEIGHT_SAFE = 55;
 const GAP_BETWEEN_SCREEN_BORDERS = "9%";
 
 export const useHeaderStyles = (theme, isWhite = false) => {
   const insets = useSafeAreaInsets();
-  const themeVars = getTheme(theme);
+  const themeColors = React.useMemo(() => getTheme(theme), [theme]);
 
   
 
@@ -84,7 +85,7 @@ export const useHeaderStyles = (theme, isWhite = false) => {
       lineHeight: HEADER_HEIGHT_SAFE,
       userSelect: "none",
       textAlign: "left",
-      color: isWhite ? themeVars.textColorHighlight : "#ffffff",
+      color: isWhite ? themeColors.textColorHighlight : "#ffffff",
 
     },
   });

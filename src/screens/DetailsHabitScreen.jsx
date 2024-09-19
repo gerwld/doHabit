@@ -17,6 +17,7 @@ const DetailsHabitScreen = ({ route, navigation }) => {
   const { t } = useTranslation();
   const d = useDispatch();
   const theme = useSelector(appSelectors.selectAppTheme);
+  const themeColors = React.useMemo(() => getTheme(theme), [theme]);
 
   const [item, setItem] = React.useState(null);
   const time = item?.remindTime;
@@ -57,10 +58,10 @@ const DetailsHabitScreen = ({ route, navigation }) => {
 
   const styles = StyleSheet.create({
     t: {
-      color: getTheme(theme).textColorHighlight
+      color: themeColors.textColorHighlight
     },
     i: {
-      color: getTheme(theme).textColor
+      color: themeColors.textColor
     },
     l: {
       marginLeft: 15
@@ -109,7 +110,7 @@ const DetailsHabitScreen = ({ route, navigation }) => {
 
         <Label>{t("label_ov")}</Label>
         <LineItemView st={{ ...styles.item, paddingTop: 25 }}>
-          <CircularProgress progress={20} size={55} strokeWidth={8} strColor={getTheme(theme).crossSymbL} color={item?.color ? item.color : "#7fcbfd"} />
+          <CircularProgress progress={20} size={55} strokeWidth={8} strColor={themeColors.crossSymbL} color={item?.color ? item.color : "#7fcbfd"} />
           <Text style={styles.t}>23423</Text>
           <Text style={styles.t}>23423</Text>
           <Text style={styles.t}>23423</Text>
@@ -121,14 +122,14 @@ const DetailsHabitScreen = ({ route, navigation }) => {
         <CalendarPicker 
         // customDatesStyles={}
         textStyle={{
-          color: getTheme(theme).textColor,
+          color: themeColors.textColor,
           fontSize: 17
           }} 
 
         // onDateChange={()=> console.log("date")}
         startFromMonday={uses24HourClock(new Date())}
         selectedDayStyle={{}}
-        selectedDayTextStyle={{color: getTheme(theme).textColor}}
+        selectedDayTextStyle={{color: themeColors.textColor}}
         todayBackgroundColor={"#ffffff3f"}
         todayStyle={{color: "red"}}
         

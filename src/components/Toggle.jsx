@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useCallback } from 'react';
 import {
   Animated,
   Easing,
@@ -8,33 +8,41 @@ import {
   View,
 } from 'react-native';
 
-const Toggle = props => {
-  const animatedValue = new Animated.Value(0);
+const Toggle = React.memo((props) => {
+  const animatedValue = React.useRef(new Animated.Value(0)).current;
 
-  const moveToggle = animatedValue.interpolate({
+  // Destructure props
+  const { value, toggleColor, backgroundColor, style, onToggle, labelStyle, label } = props;
+
+  // Define the animation for the toggle movement
+  const moveToggle = useCallback(animatedValue.interpolate({
     inputRange: [0, 1],
     outputRange: [0, 20],
-  });
+  }));
 
-  const {value, toggleColor, backgroundColor, style, onToggle, labelStyle, label} = props;  
+  // Handle animation effect when `value` prop changes
+  React.useEffect(() => {
+    Animated.timing(animatedValue, {
+      toValue: value ? 1 : 0,
+      duration: 200, // Duration can be adjusted as needed
+      easing: Easing.linear,
+      useNativeDriver: false,
+    }).start();
+  }, [value, animatedValue]);
+
+  // Determine the color of the toggle container
   const offColor = backgroundColor;
   const color = value ? toggleColor : offColor;
 
-  animatedValue.setValue(value ? 0 : 1);
-
-  Animated.timing(animatedValue, {
-    toValue: value ? 1 : 0,
-    duration: 100,
-    easing: Easing.linear,
-    useNativeDriver: false,
-  }).start();
+  React.useEffect(() => {
+    console.log('updated');
+  },[])
 
   return (
     <View style={styles.container}>
       {!!label && <Text style={[styles.label, labelStyle]}>{label}</Text>}
-
-      <Pressable onPress={typeof onToggle === 'function' && onToggle}>
-        <View style={[styles.toggleContainer, style, {backgroundColor: color}]}>
+      <Pressable onPress={typeof onToggle === 'function' ? onToggle : undefined}>
+        <View style={[styles.toggleContainer, style, { backgroundColor: color }]}>
           <Animated.View
             style={[
               styles.toggleWheelStyle,
@@ -47,17 +55,7 @@ const Toggle = props => {
       </Pressable>
     </View>
   );
-};
-
-Toggle.defaultProps = {
-  toggleColor: '#4cd137',
-  backgroundColor: '#ecf0f1',
-  label: '',
-  onToggle: () => {},
-  style: {},
-  value: false,
-  labelStyle: {},
-};
+});
 
 export default Toggle;
 

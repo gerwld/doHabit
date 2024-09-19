@@ -31,6 +31,7 @@ export const LastSevenDays = React.memo(({ isHabit, habitID, color }) => {
     const currentMonth = useCallback((DATE.getMonth())); // Months are 0-indexed    
     const currentMonthMask = t("month_" + currentMonth).substring(0, 3)
     const tmsArr = item?.datesArray;
+    const themeColors = React.useMemo(() => getTheme(theme), [theme]);
     
 
 
@@ -53,7 +54,7 @@ export const LastSevenDays = React.memo(({ isHabit, habitID, color }) => {
                         <TimeView style={styles.timeWiewInt}>
                             {(tmsArr?.filter && tmsArr?.filter(l => l === TIMESTAMP - (ONE_DAY_IN_MS * e)).length > 0)
                                 ? <Icon style={{ pointerEvents: "none" }} type="antdesign" size={24} name="check" color={color ? color : "#5fb1e7"} />
-                                : <Icon style={{ pointerEvents: "none" }} type="antdesign" size={24} name="close" color={getTheme(theme).crossSymb} />}
+                                : <Icon style={{ pointerEvents: "none" }} type="antdesign" size={24} name="close" color={themeColors.crossSymb} />}
                         </TimeView>
                     </Pressable>
                 )}

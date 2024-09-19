@@ -20,12 +20,13 @@ const STHeader = React.memo(({
 }) => {
     const { t } = useTranslation();
     const headerStyles = useHeaderStyles(theme, isWhite = true);
+    const themeColors = React.useMemo(() => getTheme(theme), [theme]);
 
     // header styles based on it's background color. if duotone then 
     // from headerStyles hook preset, otherways - white text and color bg
     const s = {
-        textColor: { color: bgColor ? "#ffffff" : getTheme(theme).textColorHighlight },
-        backgroundColor: bgColor ? bgColor : getTheme(theme).bgHighlight
+        textColor: { color: bgColor ? "#ffffff" : themeColors.textColorHighlight },
+        backgroundColor: bgColor ? bgColor : themeColors.bgHighlight
     }
 
     return (<>

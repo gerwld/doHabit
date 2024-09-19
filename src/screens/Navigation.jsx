@@ -13,6 +13,7 @@ import { getTheme } from "@constants";
 import { appSelectors } from "@redux";
 import SetHabitScreen from "./SetHabitScreen";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
+import React from "react";
 
 
 const Stack = createNativeStackNavigator();
@@ -20,15 +21,16 @@ const Stack = createNativeStackNavigator();
 export const Navigation = () => {
     const { t } = useTranslation();
     const theme = useSelector(appSelectors.selectAppTheme);
+    const themeColors = React.useMemo(() => getTheme(theme), [theme]);
 
     const navTheme = DefaultTheme;
     navTheme.colors = {
         primary: 'rgb(0, 122, 255)',
         card: 'rgb(255, 255, 255)',
-        text: getTheme(theme).textColorHighlight,
-        border: getTheme(theme).borderColor,
+        text: themeColors.textColorHighlight,
+        border: themeColors.borderColor,
         notification: 'rgb(255, 59, 48)',
-        background: getTheme(theme).background
+        background: themeColors.background
     };
 
     const EditHabitScreen = (props) => <SetHabitScreen isEdit {...props}/>
@@ -50,7 +52,7 @@ export const Navigation = () => {
     )
 
     return (
-        <GestureHandlerRootView style={{flex: 1, backgroundColor: getTheme(theme).background || "white"}}>
+        <GestureHandlerRootView style={{flex: 1, backgroundColor: themeColors.background || "white"}}>
         <NavigationContainer>
             <Stack.Navigator>
                 <Stack.Screen name="home" component={HomeScreen} options={{ headerShown: false, title: t("home_screen") }} />
