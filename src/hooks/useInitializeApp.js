@@ -34,8 +34,9 @@ const useInitializeApp = (lang) => {
     const loadHabits = async () => {
         try {
             const storedHabits = await AsyncStorage.getItem('@habits/items');
-            if (storedHabits !== null) {
-                d(habitsActions.initializeHabits(JSON.parse(storedHabits)));
+            const storedHabitsIDs = await AsyncStorage.getItem('@habits/itemsIdsArray');
+            if (storedHabitsIDs !== null && storedHabits !== null) {
+                d(habitsActions.initializeHabits(JSON.parse(storedHabits), JSON.parse(storedHabitsIDs)));
             }
         } catch (e) {
             console.error('Failed to load habits from storage', e);
@@ -46,7 +47,7 @@ const useInitializeApp = (lang) => {
     // STEP 2: call those functions
     useEffect(() => {
         loadBase();
-        // loadHabits();
+        loadHabits();
     }, []);
 
     // STEP 3: set i18n in with provider part of App

@@ -6,9 +6,10 @@ const UPD_HABIT = 'habits/UPD_HABIT';
 const SET_HABIT_TIMESTAMP = 'habits/SET_HABIT_TIMESTAMP';
 const HABITS_INITIALIZE = 'habits/HABITS_INITIALIZE';
 
-const initializeHabits = (payload) => ({
+const initializeHabits = (payload, payloadIDs) => ({
   type: HABITS_INITIALIZE,
   payload,
+  payloadIDs
 });
 
 
@@ -41,7 +42,7 @@ const delHabit = (id) => async (dispatch, getState) => {
   await setHabitsToAsyncStorage(getState);
 };
 
-const setHabitTimestamp = ({id, timestamp, isSet}) => async (dispatch, getState) => {
+const setHabitTimestamp = ({ id, timestamp, isSet }) => async (dispatch, getState) => {
   await dispatch({
     type: SET_HABIT_TIMESTAMP,
     id, timestamp, isSet
@@ -54,11 +55,14 @@ const setHabitTimestamp = ({id, timestamp, isSet}) => async (dispatch, getState)
 
 
 const setHabitsToAsyncStorage = async (getState) => {
-  const { items } = getState().habits;
-  try {
-    await AsyncStorage.setItem('@habits/items', JSON.stringify(items));
-  } catch (e) {
-    console.error('Failed to save habits state to storage', e);
+  const { items, itemsIdsArray } = getState().habits;
+  if (itemsIdsArray.length) {
+    try {
+      await AsyncStorage.setItem('@habits/items', JSON.stringify(items));
+      await AsyncStorage.setItem('@habits/itemsIdsArray', JSON.stringify(itemsIdsArray));
+    } catch (e) {
+      console.error('Failed to save habits state to storage', e);
+    }
   }
 }
 
