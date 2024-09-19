@@ -1,11 +1,11 @@
 import React, { useCallback } from "react"
 import { useTranslation } from "react-i18next"
-import { Text, View, Pressable, FlatList, StyleSheet, Platform } from "react-native"
+import { Text, View, Pressable, FlatList, StyleSheet, Platform, ActivityIndicator } from "react-native"
 import { Label } from "styles/crudtask"
 import { Icon } from "@rneui/themed"
 import { useCurrentTheme } from "hooks"
 
-const SelectList = React.memo(({ data, title, currentValue, setValue, color, theme, withoutTranslate }) => {
+const SelectList = React.memo(({ showFetch, data, title, currentValue, setValue, color, theme, withoutTranslate }) => {
     const { t } = useTranslation()
     const [themeColors] = useCurrentTheme();
 
@@ -48,15 +48,25 @@ const SelectList = React.memo(({ data, title, currentValue, setValue, color, the
         return item.value
     })
 
-    const ListItem = ({ value, mask, name, onPress, color }) => {
+    const ListItem = ({showFetch, value, mask, name, onPress, color }) => {
+        const [isLoader, setLoader] = React.useState(false);
+        const onPressWithFetch = () => {
+            if(currentValue !== value && !isLoader)
+             setLoader(true)
+            setTimeout(onPress, 10)
+        }
         
         return (
-            <Pressable onPress={onPress}>
+            <Pressable onPress={showFetch ? onPressWithFetch : onPress}>
                 <View style={select.item}>
                     <View style={{flexDirection: "column", alignItems: "flex-start", justifyContent: "center"}}>
                         <Text style={select.text}>{withoutTranslate ? name : t(value + "")}</Text>
                         {mask ? <Text style={select.maskText}>{mask}</Text> : null}
                     </View>
+                   {isLoader
+                   ? <View style={select.checkmark}><ActivityIndicator size={26} color={color ? color : "#5fb1e7"}/></View> 
+                   : null}
+
                     {currentValue === value  
                    ? 
                    (<View style={select.checkmark}>
@@ -82,7 +92,7 @@ const SelectList = React.memo(({ data, title, currentValue, setValue, color, the
                         scrollEnabled: true
                       }
                     : { bounces: true })}
-                renderItem={({ item }) => <ListItem {...{ ...item, color, onPress: () => setValue(item.value) }} />
+                renderItem={({ item }) => <ListItem {...{ ...item, color, showFetch, onPress: () => setValue(item.value) }} />
                 }
             />
         </>

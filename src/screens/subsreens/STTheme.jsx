@@ -38,6 +38,7 @@ const STTheme = (({ navigation }) => {
 
             <View style={{ paddingTop: 14, flex: 1 }}>
                 <SelectList
+                    showFetch
                     theme={theme}
                     style={{ flex: 1 }}
                     currentValue={theme.theme}
