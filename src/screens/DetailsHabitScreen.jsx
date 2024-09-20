@@ -1,5 +1,5 @@
 import React, { useCallback } from 'react'
-import { Text, Button, StyleSheet, ScrollView } from 'react-native'
+import { Text, Button, StyleSheet, ScrollView, View} from 'react-native'
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 
@@ -10,6 +10,7 @@ import { Label, InfoBar, InfoBarItem } from "styles/crudtask"
 import { CircularProgress, LineItemView, STHeader, BaseView } from '@components';
 import CalendarPicker from 'react-native-calendar-picker';
 import { useCurrentTheme } from 'hooks';
+import { SvgClock, SvgRepeat } from '../../assets/svg/hicons_svgr';
 
 
 const DetailsHabitScreen = React.memo(({ route, navigation }) => {
@@ -65,14 +66,28 @@ const DetailsHabitScreen = React.memo(({ route, navigation }) => {
       marginLeft: 15
     },
     item: {
+      flexDirection: "row",
       justifyContent: "space-around",
-      height: 180,
       marginTop: 5,
-      marginBottom: 10
+      marginBottom: 12,
+      paddingVertical: 50,
+      backgroundColor: themeColors.bgHighlight
+
+
     },
     itemFlexible: {
       marginTop: 5,
       marginBottom: 10
+    },
+    ovBlockDT: {
+      textAlign: "center",
+      fontSize: 28,
+      fontWeight: "bold",
+      color: item?.color
+    },
+    ovBlockDD: {
+      fontSize: 17,
+      color: themeColors.textColor
     }
   })
 
@@ -95,27 +110,38 @@ const DetailsHabitScreen = React.memo(({ route, navigation }) => {
 
         <LineItemView st={{ justifyContent: "space-around", paddingVertical: 10 }}>
           <InfoBarItem>
-            {/* <Icon type="feather" size={24} name="repeat" color={styles.i.color} /> */}
-            <Text style={[styles.t, styles.l]}>{item?.repeat ? REPEAT_MASKS[item.repeat] : "-"}</Text>
+            <SvgRepeat size={24} color={themeColors.textColor}/>
+            <Text style={[styles.t, styles.l]}>{item?.repeat ? t(item.repeat) : "-"}</Text>
           </InfoBarItem>
           <InfoBarItem>
-            {/* <Icon type="feather" size={24} name="clock" color={styles.i.color} /> */}
+          <SvgClock size={24} color={themeColors.textColor}/>
             <Text style={[styles.t, styles.l]}>{time ? twelveOr24Time(time) : "--:--"}</Text>
           </InfoBarItem>
         </LineItemView>
 
 
 
-        <Label>{t("label_ov")}</Label>
-        <LineItemView st={{ ...styles.item, paddingTop: 25 }}>
+        <Label>{t("label_stre")}</Label>
+        <View style={styles.item}>
           <CircularProgress progress={20} size={55} strokeWidth={8} strColor={themeColors.crossSymbL} color={item?.color ? item.color : "#7fcbfd"} />
-          <Text style={styles.t}>23423</Text>
-          <Text style={styles.t}>23423</Text>
-          <Text style={styles.t}>23423</Text>
-        </LineItemView>
+          
+          <View>
+            <Text style={styles.ovBlockDT}>0%</Text>
+            <Text style={styles.ovBlockDD}>Score</Text>
+          </View>
+          <View>
+            <Text style={styles.ovBlockDT}>0%</Text>
+            <Text style={styles.ovBlockDD}>Month</Text>
+          </View>
+          <View>
+            <Text style={styles.ovBlockDT}>0%</Text>
+            <Text style={styles.ovBlockDD}>Year</Text>
+          </View>
+
+        </View>
 
 
-        <Label>{t("label_hits")}</Label>
+        <Label>{t("label_ov")}</Label>
         <LineItemView st={{ ...styles.itemFlexible }}>
         <CalendarPicker 
         // customDatesStyles={}
@@ -136,14 +162,6 @@ const DetailsHabitScreen = React.memo(({ route, navigation }) => {
         scrollable={true} />
       
     
-        </LineItemView>
-
-
-        <Label>{t("label_stre")}</Label>
-        <LineItemView st={{ ...styles.item, marginBottom: 20 }}>
-          <Text style={styles.t}>23423</Text>
-          <Text style={styles.t}>23423</Text>
-          <Text style={styles.t}>23423</Text>
         </LineItemView>
 
 

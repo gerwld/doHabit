@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Pressable, StyleSheet, Text } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
-import { Add1, Add2, Add3, Gear1,} from '../../../assets/svg/hicons_svgr';
+import { Add1, Add2, Add3, Gear1, Gear2, Gear3,} from '../../../assets/svg/hicons_svgr';
 import { useHeaderStyles } from '../../hooks';
 
 const HEADER_HEIGHT_SAFE = 55;
@@ -41,7 +41,7 @@ export const HomeHeader = React.memo(({ navigation, leftChild, rightChild }) => 
         },
         headerTitle: {
             color: 'white',
-            fontSize: 22,
+            fontSize: 25,
             fontWeight: 'bold',
         },
         leftComponent: {
@@ -70,17 +70,17 @@ export const HomeHeader = React.memo(({ navigation, leftChild, rightChild }) => 
                 <View style={styles.leftComponent}>
                     {leftChild ? leftChild : (
                         <Pressable style={styles.headerButton} onPress={() => navigation.navigate('settings')}>
-                                <Gear1 width={33} height={33} color={"white"}/>
+                                <Gear3 width={32} height={32} color={"white"}/>
                         </Pressable>
                     )}
                 </View>
                 <View style={styles.centerComponent}>
-                    <Text style={styles.headerTitle}>Habitty</Text>
+                    <Text style={styles.headerTitle}>DoHabit</Text>
                 </View>
                 <View style={styles.rightComponent}>
                     {rightChild ? rightChild : (
                         <Pressable style={styles.headerButton} onPress={() => navigation.navigate('addhabit')}>
-                                <Add2 width={50} height={50} color={"white"}/>
+                                <Add2 width={47} height={47} color={"white"}/>
                         </Pressable>
                     )}
                 </View>

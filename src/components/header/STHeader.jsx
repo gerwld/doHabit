@@ -48,7 +48,14 @@ const STHeader = React.memo(({
 
 
                 <View style={headerStyles.centerComponent}>
-                    <Text style={[headerStyles.headerTitle, s.textColor]}>{title}</Text>
+                    <Text 
+                    numberOfLines={2} 
+                    ellipsizeMode="tail"
+                    style={[
+                        headerStyles.headerTitle, 
+                        s.textColor, 
+                        title?.length > 17 && {fontSize: 18}
+                        ]}>{title}</Text>
                 </View>
 
                 {rightComponent ? rightComponent :

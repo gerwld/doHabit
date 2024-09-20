@@ -47,6 +47,13 @@ export const useHeaderStyles = (theme, isWhite = false) => {
       color: 'white',
       fontSize: 22,
       fontWeight: 'bold',
+      
+    },
+    centerComponent: {
+      height: 55,
+      justifyContent: 'center',
+      alignItems: 'center',
+      maxWidth: "55%"
     },
 
     leftComponent: {
@@ -60,12 +67,7 @@ export const useHeaderStyles = (theme, isWhite = false) => {
       justifyContent: "center",
       alignItems: 'flex-end',
     },
-    centerComponent: {
-      height: 55,
-      justifyContent: 'center',
-      alignItems: 'center',
-    },
-
+  
     componentPressable: {
       alignSelf: "flex-start",
       paddingLeft: GAP_BETWEEN_SCREEN_BORDERS,

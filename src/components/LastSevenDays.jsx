@@ -91,7 +91,7 @@ const RenderItem = ({ e, tmsArr, color, themeColors, onPress }) => {
 
     const s = StyleSheet.create({
         iconParent: {
-            width: 40,
+            width: 30,
             height: 57,
             justifyContent: "center",
             alignItems: "center",

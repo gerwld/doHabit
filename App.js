@@ -23,7 +23,7 @@ export default withTranslation(function RootComponent() {
       <GestureHandlerRootView style={{ flex: 1 }}>
       <AppWithProvider>
         <Navigation />
-        <StatusBar translucent style="dark" />
+        <StatusBar translucent style="light" />
       </AppWithProvider>
       </GestureHandlerRootView>
     </Provider>

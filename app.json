@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "Habitty",
-    "slug": "habitty-habits-tracker",
+    "name": "DoHabit",
+    "slug": "DoHabit-habits-tracker",
     "version": "0.0.1",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -13,7 +13,7 @@
     },
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.weblxapp.habittyhabitstracker",
+      "bundleIdentifier": "com.weblxapp.DoHabithabitstracker",
       "userInterfaceStyle": "automatic"
     },
     "android": {
@@ -23,7 +23,7 @@
         "userInterfaceStyle": "automatic"
       },
       "softwareKeyboardLayoutMode": "pan",
-      "package": "com.weblxapp.habittyhabitstracker"
+      "package": "com.weblxapp.DoHabithabitstracker"
     },
     "web": {
       "favicon": "./assets/favicon.png"

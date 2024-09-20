@@ -29,13 +29,13 @@ border-bottom-width: 0;
     const content = (
         <LineItemViewItem style={[{ 
                 borderTopWidth: isFirstItem ? 0 : 1, 
-                paddingLeft: pl1 ? 14 : 0, 
+                paddingLeft: pl1 ? 18 : 0, 
                 paddingRight: pl1 ? 6 : 0, 
                 marginBottom: pl1 ? 0 : 7, 
                 ...st 
             }, 
             !pl1 && {borderTopWidth: 0, borderTopWidth: 0}]}>
-            {leftIcon ? <View style={{ height: 34, width: 34, marginRight: 10 }}>{leftIcon}</View> : null}
+            {leftIcon ? <View style={{ height: 33, width: 33, marginRight: 12 }}>{leftIcon}</View> : null}
             {leftIcon ? <View style={{ flex: 1, flexDirection: "row" }}>{children}</View> : children}
 
 
