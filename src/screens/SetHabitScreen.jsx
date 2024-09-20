@@ -6,7 +6,6 @@ import uuid from 'react-native-uuid';
 import { useDispatch, useSelector } from 'react-redux';
 import Animated, { FadeIn, FadeOut, useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated';
 
-
 import { Label, ColorPicker } from "styles/crudtask"
 import { BaseView, LineItemView, Modal, BasePressButton, LineItemOptions, STHeader } from '@components';
 import { HABIT_COLORS, getRandomItem, getTimeFromTimestamp, uses24HourClock } from '@constants';
@@ -34,9 +33,12 @@ const SetHabitScreen = React.memo(({ route, navigation, isEdit }) => {
 
   const [state, setState] = React.useState({ ...initialState });
   const [isColorPicker, setColorPicker] = React.useState(false);
+  const [isSelectTime, setSelectTime] = React.useState(false);
   const [themeColors] = useCurrentTheme();
   
   const items = useSelector(habitSelectors.selectItems);
+
+  const androidTimeSelected = state.remindTime && Platform.OS === "android";
 
   const onChangeInput = useCallback((name, value) => {
     if (name && value !== undefined) {
@@ -156,7 +158,6 @@ const SetHabitScreen = React.memo(({ route, navigation, isEdit }) => {
 `
 
   return (
-
     <BaseView>
       <STHeader
         title={isEdit ? t("eddt_screen") : t("addt_screen")}
@@ -178,7 +179,7 @@ const SetHabitScreen = React.memo(({ route, navigation, isEdit }) => {
         <ScrollView
           overScrollMode='always'
           ref={ref => { this.scrollView = ref }}
-          onContentSizeChange={() => this.scrollView.scrollToEnd({ animated: true })}
+          onContentSizeChange={() => state.remind && this.scrollView.scrollToEnd({ animated: true })}
           keyboardDismissMode="none"
           keyboardShouldPersistTaps={'handled'}
           style={{ paddingTop: 14, flex: 1 }}>
@@ -260,21 +261,33 @@ const SetHabitScreen = React.memo(({ route, navigation, isEdit }) => {
             title={t("addt_repeat")}
             value={t(state.repeat)} />
 
+          {/* TODO: Web support */}
           {Platform.OS === "ios" || Platform.OS === "android"
-            ?
-            <>
-            <LineItemView pl1 toggle toggleColor={state.color} isEnabled={state.remind} onToggle={(v) => { onChangeInput("remind", v); }}>
-              <Text style={{ fontSize: 17, color: themeColors.textColorHighlight }}>{t("addt_remind")}</Text>
-            </LineItemView>
-
-              {/* <SelectDate
-                remind={state.remind}
-                theme={theme}
-                value={state?.remindTime}
-                onChangeInput={onChangeInput}
-                isVisible={state.remind} /> */}
-            </>
+            ? <LineItemView 
+                pl1 
+                toggle 
+                toggleColor={state.color} 
+                isEnabled={state.remind} 
+                onPress={() => {onChangeInput("remind", true); setSelectTime(true)}}
+                onToggle={(v) => { onChangeInput("remind", v); setSelectTime(v) }}>
+                <Text style={{ fontSize: 17, color: themeColors.textColorHighlight, flex: 1 }}>{t("addt_remind")}</Text>
+                {androidTimeSelected
+               ? <Text style={{ fontSize: 17, color: themeColors.chevronText, marginRight: 10 }}>{state.remindTime}</Text>
+                :  null}
+              </LineItemView>
             : null}
+
+          {state.remind 
+          ? <SelectDate
+                remind={state.remind}
+                themeColors={themeColors}
+                value={state?.remindTime}
+                isSelectTime={isSelectTime}
+                setSelectTime={setSelectTime}
+                onChangeInput={onChangeInput} />
+          : null}
+      
+            
 
           <View style={{ paddingBottom: 20 }} />
         </ScrollView>
@@ -286,10 +299,14 @@ const SetHabitScreen = React.memo(({ route, navigation, isEdit }) => {
 
 
 
-const SelectDate = ({ isVisible, theme, value, onChangeInput, remind }) => {  
+const SelectDate = ({ themeColors, value, onChangeInput, remind, isSelectTime, setSelectTime }) => {  
   const date = new Date();
+  const {t} = useTranslation();
 
   const onTimeSelect = (_, payload) => {
+    if(Platform.OS === "android") {
+      setSelectTime(false)
+    }
     const time = getTimeFromTimestamp(payload);
     if (time) {
       onChangeInput("remindTime", time);
@@ -310,10 +327,12 @@ const SelectDate = ({ isVisible, theme, value, onChangeInput, remind }) => {
 
   return (
     <Animated.View style={animatedProps}>
-      {isVisible
+      {isSelectTime
         ? <Animated.View entering={FadeIn.duration(200)} exiting={FadeOut.duration(300)}>
           <RNDateTimePicker
             style={{ backgroundColor: themeColors.bgHighlight, }}
+            positiveButton={{label: 'OK', textColor: themeColors.textColor}} 
+            negativeButton={{label: t("act_cancel"), textColor: themeColors.textColor}} 
             is24Hour={uses24HourClock(date)}
             themeVariant={themeColors.label}
             onChange={onTimeSelect}
@@ -322,6 +341,7 @@ const SelectDate = ({ isVisible, theme, value, onChangeInput, remind }) => {
             mode="time"
             display="spinner"
           />
+
         </Animated.View>
         : null}
     </Animated.View>
