@@ -1,11 +1,11 @@
 import React from 'react'
-import { Icon } from '@rneui/base';
 import { Platform, Switch, View } from 'react-native';
 import styled from 'styled-components/native';
 
 
 import { useCurrentTheme } from 'hooks';
 import Toggle from '../Toggle';
+import { ChevronRight } from '../../../assets/svg/hicons_svgr';
 
 const LineItemView = React.memo(({ isFirstItem, leftIcon, children, rightArrow, toggle, toggleColor, onToggle, isEnabled, pl1, st }) => {
     const [themeColors] = useCurrentTheme();
@@ -32,7 +32,8 @@ border-bottom-width: 0;
             {leftIcon ? <View style={{ flex: 1, flexDirection: "row" }}>{children}</View> : children}
 
 
-            {rightArrow ? <Icon style={{ marginHorizontal: 5 }} type="entypo" size={18} name="chevron-thin-right" color="#ccd1db" /> : null}
+            {rightArrow ? <ChevronRight style={{ marginHorizontal: 8, width: 18, height: 18}} color={themeColors.chevron} /> : null}
+
             {toggle ?
                 Platform.OS === "ios"
                     ? <Switch

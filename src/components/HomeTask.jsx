@@ -13,11 +13,11 @@ export const HomeTask = React.memo(({ item, color }) => {
     <LineItemView st={{ height: 56 }}>
       <Pressable style={{ flex: 1 }} onPress={() => navigation.navigate("habitdetails", item)} >
         <View style={styles.pressArea}>
-          <CircularProgress progress={20} size={27} strokeWidth={4} strColor={themeColors.crossSymbL} color={item?.color ? item.color : "#7fcbfd"} />
+          <CircularProgress progress={20} size={27} strokeWidth={3.5} strColor={themeColors.crossSymbL} color={item?.color ? item.color : "#7fcbfd"} />
           <Text numberOfLines={2} ellipsizeMode='tail' style={{ fontSize: 16, flex: 1, marginLeft: 10, marginRight: 5, userSelect: "none", color: color ?? "#50677a" }}>{item.name}</Text>
         </View>
       </Pressable>
-      <LastSevenDays {...{ isHabit: true, habitID: item.id, color: item.color }} />
+      <LastSevenDays isHabit habitID={item.id} color={item.color} />
     </LineItemView>
   )
 })

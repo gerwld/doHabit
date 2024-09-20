@@ -2,8 +2,8 @@ import React, { useCallback } from "react"
 import { useTranslation } from "react-i18next"
 import { Text, View, Pressable, FlatList, StyleSheet, Platform, ActivityIndicator } from "react-native"
 import { Label } from "styles/crudtask"
-import { Icon } from "@rneui/themed"
 import { useCurrentTheme } from "hooks"
+import { Check1 } from "../../assets/svg/hicons_svgr"
 
 const SelectList = React.memo(({ showFetch, data, title, currentValue, setValue, color, theme, withoutTranslate }) => {
     const { t } = useTranslation()
@@ -24,7 +24,7 @@ const SelectList = React.memo(({ showFetch, data, title, currentValue, setValue,
             marginBottom: -1
         },
         text: {
-            fontSize: 16,
+            fontSize: 17,
             paddingLeft: 18,
             paddingRight: 10,
             color: themeColors.textColorHighlight,
@@ -70,13 +70,13 @@ const SelectList = React.memo(({ showFetch, data, title, currentValue, setValue,
                         {mask ? <Text style={select.maskText}>{mask}</Text> : null}
                     </View>
                     {isLoader
-                        ? <View style={select.checkmark}><ActivityIndicator size={26} color={color ? color : "#5fb1e7"} /></View>
+                        ? <View style={select.checkmark}><ActivityIndicator size={34} color={color ? color : "#5fb1e7"} /></View>
                         : null}
 
                     {currentValue === value
                         ?
                         (<View style={select.checkmark}>
-                            <Icon style={{ pointerEvents: "none", height: 24 }} type="antdesign" size={24} name="check" color={color ? color : "#5fb1e7"} />
+                            <Check1 style={{ pointerEvents: "none", height: 32, width: 32 }} color={color ? color : "#5fb1e7"} />
                         </View>)
                         : null}
                 </View>

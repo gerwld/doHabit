@@ -1,6 +1,5 @@
 import React, { useCallback } from 'react'
 import { Text, Button, StyleSheet, ScrollView } from 'react-native'
-import { Icon } from '@rneui/themed';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 
@@ -96,11 +95,11 @@ const DetailsHabitScreen = React.memo(({ route, navigation }) => {
 
         <LineItemView st={{ justifyContent: "space-around", paddingVertical: 10 }}>
           <InfoBarItem>
-            <Icon type="feather" size={24} name="repeat" color={styles.i.color} />
+            {/* <Icon type="feather" size={24} name="repeat" color={styles.i.color} /> */}
             <Text style={[styles.t, styles.l]}>{item?.repeat ? REPEAT_MASKS[item.repeat] : "-"}</Text>
           </InfoBarItem>
           <InfoBarItem>
-            <Icon type="feather" size={24} name="clock" color={styles.i.color} />
+            {/* <Icon type="feather" size={24} name="clock" color={styles.i.color} /> */}
             <Text style={[styles.t, styles.l]}>{time ? twelveOr24Time(time) : "--:--"}</Text>
           </InfoBarItem>
         </LineItemView>

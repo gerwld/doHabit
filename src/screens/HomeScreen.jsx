@@ -56,10 +56,7 @@ const LatestTasks = (() => {
     [themeColors]
   );
 
-  const keyExtractor = useCallback(
-    (item) => item?.id.toString(),
-    []
-  );
+  const keyExtractor = (item) => item?.id;
 
   const itemsArray = React.useMemo(() => 
     (itemsIDs || []).map(id => items[id]), 

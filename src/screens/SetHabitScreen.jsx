@@ -122,7 +122,7 @@ const SetHabitScreen = React.memo(({ route, navigation, isEdit }) => {
       borderRightColor: "transparent"
     },
     settingsInput: {
-      height: 55,
+      height: 58,
       marginTop: 7,
       marginBottom: 14,
       backgroundColor: themeColors.bgHighlight,
@@ -130,7 +130,7 @@ const SetHabitScreen = React.memo(({ route, navigation, isEdit }) => {
       paddingLeft: 15,
       paddingRight: 10,
       borderRadius: 0,
-      fontSize: 16,
+      fontSize: 17,
       color: themeColors.textColorHighlight,
       // border: `1px solid ${themeColors.borderColor}`,
       borderWidth: 1,
@@ -264,7 +264,7 @@ const SetHabitScreen = React.memo(({ route, navigation, isEdit }) => {
             ?
             <>
             <LineItemView pl1 toggle toggleColor={state.color} isEnabled={state.remind} onToggle={(v) => { onChangeInput("remind", v); }}>
-              <Text style={{ fontSize: 16, color: themeColors.textColorHighlight }}>{t("addt_remind")}</Text>
+              <Text style={{ fontSize: 17, color: themeColors.textColorHighlight }}>{t("addt_remind")}</Text>
             </LineItemView>
 
               {/* <SelectDate

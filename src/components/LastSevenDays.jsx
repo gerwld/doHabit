@@ -1,6 +1,5 @@
 import React, { useCallback } from 'react'
 import styled from 'styled-components/native';
-import { Icon } from '@rneui/base';
 import { Platform, Pressable, StyleSheet } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import * as Haptics from 'expo-haptics';
@@ -9,6 +8,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { habitSelectors } from '@redux';
 import { habitsActions } from "actions";
 import { useCurrentTheme } from "hooks";
+import { Check1, Check2, Check3, Close1, Close2, Close3 } from '../../assets/svg/hicons_svgr';
 
 
 
@@ -18,7 +18,7 @@ const RANGE_ARR = Array.from({ length: DAYS_COUNT }, (_, i) => DAYS_COUNT - 1 - 
 const ONE_DAY_IN_MS = 86400000;
 const IS_APP = Platform.OS === "ios" || Platform.OS === "android";
 const DATE = new Date();
-const TIMESTAMP = DATE.setHours(0,0,0,0)
+const TIMESTAMP = DATE.setHours(0, 0, 0, 0)
 const isCurrent = (i) => i === (DAYS_COUNT - 1);
 
 export const LastSevenDays = React.memo(({ isHabit, habitID, color }) => {
@@ -31,7 +31,7 @@ export const LastSevenDays = React.memo(({ isHabit, habitID, color }) => {
     const currentMonthMask = t("month_" + currentMonth).substring(0, 3)
     const tmsArr = item?.datesArray;
     const [themeColors] = useCurrentTheme();
-    
+
 
 
     const onDayPress = React.useCallback((date) => {
@@ -48,14 +48,12 @@ export const LastSevenDays = React.memo(({ isHabit, habitID, color }) => {
     if (isHabit) return (
         <ParentView style={styles.parentViewInt}>
             {RANGE_ARR
-                .map((e, i) =>
-                    <Pressable key={e + "__dayid"} onPress={() => onDayPress(TIMESTAMP - (ONE_DAY_IN_MS * e))}>
-                        <TimeView style={styles.timeWiewInt}>
-                            {(tmsArr?.filter && tmsArr?.filter(l => l === TIMESTAMP - (ONE_DAY_IN_MS * e)).length > 0)
-                                ? <Icon style={{ pointerEvents: "none" }} type="antdesign" size={24} name="check" color={color ? color : "#5fb1e7"} />
-                                : <Icon style={{ pointerEvents: "none" }} type="antdesign" size={24} name="close" color={themeColors.crossSymb} />}
-                        </TimeView>
-                    </Pressable>
+                .map((e, _) =>
+                    <RenderItem
+                        onPress={() => onDayPress(TIMESTAMP - (ONE_DAY_IN_MS * e))}
+                        e={e} color={color}
+                        tmsArr={tmsArr}
+                        themeColors={themeColors} />
                 )}
         </ParentView>
     )
@@ -76,10 +74,54 @@ export const LastSevenDays = React.memo(({ isHabit, habitID, color }) => {
     )
 })
 
+
+const RenderItem = ({ e, tmsArr, color, themeColors, onPress }) => {
+
+    const [isPressed, setIsPressed] = React.useState(false);
+
+    const handlePressIn = () => {
+        setIsPressed(true);
+    };
+
+    const handlePressOut = () => {
+        setIsPressed(false);
+    };
+
+    const s = StyleSheet.create({
+        glowEffect: {
+            // shadowColor: '#ffffff', // Customize the glow color here (e.g., green glow)
+            // shadowOffset: { width: 0, height: 0 },
+            // shadowOpacity: 1,
+            // shadowRadius: 200, // Controls the size of the shadow
+            // elevation: 20,
+            // borderRadius: 20,
+            backgroundColor: themeColors.bgHighlightSec
+
+        }
+    })
+
+    return (
+        <Pressable
+            onPressIn={handlePressIn}
+            onPressOut={handlePressOut}
+
+            key={e + "__dayid"}
+            onPress={onPress}>
+            <TimeView
+
+                style={[styles.timeWiewInt]}>
+                {(tmsArr?.filter && tmsArr?.filter(l => l === TIMESTAMP - (ONE_DAY_IN_MS * e)).length > 0)
+                    ? <Check1 style={isPressed && s.glowEffect} width={30} height={55} color={color ? color : "#5fb1e7"} />
+                    : <Close1 style={isPressed && s.glowEffect} width={30} height={55} color={themeColors.crossSymb} />}
+            </TimeView>
+        </Pressable>
+    )
+}
+
 const styles = StyleSheet.create({
     timeWiewInt: {
         minHeight: 50,
-        width: 33,
+        width: 31,
         alignItems: "center",
         justifyContent: "center",
         paddingVertical: 0,
@@ -91,8 +133,7 @@ const styles = StyleSheet.create({
     },
     parentView: {
         marginRight: 1
-    }
-
+    },
 });
 
 
@@ -114,5 +155,5 @@ const TimeView = styled.View`
     display: flex;
     flex-direction:column;
     align-items: center;
-    margin-right: 3px;
+    margin-right: 2.5px;
 `

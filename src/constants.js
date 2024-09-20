@@ -9,25 +9,31 @@ const THEMEV = {
         label: "light",
         background: "#f0f2f7",
         bgHighlight: "#ffffff",
+        bgHighlightSec: "#ffffff",
         borderColor: "#e5e5ea",
         textColor: "#50677a",
         textColorHighlight: "#000",
         textColorRevert: "#fff",
         crossSymb: "#a5bbd3",
+        crossSymbL: "#a5bbd3",
         thumbBackground: "#e5e5ea",
         thumbBackgroundIos: "#ffffff",
+        chevron: "#ccd1db"
     },
     "st_theme__dark": {
         label: "dark",
         background: "#000000",
-        bgHighlight: "#242424",
+        bgHighlight: "#1c1c21",
+        bgHighlightSec: "#26262e",
         borderColor: "#000",
         textColor: "#c0cdd9",
         textColorHighlight: "#fff",
         textColorRevert: "#fff",
         crossSymb: "#45474b",
+        crossSymbL: "#484b50",
         thumbBackground: "#45474b",
         thumbBackgroundIos: "#45474b",
+        chevron: "#888c95"
     }
 }
 

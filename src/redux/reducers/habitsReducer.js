@@ -53,14 +53,13 @@ export default function habits(state = initialState, action) {
                     item.datesArray = Array.from(new Set(item.datesArray));
                 }
                 break;
-                  
-
      
             case ADD_HABIT:
                 draft.items[action.id] = action.payload;
                 draft.itemsIdsArray.unshift(action.id); // sort by index, easy pick without Object.keys etc
                 // OLD: draft.items.unshift(action.payload);
                 break;
+                
             case UPD_HABIT:
                 draft.items[action.id] = action.payload;
                 // OLD: draft.items[action.id] = action.payload;
@@ -81,6 +80,7 @@ export default function habits(state = initialState, action) {
                 //     items: [...state.items || []].filter(e => e.id !== action.id)
                 // }
                 break;
+                
             default:
                 return state;
         }

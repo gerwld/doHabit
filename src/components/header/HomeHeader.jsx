@@ -1,8 +1,8 @@
 import React from 'react';
 import { View, Pressable, StyleSheet, Text } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
-import { Icon } from '@rneui/themed';
 import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
+import { Add1, Add2, Add3, Gear1,} from '../../../assets/svg/hicons_svgr';
 
 const HEADER_HEIGHT_SAFE = 55;
 
@@ -69,7 +69,7 @@ export const HomeHeader = React.memo(({ navigation, leftChild, rightChild }) => 
                 <View style={styles.leftComponent}>
                     {leftChild ? leftChild : (
                         <Pressable style={styles.headerButton} onPress={() => navigation.navigate('settings')}>
-                                <Icon type="antdesign" size={31} name="setting" color="white" />
+                                <Gear1 width={34} height={34} color={"white"}/>
                         </Pressable>
                     )}
                 </View>
@@ -79,7 +79,7 @@ export const HomeHeader = React.memo(({ navigation, leftChild, rightChild }) => 
                 <View style={styles.rightComponent}>
                     {rightChild ? rightChild : (
                         <Pressable style={styles.headerButton} onPress={() => navigation.navigate('addhabit')}>
-                                <Icon type="antdesign" size={29} name="plus" color="white" />
+                                <Add2 width={50} height={50} color={"white"}/>
                         </Pressable>
                     )}
                 </View>
