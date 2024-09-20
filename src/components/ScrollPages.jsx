@@ -6,8 +6,10 @@ import Animated, { useSharedValue } from 'react-native-reanimated';
 const AnimatedView = Animated.createAnimatedComponent(View);
 import styled from 'styled-components/native';
 import { useNavigation } from '@react-navigation/native';
+import { useTranslation } from 'react-i18next';
 
 const ScrollPages = ({ children, navigateToHome = true }) => {
+    const {t} = useTranslation();
     const navigation = useNavigation();
 
     const windowWidth = Dimensions.get('window').width;
@@ -109,8 +111,8 @@ const ScrollPages = ({ children, navigateToHome = true }) => {
 
                     {/* navigation */}
                     <View style={{ width: "max-width", alignItems: "center" }}>
-                        <View style={{ width: 100 }}>
-                            <Button onPress={() => {setPage(0); navigation.navigate("home")}} title="Skip" />
+                        <View style={{ maxWidth: 200 }}>
+                            <Button onPress={() => {setPage(0); navigation.navigate("home")}} title={pagevis === TOTAL_PAGES - 1 ? t("act_begin") : t("act_skip") || "Skip"} />
                         </View>
                     </View>
                     <View style={{ paddingVertical: 10, flexDirection: "row", gap: 5, justifyContent: "center" }}>

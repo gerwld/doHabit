@@ -24,6 +24,8 @@
   "act_cancel": "Cancel",
   "act_save": "Save",
   "act_delete": "Delete",
+  "act_skip": "Skip",
+  "act_begin": "Begin",
   "every-day": "Every Day",
   "every-week": "Every Week",
   "3-times-week": "3 times per week",
@@ -33,6 +35,7 @@
   "label_hist": "History",
   "label_stre": "Habit Strength",
   "int_lang": "Interface language",
+  "int_theme": "Interface Theme",
   "lang": "Language",
   "month_0": "January",
   "month_1": "February",
@@ -45,5 +48,17 @@
   "month_8": "September",
   "month_9": "October",
   "month_10": "November",
-  "month_11": "December"
+  "month_11": "December",
+
+"tutorial_title_screen_1": "DoHabit - Habits Tracker",
+"tutorial_desc_screen_1": "Application that helps you maintain your goals, step by step. And reminds about them.",
+
+"tutorial_title_screen_2": "Add a New Habit",
+"tutorial_desc_screen_2": "To begin, click the (+) action button. Specify the details: choose your preferred color, set the regularity, and the repeat intervals.",
+
+"tutorial_title_screen_3": "Checkboxes",
+"tutorial_desc_screen_3": "Performed your habit? Great! Click the checkbox to mark it as done for the specified day.",
+
+"tutorial_title_screen_4": "Regularity",
+"tutorial_desc_screen_4": "Don’t turn off notifications — our data analysis shows that doing so lowers users chances of success."
 }
