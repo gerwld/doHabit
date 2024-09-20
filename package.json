@@ -25,6 +25,7 @@
     "expo-linear-gradient": "^13.0.2",
     "expo-localization": "~15.0.3",
     "expo-status-bar": "~1.12.1",
+    "expo-system-ui": "~3.0.7",
     "i18next": "^23.14.0",
     "immer": "^10.1.1",
     "react": "18.2.0",

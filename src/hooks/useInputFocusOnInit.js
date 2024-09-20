@@ -5,13 +5,14 @@ const useInputFocusOnInit = (inputRef, delay = 600) => {
     React.useEffect(() => {
         // sets focus on first input
         let timer;
-        const isAddOnMobile = (Platform.OS === "ios" || Platform.OS === "android");
+        const platform = Platform.OS;
+        const isAddOnMobile = (platform === "ios" || platform === "android");
         if (isAddOnMobile) {
           timer = setTimeout(() => {
             if (inputRef.current) {
               inputRef.current.focus();  // Focus on TextInput after delay
             }
-          }, delay);
+          }, platform === "android" ? (delay / 2) : delay );
         }
     
         return () => clearTimeout(timer);

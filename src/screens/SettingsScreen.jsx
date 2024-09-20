@@ -40,7 +40,7 @@ const SettingsScreen = ({ navigation }) => {
       zIndex: -1
     },
     copyrightText: {
-      color: themeColors.crossSymb,
+      color: themeColors.copyright,
       fontSize: 18,
     }
   })

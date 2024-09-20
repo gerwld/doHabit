@@ -62,7 +62,6 @@ const LatestTasks = (() => {
     (itemsIDs || []).map(id => items[id]), 
     [items, itemsIDs]
   );
-  console.log(items);
   
 
   if (!itemsIDs || !itemsIDs.length) {

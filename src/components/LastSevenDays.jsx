@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react'
 import styled from 'styled-components/native';
-import { Platform, Pressable, StyleSheet } from 'react-native';
+import { ImageBackground, Platform, Pressable, StyleSheet, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import * as Haptics from 'expo-haptics';
 
@@ -9,7 +9,7 @@ import { habitSelectors } from '@redux';
 import { habitsActions } from "actions";
 import { useCurrentTheme } from "hooks";
 import { Check1, Check2, Check3, Close1, Close2, Close3 } from '../../assets/svg/hicons_svgr';
-
+import glow from "assets/img/glow.png"
 
 
 const DAYS_COUNT = 5;
@@ -87,17 +87,32 @@ const RenderItem = ({ e, tmsArr, color, themeColors, onPress }) => {
         setIsPressed(false);
     };
 
-    const s = StyleSheet.create({
-        glowEffect: {
-            // shadowColor: '#ffffff', // Customize the glow color here (e.g., green glow)
-            // shadowOffset: { width: 0, height: 0 },
-            // shadowOpacity: 1,
-            // shadowRadius: 200, // Controls the size of the shadow
-            // elevation: 20,
-            // borderRadius: 20,
-            backgroundColor: themeColors.bgHighlightSec
+    const current = TIMESTAMP - (ONE_DAY_IN_MS * e);
 
-        }
+    const s = StyleSheet.create({
+        iconParent: {
+            width: 40,
+            height: 57,
+            justifyContent: "center",
+            alignItems: "center",
+            overflow:"hidden",
+        },
+        parentGlowEffect: {
+            backgroundColor: themeColors.bgHighlightSec,
+            shadowColor: '#ffffff',
+
+        },
+        icon: {
+            width: 26,
+            height: 26,
+            color: color ? color : "#5fb1e7",
+            
+        },
+        iconX: {
+            width: 24,
+            height: 24,
+            color: themeColors.crossSymb, 
+        },
     })
 
     return (
@@ -109,18 +124,30 @@ const RenderItem = ({ e, tmsArr, color, themeColors, onPress }) => {
             onPress={onPress}>
             <TimeView
 
-                style={[styles.timeWiewInt]}>
-                {(tmsArr?.filter && tmsArr?.filter(l => l === TIMESTAMP - (ONE_DAY_IN_MS * e)).length > 0)
-                    ? <Check1 style={isPressed && s.glowEffect} width={30} height={55} color={color ? color : "#5fb1e7"} />
-                    : <Close1 style={isPressed && s.glowEffect} width={30} height={55} color={themeColors.crossSymb} />}
+                style={styles.timeWiewInt}>
+                <View style={[s.iconParent, isPressed && s.parentGlowEffect]}>
+                    <ItemIcon tmsArr={tmsArr} s={s} current={current} />
+                </View>
             </TimeView>
         </Pressable>
     )
 }
 
+const ItemIcon = React.memo(({tmsArr, s, current}) => {
+    return (
+        (tmsArr?.filter && tmsArr?.filter(l => l === current).length > 0)
+            ?
+            <Check1 style={s.icon} />
+
+            :
+            <Close1 style={s.iconX} />
+        
+    )
+})
+
 const styles = StyleSheet.create({
     timeWiewInt: {
-        minHeight: 50,
+        height: 55,
         width: 31,
         alignItems: "center",
         justifyContent: "center",
@@ -133,7 +160,7 @@ const styles = StyleSheet.create({
     },
     parentView: {
         marginRight: 1
-    },
+    }
 });
 
 

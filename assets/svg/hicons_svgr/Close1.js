@@ -3,8 +3,8 @@ import Svg, { Path } from "react-native-svg";
 const SvgClose1 = (props) => (
   <Svg
     xmlns="http://www.w3.org/2000/svg"
-    width={32}
-    height={32}
+    width={props?.style?.width || 32}
+    height={props?.style?.height || 32}
     viewBox="0 0 24 24"
     {...props}
   >

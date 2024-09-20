@@ -70,7 +70,7 @@ const SelectList = React.memo(({ showFetch, data, title, currentValue, setValue,
                         {mask ? <Text style={select.maskText}>{mask}</Text> : null}
                     </View>
                     {isLoader
-                        ? <View style={select.checkmark}><ActivityIndicator size={34} color={color ? color : "#5fb1e7"} /></View>
+                        ? <View style={select.checkmark}><ActivityIndicator size={32} color={color ? color : "#5fb1e7"} /></View>
                         : null}
 
                     {currentValue === value

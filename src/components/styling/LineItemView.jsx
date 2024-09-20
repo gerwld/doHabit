@@ -1,5 +1,5 @@
 import React from 'react'
-import { Platform, Switch, View } from 'react-native';
+import { Platform, Pressable, Switch, View } from 'react-native';
 import styled from 'styled-components/native';
 
 
@@ -7,7 +7,7 @@ import { useCurrentTheme } from 'hooks';
 import Toggle from '../Toggle';
 import { ChevronRight } from '../../../assets/svg/hicons_svgr';
 
-const LineItemView = React.memo(({ isFirstItem, leftIcon, children, rightArrow, toggle, toggleColor, onToggle, isEnabled, pl1, st }) => {
+const LineItemView = React.memo(({ onPress,isFirstItem, leftIcon, children, rightArrow, toggle, toggleColor, onToggle, isEnabled, pl1, st }) => {
     const [themeColors] = useCurrentTheme();
     const LineItemViewItem = styled.View`
 padding: 0;
@@ -26,13 +26,20 @@ border-bottom-width: 0;
 `;
 
 
-    return (
-        <LineItemViewItem style={{ borderTopWidth: isFirstItem ? 0 : 1, paddingLeft: pl1 ? 14 : 0, paddingRight: pl1 ? 6 : 0, marginBottom: pl1 ? -1 : 7, ...st }}>
+    const content = (
+        <LineItemViewItem style={[{ 
+                borderTopWidth: isFirstItem ? 0 : 1, 
+                paddingLeft: pl1 ? 14 : 0, 
+                paddingRight: pl1 ? 6 : 0, 
+                marginBottom: pl1 ? 0 : 7, 
+                ...st 
+            }, 
+            !pl1 && {borderTopWidth: 0, borderTopWidth: 0}]}>
             {leftIcon ? <View style={{ height: 34, width: 34, marginRight: 10 }}>{leftIcon}</View> : null}
             {leftIcon ? <View style={{ flex: 1, flexDirection: "row" }}>{children}</View> : children}
 
 
-            {rightArrow ? <ChevronRight style={{ marginHorizontal: 8, width: 18, height: 18}} color={themeColors.chevron} /> : null}
+            {rightArrow ? <ChevronRight style={{ marginLeft: 5, marginRight: 8, marginTop: 1, width: 20, height: 22}} color={themeColors.chevron} /> : null}
 
             {toggle ?
                 Platform.OS === "ios"
@@ -59,6 +66,9 @@ border-bottom-width: 0;
                 : null}
         </LineItemViewItem>
     );
+
+    if(onPress) return <Pressable onPress={onPress}>{content}</Pressable>
+    return content;
 
 });
 

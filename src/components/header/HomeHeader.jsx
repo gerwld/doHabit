@@ -3,6 +3,7 @@ import { View, Pressable, StyleSheet, Text } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Add1, Add2, Add3, Gear1,} from '../../../assets/svg/hicons_svgr';
+import { useHeaderStyles } from '../../hooks';
 
 const HEADER_HEIGHT_SAFE = 55;
 
@@ -69,7 +70,7 @@ export const HomeHeader = React.memo(({ navigation, leftChild, rightChild }) => 
                 <View style={styles.leftComponent}>
                     {leftChild ? leftChild : (
                         <Pressable style={styles.headerButton} onPress={() => navigation.navigate('settings')}>
-                                <Gear1 width={34} height={34} color={"white"}/>
+                                <Gear1 width={33} height={33} color={"white"}/>
                         </Pressable>
                     )}
                 </View>

@@ -12,6 +12,8 @@ import SetHabitScreen from "./SetHabitScreen";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import React from "react";
 import { useCurrentTheme } from "hooks";
+import * as SystemUI from 'expo-system-ui';
+
 
 
 const Stack = createNativeStackNavigator();
@@ -30,6 +32,9 @@ export const Navigation = () => {
         background: themeColors.background
     };
 
+    SystemUI.setBackgroundColorAsync(themeColors.background || "white");
+
+
     const EditHabitScreen = (props) => <SetHabitScreen isEdit {...props}/>
 
     const addEditSubdirectories = (
@@ -42,8 +47,8 @@ export const Navigation = () => {
 
     const settingsSubdirectories = (
         <>
-            <Stack.Screen name="settings" component={SettingsScreen} options={{ headerShown: false, title: t("st_screen") }} />
-            <Stack.Screen name="settings/language" component={STLanguage} options={{ headerShown: false, title: t("st_screen") }} />
+            <Stack.Screen name="settings" component={SettingsScreen} options={{ headerShown: false, title: t("st_screen"),  }} />
+            <Stack.Screen name="settings/language" component={STLanguage} options={{ headerShown: false, title: t("st_screen"), }} />
             <Stack.Screen name="settings/theme" component={STTheme} options={{ headerShown: false, title: t("st_screen") }} />
         </>
     )
@@ -53,7 +58,7 @@ export const Navigation = () => {
         <NavigationContainer>
             <Stack.Navigator screenOptions={{ gestureEnabled: true, navigationBarColor: themeColors.background || "white" }}>
                 <Stack.Screen name="home" component={HomeScreen} options={{ headerShown: false, title: t("home_screen") }} />
-                <Stack.Screen name="habitdetails" component={DetailsHabitScreen} options={{ headerShown: false, title: "Habit Details" }} />
+                <Stack.Screen name="habitdetails" component={DetailsHabitScreen} options={{ headerShown: false, title: "Habit Details", animationTypeForReplace: "pop", animation: "fade_from_bottom" }} />
                 {settingsSubdirectories}
                 {addEditSubdirectories}
                 <Stack.Screen

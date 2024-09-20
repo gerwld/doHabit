@@ -1,3 +1,5 @@
+const { StyleSheet } = require("react-native")
+
 const THEMES_MASKS = {
     "st_theme__light": "Light",
     "st_theme__dark": "Dark",
@@ -9,16 +11,18 @@ const THEMEV = {
         label: "light",
         background: "#f0f2f7",
         bgHighlight: "#ffffff",
-        bgHighlightSec: "#ffffff",
-        borderColor: "#e5e5ea",
+        bgHighlightSec: "#f7f8fc",
+        borderColor: "#ebeef4",
         textColor: "#50677a",
         textColorHighlight: "#000",
         textColorRevert: "#fff",
-        crossSymb: "#a5bbd3",
-        crossSymbL: "#a5bbd3",
+        crossSymb: "#c3ccdb",
+        crossSymbL: "#e0e5ee",
         thumbBackground: "#e5e5ea",
         thumbBackgroundIos: "#ffffff",
-        chevron: "#ccd1db"
+        copyright: "#c3c7d3",
+        chevron: "#b3b7c1",
+        chevronText:"#a8adb8", 
     },
     "st_theme__dark": {
         label: "dark",
@@ -33,7 +37,8 @@ const THEMEV = {
         crossSymbL: "#484b50",
         thumbBackground: "#45474b",
         thumbBackgroundIos: "#45474b",
-        chevron: "#888c95"
+        chevron: "#888c95",
+        chevronText:"#ccd1db",
     }
 }
 

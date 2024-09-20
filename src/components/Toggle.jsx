@@ -49,16 +49,6 @@ const Toggle = React.memo((props) => {
   );
 });
 
-Toggle.defaultProps = {
-  toggleColor: '#4cd137',
-  backgroundColor: '#ecf0f1',
-  label: '',
-  onToggle: () => {},
-  style: {},
-  value: false,
-  labelStyle: {},
-};
-
 export default Toggle;
 
 const styles = StyleSheet.create({

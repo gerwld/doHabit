@@ -3,9 +3,10 @@ import Svg, { Path } from "react-native-svg";
 const SvgChevronRight = (props) => (
   <Svg
     xmlns="http://www.w3.org/2000/svg"
-    width="18"
-    height="18"
+    width={props.style.width || 18}
+    height={props.style.height || 18}
     viewBox="0 0 20 20"
+    
     {...props}
   >
     <Path
