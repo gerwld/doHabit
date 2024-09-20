@@ -8,7 +8,7 @@ import Animated, { FadeIn, FadeOut, useAnimatedStyle, useSharedValue, withTiming
 
 import { Label, ColorPicker } from "styles/crudtask"
 import { BaseView, LineItemView, Modal, BasePressButton, LineItemOptions, STHeader } from '@components';
-import { HABIT_COLORS, getRandomItem, getTimeFromTimestamp, uses24HourClock } from '@constants';
+import { HABIT_COLORS, convertTo12HourFormat, getRandomItem, getTimeFromTimestamp, uses24HourClock } from '@constants';
 import { habitsActions } from "actions";
 import { habitSelectors } from '@redux';
 import alert from '../polyfils/alert';
@@ -157,6 +157,11 @@ const SetHabitScreen = React.memo(({ route, navigation, isEdit }) => {
   border-radius: 10px;
 `
 
+const twelveOr24Time = useCallback((time) => {
+  if(uses24HourClock(new Date())) return time;
+  return convertTo12HourFormat(time);
+}, [])
+
   return (
     <BaseView>
       <STHeader
@@ -272,7 +277,7 @@ const SetHabitScreen = React.memo(({ route, navigation, isEdit }) => {
                 onToggle={(v) => { onChangeInput("remind", v); setSelectTime(v) }}>
                 <Text style={{ fontSize: 17, color: themeColors.textColorHighlight, flex: 1 }}>{t("addt_remind")}</Text>
                 {androidTimeSelected
-               ? <Text style={{ fontSize: 17, color: themeColors.chevronText, marginRight: 10 }}>{state.remindTime}</Text>
+               ? <Text style={{ fontSize: 17, color: themeColors.chevronText, marginRight: 10 }}>{twelveOr24Time(state.remindTime)}</Text>
                 :  null}
               </LineItemView>
             : null}
@@ -330,7 +335,7 @@ const SelectDate = ({ themeColors, value, onChangeInput, remind, isSelectTime, s
       {isSelectTime
         ? <Animated.View entering={FadeIn.duration(200)} exiting={FadeOut.duration(300)}>
           <RNDateTimePicker
-            style={{ backgroundColor: themeColors.bgHighlight, }}
+            style={{ backgroundColor: themeColors.bgHighlight, background: "red" }}
             positiveButton={{label: 'OK', textColor: themeColors.textColor}} 
             negativeButton={{label: t("act_cancel"), textColor: themeColors.textColor}} 
             is24Hour={uses24HourClock(date)}
