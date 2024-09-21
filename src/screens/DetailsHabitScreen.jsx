@@ -9,7 +9,7 @@ import { REPEAT_MASKS, uses24HourClock, convertTo12HourFormat } from '@constants
 import { Label, InfoBar, InfoBarItem } from "styles/crudtask"
 import { CircularProgress, LineItemView, STHeader, BaseView } from '@components';
 import CalendarPicker from 'react-native-calendar-picker';
-import { useCurrentTheme } from 'hooks';
+import { useCurrentTheme, useHabitScore } from 'hooks';
 import { SvgClock, SvgRepeat } from '../../assets/svg/hicons_svgr';
 
 
@@ -17,8 +17,8 @@ const DetailsHabitScreen = React.memo(({ route, navigation }) => {
   const { t } = useTranslation();
   const d = useDispatch();
   const [themeColors] = useCurrentTheme();
-
   const [item, setItem] = React.useState(null);
+  const [score, monthScore, yearScore] = useHabitScore(item);
   const time = item?.remindTime;
 
   const twelveOr24Time = useCallback((time) => {
@@ -81,13 +81,21 @@ const DetailsHabitScreen = React.memo(({ route, navigation }) => {
     },
     ovBlockDT: {
       textAlign: "center",
-      fontSize: 28,
+      fontSize: 26,
+      minWidth: 72,
       fontWeight: "bold",
       color: item?.color
     },
     ovBlockDD: {
       fontSize: 17,
       color: themeColors.textColor
+    },
+    ovParent: {
+      alignItems:"center",
+      justifyContent: "center"
+    },
+    circle: {
+      paddingLeft: 10
     }
   })
 
@@ -123,18 +131,27 @@ const DetailsHabitScreen = React.memo(({ route, navigation }) => {
 
         <Label>{t("label_stre")}</Label>
         <View style={styles.item}>
-          <CircularProgress progress={20} size={55} strokeWidth={8} strColor={themeColors.crossSymbL} color={item?.color ? item.color : "#7fcbfd"} />
-          
-          <View>
-            <Text style={styles.ovBlockDT}>0%</Text>
+          <View style={styles.circle} >
+            <CircularProgress 
+              progress={score > 0 ? score : 1} 
+              size={55} 
+              strokeWidth={8} 
+              strColor={themeColors.crossSymbL} 
+              color={item?.color ? item.color : "#7fcbfd"} />
+          </View>
+
+          <View  style={styles.ovParent}>
+            <Text style={styles.ovBlockDT}>{score || 0}%</Text>
             <Text style={styles.ovBlockDD}>Score</Text>
           </View>
-          <View>
-            <Text style={styles.ovBlockDT}>0%</Text>
+
+          <View style={styles.ovParent}>
+            <Text style={styles.ovBlockDT}>{monthScore || 0}%</Text>
             <Text style={styles.ovBlockDD}>Month</Text>
           </View>
-          <View>
-            <Text style={styles.ovBlockDT}>0%</Text>
+
+          <View style={styles.ovParent}>
+            <Text style={styles.ovBlockDT}>{yearScore || 0}%</Text>
             <Text style={styles.ovBlockDD}>Year</Text>
           </View>
 
