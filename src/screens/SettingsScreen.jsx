@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react'
 import { useSelector } from 'react-redux';
-import { View, Text, ScrollView, StyleSheet, Pressable, StatusBar } from 'react-native'
+import { View, Text, ScrollView, StyleSheet, Pressable, StatusBar, Linking } from 'react-native'
 import { useTranslation } from 'react-i18next';
 
 import { LineItemView, GapView, LineItemOptions, Segment, STHeader } from '@components'
@@ -8,6 +8,7 @@ import { LANG_MASKS, getThemeStatusBar } from '@constants';
 import { appSelectors } from '@redux';
 import { Feature, Lang, Rateapp, Support, Theme, Tutorial } from '@icons';
 import { useCurrentTheme } from 'hooks';
+import * as WebBrowser from 'expo-web-browser';
 
 
 
@@ -49,7 +50,11 @@ const SettingsScreen = ({ navigation }) => {
     navigation.navigate(path, {});
   });
 
-  
+  const openURL = async (url) => {
+    let result = await WebBrowser.openBrowserAsync(url);
+  };
+
+
 
   return (
     <View style={{ flex: 1, backgroundColor: themeColors.background }}>
@@ -63,23 +68,25 @@ const SettingsScreen = ({ navigation }) => {
           <GapView />
           <Segment>
             <Pressable onPress={() => navigation.replace("tutorial")}>
-              <LineItemView leftIcon={<Tutorial/>} pl1 isFirstItem rightArrow>
+              <LineItemView leftIcon={<Tutorial />} pl1 isFirstItem rightArrow>
                 <Text style={styles.t}>{t("st_tutorial")}</Text>
               </LineItemView>
             </Pressable>
 
-            <LineItemView leftIcon={<Support/>} pl1 rightArrow>
-              <Text style={styles.t}>{t("st_support")}</Text>
-            </LineItemView>
+            <Pressable onPress={() => openURL('https://docs.google.com/forms/d/e/1FAIpQLSexoHccj3mXLLFMC4SV4SbV5NgIViojjLu7YE35ycBu2pkVSQ/viewform?usp=sf_link')}>
+              <LineItemView leftIcon={<Support />} pl1 rightArrow>
+                <Text style={styles.t}>{t("st_support")}</Text>
+              </LineItemView>
+            </Pressable>
 
             <LineItemOptions
-              leftIcon={<Theme/>}
+              leftIcon={<Theme />}
               onPress={() => navigateToPage("settings/theme")}
               title={t("st_theme")}
               value={t(theme.theme + "")} />
 
             <LineItemOptions
-              leftIcon={<Lang/>}
+              leftIcon={<Lang />}
               onPress={() => navigateToPage("settings/language")}
               title={t("st_lang")}
               value={LANG_MASKS[lang]?.mask} />
@@ -88,11 +95,13 @@ const SettingsScreen = ({ navigation }) => {
           <GapView />
 
           <Segment>
-            <LineItemView leftIcon={<Feature/>} pl1 isFirstItem rightArrow>
-              <Text style={styles.t}>{t("st_feat")}</Text>
-            </LineItemView>
+            <Pressable onPress={() => openURL('https://docs.google.com/forms/d/e/1FAIpQLSd2chzzyUdExwXJXpBCHVP3JnU8nUETBQbe54DWoMWbHBHT_g/viewform?usp=sf_link')}>
+              <LineItemView leftIcon={<Feature />} pl1 isFirstItem rightArrow>
+                <Text style={styles.t}>{t("st_feat")}</Text>
+              </LineItemView>
+            </Pressable>
 
-            <LineItemView leftIcon={<Rateapp/>} pl1 rightArrow>
+            <LineItemView leftIcon={<Rateapp />} pl1 rightArrow>
               <Text style={styles.t}>{t("st_rate")}</Text>
             </LineItemView>
           </Segment>
