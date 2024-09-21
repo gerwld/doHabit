@@ -1,5 +1,9 @@
 import Animated, { FadeIn, FadeOut, useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated';
-import { getTimeFromTimestamp } from '@constants';
+import { getTimeFromTimestamp, uses24HourClock } from '@constants';
+import { useTranslation } from 'react-i18next';
+import React from 'react';
+import RNDateTimePicker from '@react-native-community/datetimepicker';
+import { Platform } from 'react-native';
 
 const SelectDate = ({ themeColors, value, onChangeInput, remind, isSelectTime, setSelectTime }) => {  
     const date = new Date();
