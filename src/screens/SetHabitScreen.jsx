@@ -4,15 +4,13 @@ import styled from 'styled-components/native';
 import { useTranslation } from 'react-i18next';
 import uuid from 'react-native-uuid';
 import { useDispatch, useSelector } from 'react-redux';
-import Animated, { FadeIn, FadeOut, useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated';
 
 import { Label, ColorPicker } from "styles/crudtask"
-import { BaseView, LineItemView, Modal, BasePressButton, LineItemOptions, STHeader } from '@components';
-import { HABIT_COLORS, convertTo12HourFormat, getRandomItem, getTimeFromTimestamp, uses24HourClock } from '@constants';
+import { BaseView, LineItemView, Modal, BasePressButton, LineItemOptions, STHeader, SelectDate } from '@components';
+import { HABIT_COLORS, convertTo12HourFormat, getRandomItem, uses24HourClock } from '@constants';
 import { habitsActions } from "actions";
 import { habitSelectors } from '@redux';
 import alert from '../polyfils/alert';
-import RNDateTimePicker from '@react-native-community/datetimepicker';
 import { useCurrentTheme, useInputFocusOnInit } from 'hooks';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
@@ -28,15 +26,15 @@ const SetHabitScreen = React.memo(({ route, navigation, isEdit }) => {
     name: "",
     notification: "",
     remind: false,
-    repeat: "every-day"
+    repeat: "every-week"
   }
 
   const [state, setState] = React.useState({ ...initialState });
   const [isColorPicker, setColorPicker] = React.useState(false);
   const [isSelectTime, setSelectTime] = React.useState(false);
+  const itemsArray = useSelector(habitSelectors.selectItemsArray);
   const [themeColors] = useCurrentTheme();
-  
-  const items = useSelector(habitSelectors.selectItems);
+
 
   const androidTimeSelected = state.remindTime && Platform.OS === "android";
 
@@ -57,8 +55,8 @@ const SetHabitScreen = React.memo(({ route, navigation, isEdit }) => {
 
 
   const onSubmitCheckName = useCallback((name) => {
-    return !!items.find(e => e.name === name)
-  }, [items])
+    return !!itemsArray.find(e => e.name === name)
+  }, [itemsArray])
 
   const onSubmit = useCallback(() => {
     if (isEdit) {
@@ -66,7 +64,7 @@ const SetHabitScreen = React.memo(({ route, navigation, isEdit }) => {
       navigation.navigate('home')
     }
     else {
-      if (false && onSubmitCheckName(state.name)) {
+      if (onSubmitCheckName(state.name)) {
         alert(
           `Habit with provided name already exist.`,
           "",
@@ -99,6 +97,11 @@ const SetHabitScreen = React.memo(({ route, navigation, isEdit }) => {
       },
     });
   }
+
+  const twelveOr24Time = useCallback((time) => {
+    if(uses24HourClock(new Date())) return time;
+    return convertTo12HourFormat(time);
+  }, [])
 
   !isEdit && useInputFocusOnInit(focusInputRef);
 
@@ -157,10 +160,6 @@ const SetHabitScreen = React.memo(({ route, navigation, isEdit }) => {
   border-radius: 10px;
 `
 
-const twelveOr24Time = useCallback((time) => {
-  if(uses24HourClock(new Date())) return time;
-  return convertTo12HourFormat(time);
-}, [])
 
   return (
     <BaseView>
@@ -291,8 +290,6 @@ const twelveOr24Time = useCallback((time) => {
                 setSelectTime={setSelectTime}
                 onChangeInput={onChangeInput} />
           : null}
-      
-            
 
           <View style={{ paddingBottom: 20 }} />
         </ScrollView>
@@ -301,57 +298,6 @@ const twelveOr24Time = useCallback((time) => {
     </BaseView>
   )
 });
-
-
-
-const SelectDate = ({ themeColors, value, onChangeInput, remind, isSelectTime, setSelectTime }) => {  
-  const date = new Date();
-  const {t} = useTranslation();
-
-  const onTimeSelect = (_, payload) => {
-    if(Platform.OS === "android") {
-      setSelectTime(false)
-    }
-    const time = getTimeFromTimestamp(payload);
-    if (time) {
-      onChangeInput("remindTime", time);
-    }
-  }
-
-  const height = useSharedValue(220);
-
-  const animatedProps = useAnimatedStyle(() => ({
-    height: height.value,
-    overflow: 'hidden'
-  }));
-
-  React.useEffect(() => {
-    const value = remind ? 220 : 0
-    height.value = withTiming(value, {duration: 300})
-  }, [remind])
-
-  return (
-    <Animated.View style={animatedProps}>
-      {isSelectTime
-        ? <Animated.View entering={FadeIn.duration(200)} exiting={FadeOut.duration(300)}>
-          <RNDateTimePicker
-            style={{ backgroundColor: themeColors.bgHighlight, background: "red" }}
-            positiveButton={{label: 'OK', textColor: themeColors.textColor}} 
-            negativeButton={{label: t("act_cancel"), textColor: themeColors.textColor}} 
-            is24Hour={uses24HourClock(date)}
-            themeVariant={themeColors.label}
-            onChange={onTimeSelect}
-            timeZoneName={'GMT0'}
-            value={new Date("2024-09-16T" + (value ? value + ":00.000Z" : `${DEFAULT_TIME}:00.000Z`))}
-            mode="time"
-            display="spinner"
-          />
-
-        </Animated.View>
-        : null}
-    </Animated.View>
-  )
-}
 
 
 export default SetHabitScreen

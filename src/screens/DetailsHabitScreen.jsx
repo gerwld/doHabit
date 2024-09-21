@@ -99,6 +99,15 @@ const DetailsHabitScreen = React.memo(({ route, navigation }) => {
     }
   })
 
+  function getDecimal(value) {
+    let hasDec = value % 1 !== 0
+    if(hasDec) return value?.toFixed(1)
+    return value;
+  }
+  function addPlus(v) {
+    return v>0 ? '+'+v : 0
+  }
+
 
   return (
     <BaseView>
@@ -141,17 +150,17 @@ const DetailsHabitScreen = React.memo(({ route, navigation }) => {
           </View>
 
           <View  style={styles.ovParent}>
-            <Text style={styles.ovBlockDT}>{score || 0}%</Text>
+            <Text style={styles.ovBlockDT}>{addPlus(getDecimal(score))}%</Text>
             <Text style={styles.ovBlockDD}>Score</Text>
           </View>
 
           <View style={styles.ovParent}>
-            <Text style={styles.ovBlockDT}>{monthScore || 0}%</Text>
+            <Text style={styles.ovBlockDT}>{addPlus(getDecimal(monthScore))}%</Text>
             <Text style={styles.ovBlockDD}>Month</Text>
           </View>
 
           <View style={styles.ovParent}>
-            <Text style={styles.ovBlockDT}>{yearScore || 0}%</Text>
+            <Text style={styles.ovBlockDT}>{addPlus(getDecimal(yearScore))}%</Text>
             <Text style={styles.ovBlockDD}>Year</Text>
           </View>
 

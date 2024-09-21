@@ -1,5 +1,5 @@
 {
-  "name": "DoHabit",
+  "name": "do-habit",
   "version": "1.0.0",
   "scripts": {
     "start": "expo start --dev-client",

@@ -49,6 +49,33 @@ const REPEAT_MASKS = {
     "5-times-week": "5 times per week",
 }
 
+const REPEAT_GAP_VALUES = {
+    "every-day": {
+        "month_repeat_days": 30,        // day_percent * month_repeat_days = 100%
+        "gratitude_percent": 100 / 30,  // % score for extra days
+        "day_percent": 100 / 30,        // score for specified days
+        "reset_delay": 1,               // when score resets
+    },
+    "every-week": {
+        "month_repeat_days": 4,
+        "gratitude_percent": 100 / (4 * 0.1),
+        "day_percent": 100 / 4,
+        "reset_delay": 12,
+    },
+    "3-times-week": {
+        "month_repeat_days": 12,
+        "gratitude_percent": 100 / (12 * 0.3),
+        "day_percent": 100 / 12,
+        "reset_delay": 4,
+    },
+    "5-times-week": {
+        "month_repeat_days": 20,
+        "gratitude_percent": 100 / (20 * 0.3),
+        "day_percent": 100 / 20,
+        "reset_delay": 2,
+    },
+}
+
 const LANG_MASKS = {
     "en": {
         orig: "English",
@@ -137,9 +164,12 @@ const uses24HourClock = (date) => {
 };
 
 module.exports = {
-    THEMES_MASKS,
-    REPEAT_MASKS,
     LANG_MASKS,
+    THEMES_MASKS,
+
+    REPEAT_MASKS,
+    REPEAT_GAP_VALUES,
+    
     HABIT_COLORS,
     THEMEV,
     getRandomItem,

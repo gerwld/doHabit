@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react'
 import styled from 'styled-components/native';
-import { ImageBackground, Platform, Pressable, StyleSheet, View } from 'react-native';
+import { Platform, Pressable, StyleSheet, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import * as Haptics from 'expo-haptics';
 
@@ -50,6 +50,7 @@ export const LastSevenDays = React.memo(({ isHabit, habitID, color }) => {
             {RANGE_ARR
                 .map((e, _) =>
                     <RenderItem
+                        key={e + "__timestamp_key"}
                         onPress={() => onDayPress(TIMESTAMP - (ONE_DAY_IN_MS * e))}
                         e={e} color={color}
                         tmsArr={tmsArr}

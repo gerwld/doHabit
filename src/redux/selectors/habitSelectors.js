@@ -10,3 +10,9 @@ export const selectItemById = createSelector(
   [selectItems, (_, habitID) => habitID],
   (items, habitID) => items[habitID]
 );
+
+// Items as array
+export const selectItemsArray = createSelector(
+  [selectItems, selectItemsIDs],
+  (items, itemsIDs) => (itemsIDs || []).map(id => items[id])
+);

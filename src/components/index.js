@@ -16,4 +16,5 @@ export { default as ScrollPages } from "./ScrollPages";
 export { BasePressButton } from "./styling/BasePressButton";
 export { default as Segment } from "./styling/Segment";
 export { default as Toggle } from "./Toggle";
+export { default as SelectDate } from "./SelectDate";
 
