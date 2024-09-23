@@ -27,7 +27,7 @@ export default withTranslation(function RootComponent() {
         <StatusBar translucent style="light" />
       </AppWithProvider>
       </GestureHandlerRootView>
-      <Debugger/>
+      {/* <Debugger/> */}
     </Provider>
   )
 })

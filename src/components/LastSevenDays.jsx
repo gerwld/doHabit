@@ -11,6 +11,7 @@ import { useCurrentTheme } from "hooks";
 import { Check1, Check2, Check3, Close1, Close2, Close3 } from '../../assets/svg/hicons_svgr';
 import glow from "assets/img/glow.png"
 import { PLATFORM } from '@constants';
+import useCoreWindowDimensions from '../hooks/useCoreWindowDimensions';
 
 
 
@@ -21,15 +22,11 @@ const DATE = new Date();
 const TIMESTAMP = DATE.setHours(0, 0, 0, 0)
 
 function getCountDays(vp) {
-if(vp > 500) return 12
-if(vp > 420) return 6
-return 5
+    if (vp > 1320) return 20
+    if (vp > 750) return 12
+    if (vp < 350) return 4
+    return 5
 }
-
-const DAYS_COUNT = getCountDays(Dimensions.get("window").width);
-const RANGE_ARR = Array.from({ length: DAYS_COUNT }, (_, i) => DAYS_COUNT - 1 - i);
-const isCurrent = (i) => i === (DAYS_COUNT - 1);
-
 
 export const LastSevenDays = React.memo(({ isHabit, habitID, color }) => {
     const { t } = useTranslation();
@@ -41,6 +38,11 @@ export const LastSevenDays = React.memo(({ isHabit, habitID, color }) => {
     const currentMonthMask = t("month_" + currentMonth).substring(0, 3)
     const tmsArr = item?.datesArray;
     const [themeColors] = useCurrentTheme();
+    const {width} = useWindowDimensions();
+
+    const DAYS_COUNT = getCountDays(width);
+    const RANGE_ARR = Array.from({ length: DAYS_COUNT }, (_, i) => DAYS_COUNT - 1 - i);
+    const isCurrent = (i) => i === (DAYS_COUNT - 1);
 
 
 
@@ -132,7 +134,7 @@ const RenderItem = ({ e, tmsArr, color, themeColors, onPress }) => {
             onPressOut={handlePressOut}
 
             key={e + "__dayid"}
-            
+
             onPress={onPress}>
             <TimeView
 
@@ -161,8 +163,8 @@ const styles = StyleSheet.create({
     timeWiewInt: {
         height: 55,
         width: 32,
-        minWidth:32,
-        maxWidth:32,
+        minWidth: 32,
+        maxWidth: 32,
         alignItems: "center",
         justifyContent: "center",
         paddingVertical: 0,

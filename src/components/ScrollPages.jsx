@@ -1,4 +1,4 @@
-import { View, Button, SafeAreaView, Dimensions } from 'react-native'
+import { View, Button, SafeAreaView, Dimensions, Pressable, Text } from 'react-native'
 import React, { useState } from 'react'
 import { Gesture, GestureDetector, GestureHandlerRootView } from 'react-native-gesture-handler';
 import { runOnJS, useAnimatedStyle, withTiming } from 'react-native-reanimated';
@@ -74,7 +74,7 @@ const ScrollPages = ({ children, navigateToHome = true }) => {
     const navBlock = RANGE_ARR.map((e, i) => <PageButton
         key={`key_scrollpages_nav_${i}`}
         children={<PageButtonIc
-            style={{ backgroundColor: e == pagevis ? "#2296f3" : "#8080804f" }}
+            style={{ backgroundColor: e == pagevis ? "#63b1de" : "#8e8e8e4f" }}
         />}
         onPress={() => { setPage(e); x.value = withTiming(-windowWidth * e) }}
     />)
@@ -113,7 +113,9 @@ const ScrollPages = ({ children, navigateToHome = true }) => {
                     {/* navigation */}
                     <View style={{ width: "max-width", alignItems: "center" }}>
                         <View style={{ maxWidth: 200 }}>
-                            <Button onPress={() => {setPage(0); navigation.navigate("home")}} title={pagevis === TOTAL_PAGES - 1 ? t("act_begin") : t("act_skip") || "Skip"} />
+                            <Pressable onPress={() => {setPage(0); navigation.navigate("home")}} >
+                                <Text style={{color: "#56a0cb", fontSize: 20}}>{pagevis === TOTAL_PAGES - 1 ? t("act_begin") : t("act_skip") || "Skip"}</Text>
+                            </Pressable>
                         </View>
                     </View>
                     <View style={{ paddingVertical: 10, flexDirection: "row", gap: 5, justifyContent: "center" }}>

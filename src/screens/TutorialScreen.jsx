@@ -7,6 +7,7 @@ import { ScrollPages } from '@components'
 import { getTheme } from '@constants';
 
 import logo from "assets/adaptive-icon.png"
+import logo_dark from "assets/adaptive-icon__dark.png"
 
 import {
     l1_ios,
@@ -54,6 +55,7 @@ const TutorialScreen = () => {
         },
         mainLogo: {
             width: "55%",
+            maxWidth: 300,
             marginTop: "5%"
         },
         imgBox: {
@@ -69,7 +71,7 @@ const TutorialScreen = () => {
         <ScrollPages>
             <View style={styles.screen}>
                 <View style={styles.imgBox}>
-                    <Image source={logo} resizeMode="contain" style={styles.mainLogo} />
+                    <Image source={isDarkTheme ? logo : logo_dark} resizeMode="contain" style={styles.mainLogo} />
                 </View>
                 <Text style={styles.title}>{t("tutorial_title_screen_1")}</Text>
                 <Text style={styles.description}>{t("tutorial_desc_screen_1")}</Text>

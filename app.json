@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "doHabit",
+    "name": "DoHabit",
     "slug": "doHabit-habits-tracker",
     "version": "0.0.1",
     "orientation": "portrait",
@@ -9,7 +9,10 @@
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "dark": {
+        "image": "./assets/splash.png",
+        "resizeMode": "contain"
+   }
     },
     "ios": {
       "supportsTablet": true,
@@ -17,9 +20,11 @@
       "userInterfaceStyle": "automatic"
     },
     "android": {
+      "icon": "./assets/icon.png",
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#ffffff",
+        "backgroundImage": "./assets/adaptive-icon-background.png",
+        "backgroundColor": "#3bb7e7",
         "userInterfaceStyle": "automatic"
       },
       "softwareKeyboardLayoutMode": "pan",
