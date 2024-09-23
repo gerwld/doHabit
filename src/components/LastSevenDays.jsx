@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react'
 import styled from 'styled-components/native';
-import { Platform, Pressable, StyleSheet, View } from 'react-native';
+import { Dimensions, Pressable, StyleSheet, useWindowDimensions, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import * as Haptics from 'expo-haptics';
 
@@ -10,16 +10,26 @@ import { habitsActions } from "actions";
 import { useCurrentTheme } from "hooks";
 import { Check1, Check2, Check3, Close1, Close2, Close3 } from '../../assets/svg/hicons_svgr';
 import glow from "assets/img/glow.png"
+import { PLATFORM } from '@constants';
 
 
-const DAYS_COUNT = 5;
-const RANGE_ARR = Array.from({ length: DAYS_COUNT }, (_, i) => DAYS_COUNT - 1 - i);
+
 
 const ONE_DAY_IN_MS = 86400000;
-const IS_APP = Platform.OS === "ios" || Platform.OS === "android";
+const IS_APP = PLATFORM === "ios" || PLATFORM === "android";
 const DATE = new Date();
 const TIMESTAMP = DATE.setHours(0, 0, 0, 0)
+
+function getCountDays(vp) {
+if(vp > 500) return 12
+if(vp > 420) return 6
+return 5
+}
+
+const DAYS_COUNT = getCountDays(Dimensions.get("window").width);
+const RANGE_ARR = Array.from({ length: DAYS_COUNT }, (_, i) => DAYS_COUNT - 1 - i);
 const isCurrent = (i) => i === (DAYS_COUNT - 1);
+
 
 export const LastSevenDays = React.memo(({ isHabit, habitID, color }) => {
     const { t } = useTranslation();
@@ -59,7 +69,7 @@ export const LastSevenDays = React.memo(({ isHabit, habitID, color }) => {
         </ParentView>
     )
     return (
-        <ParentView style={[{ marginTop: 14, marginBottom: 7 }, styles.parentView]}>
+        <ParentView style={[{ marginTop: 14, marginBottom: 7, marginRight: 4 }, styles.parentView]}>
             {RANGE_ARR
                 .map((e, i) => {
                     const activeStyle = isCurrent(i) ? { color: "#5fb1e7" } : null;
@@ -96,7 +106,7 @@ const RenderItem = ({ e, tmsArr, color, themeColors, onPress }) => {
             height: 57,
             justifyContent: "center",
             alignItems: "center",
-            overflow:"hidden",
+            overflow: "hidden",
         },
         parentGlowEffect: {
             backgroundColor: themeColors.bgHighlightSec,
@@ -107,12 +117,12 @@ const RenderItem = ({ e, tmsArr, color, themeColors, onPress }) => {
             width: 26,
             height: 26,
             color: color ? color : "#5fb1e7",
-            
+
         },
         iconX: {
             width: 24,
             height: 24,
-            color: themeColors.crossSymb, 
+            color: themeColors.crossSymb,
         },
     })
 
@@ -122,6 +132,7 @@ const RenderItem = ({ e, tmsArr, color, themeColors, onPress }) => {
             onPressOut={handlePressOut}
 
             key={e + "__dayid"}
+            
             onPress={onPress}>
             <TimeView
 
@@ -134,7 +145,7 @@ const RenderItem = ({ e, tmsArr, color, themeColors, onPress }) => {
     )
 }
 
-const ItemIcon = React.memo(({tmsArr, s, current}) => {
+const ItemIcon = React.memo(({ tmsArr, s, current }) => {
     return (
         (tmsArr?.filter && tmsArr?.filter(l => l === current).length > 0)
             ?
@@ -142,14 +153,16 @@ const ItemIcon = React.memo(({tmsArr, s, current}) => {
 
             :
             <Close1 style={s.iconX} />
-        
+
     )
 })
 
 const styles = StyleSheet.create({
     timeWiewInt: {
         height: 55,
-        width: 31,
+        width: 32,
+        minWidth:32,
+        maxWidth:32,
         alignItems: "center",
         justifyContent: "center",
         paddingVertical: 0,
@@ -160,7 +173,7 @@ const styles = StyleSheet.create({
         marginRight: 4
     },
     parentView: {
-        marginRight: 1
+        marginRight: 4
     }
 });
 
@@ -178,10 +191,11 @@ const ParentView = styled.View`
 `
 
 const TimeView = styled.View`
-    width: min-content;
-    min-width: 30px;
+    width: 32px;
+    max-width: 32px;
+    min-width: 32px;
     display: flex;
     flex-direction:column;
     align-items: center;
-    margin-right: 2.5px;
+    /* border: 1px solid red */
 `
