@@ -7,6 +7,7 @@ const AnimatedView = Animated.createAnimatedComponent(View);
 import styled from 'styled-components/native';
 import { useNavigation } from '@react-navigation/native';
 import { useTranslation } from 'react-i18next';
+import { StatusBar } from 'expo-status-bar';
 
 const ScrollPages = ({ children, navigateToHome = true }) => {
     const {t} = useTranslation();
@@ -118,6 +119,9 @@ const ScrollPages = ({ children, navigateToHome = true }) => {
                     <View style={{ paddingVertical: 10, flexDirection: "row", gap: 5, justifyContent: "center" }}>
                         {navBlock}
                     </View>
+
+                    {/* hide statusbar */}
+                    <StatusBar hidden={true} />
                 </View>
 
 

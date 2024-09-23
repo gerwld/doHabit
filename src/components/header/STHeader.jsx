@@ -18,7 +18,7 @@ const STHeader = React.memo(({
     ...rest
 }) => {
     const { t } = useTranslation();
-    const headerStyles = useHeaderStyles(theme, isWhite = true);
+    const {headerStyles} = useHeaderStyles(theme, isWhite = true);
     const [themeColors] = useCurrentTheme();
 
     // header styles based on it's background color. if duotone then 

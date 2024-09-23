@@ -1,8 +1,10 @@
 import React from 'react'
 import { useTranslation } from 'react-i18next';
 import { View, Text, StyleSheet, Image } from 'react-native'
+
 import { useCurrentTheme } from 'hooks';
 import { ScrollPages } from '@components'
+import { getTheme } from '@constants';
 
 import logo from "assets/adaptive-icon.png"
 
@@ -14,11 +16,12 @@ import {
     d2_ios,
     d3_ios
 } from "assets";
-import { getTheme } from '../constants';
+
 
 
 const TutorialScreen = () => {
     const {t} = useTranslation();
+
     const [themeColors, theme] = useCurrentTheme();
     const isDarkTheme = getTheme(theme)?.label === "dark"; 
     const styles = StyleSheet.create({

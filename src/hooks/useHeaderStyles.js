@@ -1,23 +1,30 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet, useWindowDimensions } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import React from 'react';
 import useCurrentTheme from './useCurrentTheme';
+import { PLATFORM } from '@constants';
 
-const HEADER_HEIGHT_SAFE = 55;
+const getRatioExtras = () => {
+  if(PLATFORM === "android") return 0.016
+  return 0
+}
+
 const GAP_BETWEEN_SCREEN_BORDERS = 14;
 
 export const useHeaderStyles = (theme, isWhite = false) => {
+  const themeColors = useCurrentTheme();
   const insets = useSafeAreaInsets();
-  const [themeColors] = useCurrentTheme();
-
+  const { height } = useWindowDimensions();
+  const HEADER_HEIGHT_SAFE = PLATFORM === "web" ? 55: 60;
+  const HEADER_HEIGHT_EXTRAS = Math.min(height * getRatioExtras(), 20);
+  const INSET_SAFE = PLATFORM === "ios" && insets.top < 21 ? insets.top - 1 : insets.top;
   
 
   const headerStyles = StyleSheet.create({
     header: {
       width: "100%",
-      height: insets.top + HEADER_HEIGHT_SAFE,
-      maxHeight: insets.top + HEADER_HEIGHT_SAFE,
-      minHeight: insets.top + HEADER_HEIGHT_SAFE,
+      height: INSET_SAFE + HEADER_HEIGHT_SAFE + HEADER_HEIGHT_EXTRAS,
+      maxHeight: INSET_SAFE + HEADER_HEIGHT_SAFE + HEADER_HEIGHT_EXTRAS,
+      minHeight: INSET_SAFE + HEADER_HEIGHT_SAFE + HEADER_HEIGHT_EXTRAS,
       padding: 0,
       alignItems: "center",
       justifyContent: "flex-end",
@@ -40,17 +47,17 @@ export const useHeaderStyles = (theme, isWhite = false) => {
       flexDirection: 'row',
       alignItems: 'center',
       justifyContent: 'center',
-      height: 55,
+      height: HEADER_HEIGHT_SAFE,
       width: 55,
     },
     headerTitle: {
       color: 'white',
       fontSize: 22,
       fontWeight: 'bold',
-      
+
     },
     centerComponent: {
-      height: 55,
+      height: HEADER_HEIGHT_SAFE,
       justifyContent: 'center',
       alignItems: 'center',
       maxWidth: "55%"
@@ -58,22 +65,22 @@ export const useHeaderStyles = (theme, isWhite = false) => {
 
     leftComponent: {
       flex: 1,
-      height: 55,
+      height: HEADER_HEIGHT_SAFE,
       justifyContent: "center",
     },
     rightComponent: {
       flex: 1,
-      height: 55,
+      height: HEADER_HEIGHT_SAFE,
       justifyContent: "center",
       alignItems: 'flex-end',
     },
-  
+
     componentPressable: {
       alignSelf: "flex-start",
       paddingLeft: GAP_BETWEEN_SCREEN_BORDERS,
       paddingRight: 4,
       justifyContent: "center",
-      height: 55,
+      height: HEADER_HEIGHT_SAFE,
     },
     componentPressableRight: {
       alignSelf: "flex-end",
@@ -92,5 +99,10 @@ export const useHeaderStyles = (theme, isWhite = false) => {
     },
   });
 
-  return headerStyles;
+  return {
+    headerStyles,
+    HEADER_HEIGHT_SAFE,
+    HEADER_HEIGHT_EXTRAS,
+    INSET_SAFE
+  };
 };

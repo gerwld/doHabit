@@ -1,11 +1,11 @@
 import React, { useCallback } from 'react'
-import { Text, Button, StyleSheet, ScrollView, View} from 'react-native'
+import { Text, Button, StyleSheet, ScrollView, View, useWindowDimensions } from 'react-native'
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 
 import alert from '../polyfils/alert';
 import { habitsActions } from "actions";
-import { REPEAT_MASKS, uses24HourClock, convertTo12HourFormat } from '@constants';
+import { uses24HourClock, convertTo12HourFormat } from '@constants';
 import { Label, InfoBar, InfoBarItem } from "styles/crudtask"
 import { CircularProgress, LineItemView, STHeader, BaseView } from '@components';
 import CalendarPicker from 'react-native-calendar-picker';
@@ -18,11 +18,12 @@ const DetailsHabitScreen = React.memo(({ route, navigation }) => {
   const d = useDispatch();
   const [themeColors] = useCurrentTheme();
   const [item, setItem] = React.useState(null);
+  const {width, height} = useWindowDimensions()
   const [score, monthScore, yearScore] = useHabitScore(item);
   const time = item?.remindTime;
 
   const twelveOr24Time = useCallback((time) => {
-    if(uses24HourClock(new Date())) return time;
+    if (uses24HourClock(new Date())) return time;
     return convertTo12HourFormat(time);
   }, [time])
 
@@ -91,7 +92,7 @@ const DetailsHabitScreen = React.memo(({ route, navigation }) => {
       color: themeColors.textColor
     },
     ovParent: {
-      alignItems:"center",
+      alignItems: "center",
       justifyContent: "center"
     },
     circle: {
@@ -101,11 +102,11 @@ const DetailsHabitScreen = React.memo(({ route, navigation }) => {
 
   function getDecimal(value) {
     let hasDec = value % 1 !== 0
-    if(hasDec) return value?.toFixed(1)
+    if (hasDec) return value?.toFixed(1)
     return value;
   }
   function addPlus(v) {
-    return v>0 ? '+'+v : 0
+    return v > 0 ? '+' + v : 0
   }
 
 
@@ -127,11 +128,11 @@ const DetailsHabitScreen = React.memo(({ route, navigation }) => {
 
         <LineItemView st={{ justifyContent: "space-around", paddingVertical: 10 }}>
           <InfoBarItem>
-            <SvgRepeat size={24} color={themeColors.textColor}/>
+            <SvgRepeat size={24} color={themeColors.textColor} />
             <Text style={[styles.t, styles.l]}>{item?.repeat ? t(item.repeat) : "-"}</Text>
           </InfoBarItem>
           <InfoBarItem>
-          <SvgClock size={24} color={themeColors.textColor}/>
+            <SvgClock size={24} color={themeColors.textColor} />
             <Text style={[styles.t, styles.l]}>{time ? twelveOr24Time(time) : "--:--"}</Text>
           </InfoBarItem>
         </LineItemView>
@@ -141,15 +142,15 @@ const DetailsHabitScreen = React.memo(({ route, navigation }) => {
         <Label>{t("label_stre")}</Label>
         <View style={styles.item}>
           <View style={styles.circle} >
-            <CircularProgress 
-              progress={score > 0 ? score : 1} 
-              size={55} 
-              strokeWidth={8} 
-              strColor={themeColors.crossSymbL} 
+            <CircularProgress
+              progress={score > 0 ? score : 1}
+              size={55}
+              strokeWidth={8}
+              strColor={themeColors.crossSymbL}
               color={item?.color ? item.color : "#7fcbfd"} />
           </View>
 
-          <View  style={styles.ovParent}>
+          <View style={styles.ovParent}>
             <Text style={styles.ovBlockDT}>{addPlus(getDecimal(score))}%</Text>
             <Text style={styles.ovBlockDD}>Score</Text>
           </View>
@@ -169,25 +170,24 @@ const DetailsHabitScreen = React.memo(({ route, navigation }) => {
 
         <Label>{t("label_ov")}</Label>
         <LineItemView st={{ ...styles.itemFlexible }}>
-        <CalendarPicker 
-        // customDatesStyles={}
-        textStyle={{
-          color: themeColors.textColor,
-          fontSize: 17
-          }} 
+          <View style={{alignItems: "center", justifyContent:"center", width: "100%"}}>
+            
+            <CalendarPicker
+              width={Math.min(width, height, 800)}
+              textStyle={{
+                color: themeColors.textColor,
+                fontSize: 17
+              }}
+              startFromMonday={uses24HourClock(new Date())}
+              selectedDayStyle={{}}
+              selectedDayTextStyle={{ color: themeColors.textColor }}
+              todayBackgroundColor={"#ffffff3f"}
+              todayStyle={{ color: "red" }}
+              scrollable={true} />
 
-        // onDateChange={()=> console.log("date")}
-        startFromMonday={uses24HourClock(new Date())}
-        selectedDayStyle={{}}
-        selectedDayTextStyle={{color: themeColors.textColor}}
-        todayBackgroundColor={"#ffffff3f"}
-        todayStyle={{color: "red"}}
-        
-     
-        
-        scrollable={true} />
-      
-    
+          </View>
+
+
         </LineItemView>
 
 

@@ -4,6 +4,7 @@ import { Text, View, Pressable, FlatList, StyleSheet, Platform, ActivityIndicato
 import { Label } from "styles/crudtask"
 import { useCurrentTheme } from "hooks"
 import { Check1 } from "../../assets/svg/hicons_svgr"
+import { PLATFORM } from "@constants"
 
 const SelectList = React.memo(({ showFetch, data, title, currentValue, setValue, color, theme, withoutTranslate }) => {
     const { t } = useTranslation()
@@ -92,7 +93,7 @@ const SelectList = React.memo(({ showFetch, data, title, currentValue, setValue,
                 contentContainerStyle={{ paddingBottom: 10 }}
                 keyExtractor={keyExtractor}
                 data={data}
-                {...(Platform.OS === 'android'
+                {...(PLATFORM === 'android'
                     ? {
                         overScrollMode: 'always',
                         scrollEnabled: true

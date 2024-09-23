@@ -1,4 +1,5 @@
 import { Alert, Platform } from 'react-native'
+import { PLATFORM } from '@constants'
 
 const alertPolyfill = (title, description, options, extra) => {
     const result = window.confirm([title, description].filter(Boolean).join('\n'))
@@ -14,6 +15,6 @@ const alertPolyfill = (title, description, options, extra) => {
     }
 }
 
-const alert = Platform.OS === 'web' ? alertPolyfill : Alert.alert
+const alert = PLATFORM === 'web' ? alertPolyfill : Alert.alert
 
 export default alert

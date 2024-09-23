@@ -1,5 +1,5 @@
 import React, { useCallback, useRef } from 'react'
-import { View, Text, StyleSheet, TextInput, ScrollView, Platform, KeyboardAvoidingView, TouchableWithoutFeedback } from 'react-native'
+import { View, Text, StyleSheet, TextInput, ScrollView, KeyboardAvoidingView, TouchableWithoutFeedback } from 'react-native'
 import styled from 'styled-components/native';
 import { useTranslation } from 'react-i18next';
 import uuid from 'react-native-uuid';
@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { Label, ColorPicker } from "styles/crudtask"
 import { BaseView, LineItemView, Modal, BasePressButton, LineItemOptions, STHeader, SelectDate } from '@components';
-import { HABIT_COLORS, convertTo12HourFormat, getRandomItem, uses24HourClock } from '@constants';
+import { HABIT_COLORS, PLATFORM, convertTo12HourFormat, getRandomItem, uses24HourClock } from '@constants';
 import { habitsActions } from "actions";
 import { habitSelectors } from '@redux';
 import alert from '../polyfils/alert';
@@ -26,7 +26,7 @@ const SetHabitScreen = React.memo(({ route, navigation, isEdit }) => {
     name: "",
     notification: "",
     remind: false,
-    repeat: "every-week"
+    repeat: "every-day"
   }
 
   const [state, setState] = React.useState({ ...initialState });
@@ -36,7 +36,7 @@ const SetHabitScreen = React.memo(({ route, navigation, isEdit }) => {
   const [themeColors] = useCurrentTheme();
 
 
-  const androidTimeSelected = state.remindTime && Platform.OS === "android";
+  const androidTimeSelected = state.remindTime && PLATFORM === "android";
 
   const onChangeInput = useCallback((name, value) => {
     if (name && value !== undefined) {
@@ -178,7 +178,7 @@ const SetHabitScreen = React.memo(({ route, navigation, isEdit }) => {
       {/* color picker & input */}
       <KeyboardAvoidingView
         style={{ flex: 1 }}
-        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+        behavior={PLATFORM === 'ios' ? 'padding' : 'height'}
       >
         <ScrollView
           overScrollMode='always'
@@ -266,7 +266,7 @@ const SetHabitScreen = React.memo(({ route, navigation, isEdit }) => {
             value={t(state.repeat)} />
 
           {/* TODO: Web support */}
-          {Platform.OS === "ios" || Platform.OS === "android"
+          {PLATFORM === "ios" || PLATFORM === "android"
             ? <LineItemView 
                 pl1 
                 toggle 

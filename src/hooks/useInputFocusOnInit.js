@@ -1,18 +1,17 @@
 import React from "react";
-import { Platform } from "react-native";
+import { PLATFORM } from "@constants";
 
 const useInputFocusOnInit = (inputRef, delay = 600) => {
     React.useEffect(() => {
         // sets focus on first input
         let timer;
-        const platform = Platform.OS;
-        const isAddOnMobile = (platform === "ios" || platform === "android");
+        const isAddOnMobile = (PLATFORM === "ios" || PLATFORM === "android");
         if (isAddOnMobile) {
           timer = setTimeout(() => {
             if (inputRef.current) {
               inputRef.current.focus();  // Focus on TextInput after delay
             }
-          }, platform === "android" ? (delay / 2) : delay );
+          }, PLATFORM === "android" ? (delay / 2) : delay );
         }
     
         return () => clearTimeout(timer);

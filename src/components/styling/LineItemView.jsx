@@ -6,6 +6,7 @@ import styled from 'styled-components/native';
 import { useCurrentTheme } from 'hooks';
 import Toggle from '../Toggle';
 import { ChevronRight } from '../../../assets/svg/hicons_svgr';
+import { PLATFORM } from '@constants';
 
 const LineItemView = React.memo(({ onPress,isFirstItem, leftIcon, children, rightArrow, toggle, toggleColor, onToggle, isEnabled, pl1, st }) => {
     const [themeColors] = useCurrentTheme();
@@ -42,7 +43,7 @@ border-bottom-width: 0;
             {rightArrow ? <ChevronRight style={{ marginLeft: 5, marginRight: 8, marginTop: 1, width: 20, height: 22}} color={themeColors.chevron} /> : null}
 
             {toggle ?
-                Platform.OS === "ios"
+                PLATFORM === "ios"
                     ? <Switch
                         style={{ marginRight: 10 }}
                         trackColor={{ false: '#d7dcde', true: (toggleColor ? toggleColor : '#81b0ff') }}

@@ -7,6 +7,7 @@ import { Navigation } from 'screens/Navigation';
 import withTranslation from 'hocs/withTranslation';
 import { useInitializeApp } from 'hooks';
 import { appSelectors, store } from '@redux';
+import Debugger from './src/components/Debugger';
 
 
 function AppWithProvider({ children }) {
@@ -26,6 +27,7 @@ export default withTranslation(function RootComponent() {
         <StatusBar translucent style="light" />
       </AppWithProvider>
       </GestureHandlerRootView>
+      <Debugger/>
     </Provider>
   )
 })

@@ -69,7 +69,8 @@ const useInitializeApp = (lang) => {
         let locale_set = lang; // lang = appReducer.lang
     
         if (!locale_set || !languagesList.includes(locale_set)) { 
-            locale_set = getValidLanguage([...userPreferredLanguages, 'en']);
+            locale_set = getValidLanguage([lang, ...userPreferredLanguages, 'en']);
+            console.log(locale_set)
             d(appActions.setLang(locale_set));
         }
 

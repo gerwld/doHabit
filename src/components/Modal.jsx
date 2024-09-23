@@ -1,12 +1,13 @@
 import { StyleSheet } from 'react-native'
-import { View, KeyboardAvoidingView, Modal as RNModal, Platform } from 'react-native'
+import { View, KeyboardAvoidingView, Modal as RNModal } from 'react-native'
+import { PLATFORM } from '@constants'
 
 
 const Modal = ({ isOpen, withInput, children, ...rest }) => {
     const content = withInput ? (
         <KeyboardAvoidingView
             style={styles.modalWindow}
-            behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+            behavior={PLATFORM === 'ios' ? 'padding' : 'height'}
         >
             {children}
         </KeyboardAvoidingView>)

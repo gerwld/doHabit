@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "DoHabit",
-    "slug": "DoHabit-habits-tracker",
+    "name": "doHabit",
+    "slug": "doHabit-habits-tracker",
     "version": "0.0.1",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -13,7 +13,7 @@
     },
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.weblxapp.DoHabithabitstracker",
+      "bundleIdentifier": "com.weblxapp.dohabithabitstracker.v1",
       "userInterfaceStyle": "automatic"
     },
     "android": {
@@ -23,7 +23,7 @@
         "userInterfaceStyle": "automatic"
       },
       "softwareKeyboardLayoutMode": "pan",
-      "package": "com.weblxapp.DoHabithabitstracker"
+      "package": "com.weblxapp.dohabithabitstracker.v1"
     },
     "web": {
       "favicon": "./assets/favicon.png"
@@ -33,7 +33,7 @@
     ],
     "extra": {
       "eas": {
-        "projectId": "2b4e9c1b-4fd7-446f-8dda-f82b4722d97e"
+        "projectId": "399bedba-025d-40d1-858c-e8203ef947ea"
       }
     }
   }

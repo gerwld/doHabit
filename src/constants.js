@@ -1,4 +1,6 @@
-const { StyleSheet } = require("react-native")
+const { StyleSheet, Platform } = require("react-native")
+
+const PLATFORM = Platform.OS;
 
 const THEMES_MASKS = {
     "st_theme__light": "Light",
@@ -13,7 +15,7 @@ const THEMEV = {
         bgHighlight: "#ffffff",
         bgHighlightSec: "#f7f8fc",
         borderColor: "#ebeef4",
-        textColor: "#50677a",
+        textColor: "#44677a",
         textColorHighlight: "#000",
         textColorRevert: "#fff",
         crossSymb: "#c3ccdb",
@@ -28,13 +30,13 @@ const THEMEV = {
         label: "dark",
         background: "#000000",
         bgHighlight: "#1c1c21",
-        bgHighlightSec: "#26262e",
+        bgHighlightSec: "#222228",
         borderColor: "#000",
         textColor: "#c0cdd9",
         textColorHighlight: "#fff",
         textColorRevert: "#fff",
         crossSymb: "#45474b",
-        crossSymbL: "#484b50",
+        crossSymbL: "#484b44",
         thumbBackground: "#45474b",
         thumbBackgroundIos: "#45474b",
         chevron: "#888c95",
@@ -50,29 +52,29 @@ const REPEAT_MASKS = {
 }
 
 const REPEAT_GAP_VALUES = {
-    "every-day": {
-        "month_repeat_days": 30,        // day_percent * month_repeat_days = 100%
-        "gratitude_percent": 100 / 30,  // % score for extra days
-        "day_percent": 100 / 30,        // score for specified days
-        "reset_delay": 1,               // when score resets
+    "every-day": { 
+        "scale": 44,                     // day_percent * scale = 100%
+        "gratitude_percent": 100 / 30,   // % score for extra days
+        "day_percent": 100 / 44,         // score for specified days
+        "reset_gap": 2,                  // when score resets
     },
     "every-week": {
-        "month_repeat_days": 4,
+        "scale": 33,
         "gratitude_percent": 100 / (4 * 0.1),
-        "day_percent": 100 / 4,
-        "reset_delay": 12,
+        "day_percent": 100 / 33,
+        "reset_gap": 12,
     },
     "3-times-week": {
-        "month_repeat_days": 12,
+        "scale": 33,
         "gratitude_percent": 100 / (12 * 0.3),
-        "day_percent": 100 / 12,
-        "reset_delay": 4,
+        "day_percent": 100 / 33,
+        "reset_gap": 4,
     },
     "5-times-week": {
-        "month_repeat_days": 20,
+        "scale": 38,
         "gratitude_percent": 100 / (20 * 0.3),
-        "day_percent": 100 / 20,
-        "reset_delay": 2,
+        "day_percent": 100 / 38,
+        "reset_gap": 2,
     },
 }
 
@@ -92,15 +94,15 @@ const LANG_MASKS = {
 }
 
 const HABIT_COLORS = [
-    '#FF9500', // Orange
+    '#FF9440', // Orange
     '#FFCC00', // Yellow
-    '#34C759', // Green
+    '#44C759', // Green
     '#5AC8FA', // Teal
     '#007AFF', // Blue
     '#AF52DE', // Purple
     '#FF2D55', // Pink
     '#69dd91',  // Green
-    '#e34234' // Brown
+    '#e44244' // Brown
 ];
 
 const getRandomItem = (arr) => {
@@ -164,6 +166,7 @@ const uses24HourClock = (date) => {
 };
 
 module.exports = {
+    PLATFORM,
     LANG_MASKS,
     THEMES_MASKS,
 

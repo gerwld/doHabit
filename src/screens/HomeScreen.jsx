@@ -1,8 +1,8 @@
 import React, { useCallback, useMemo } from 'react'
-import { Text, FlatList, StatusBar, StyleSheet, View, Platform, SafeAreaView } from 'react-native';
+import { Text, FlatList, StatusBar, StyleSheet, View, SafeAreaView } from 'react-native';
 import { HomeHeader, BaseView, LastSevenDays, HomeTask } from '@components';
 import { useSelector } from 'react-redux';
-import { getThemeStatusBar } from '@constants';
+import { getThemeStatusBar, PLATFORM } from '@constants';
 import { habitSelectors, appSelectors } from '@redux';
 import { useCurrentTheme } from 'hooks';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
@@ -79,7 +79,7 @@ const LatestTasks = (() => {
     data: itemsArray,
     renderItem,
     keyExtractor,
-    ...(Platform.OS === 'android' ? { overScrollMode: 'always', scrollEnabled: true } : { bounces: true }),
+    ...(PLATFORM === 'android' ? { overScrollMode: 'always', scrollEnabled: true } : { bounces: true }),
   };
 
   return (

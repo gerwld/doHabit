@@ -1,5 +1,5 @@
 import { Text, Pressable, StyleSheet, View } from 'react-native'
-import React from 'react'
+import React, { useEffect } from 'react'
 import LineItemView from './styling/LineItemView'
 import { LastSevenDays } from './LastSevenDays'
 import CircularProgress from './CircularProgress'
@@ -10,6 +10,8 @@ export const HomeTask = React.memo(({ item, color }) => {
   const navigation = useNavigation();
   const [themeColors] = useCurrentTheme();
   const [score] = useHabitScore(item);
+  
+  
   return (
     <LineItemView st={{ height: 56 }}>
       <Pressable style={{ flex: 1 }} onPress={() => navigation.navigate("habitdetails", item)} >
