@@ -24,6 +24,7 @@ const TIMESTAMP = DATE.setHours(0, 0, 0, 0)
 function getCountDays(vp) {
     if (vp > 1320) return 20
     if (vp > 750) return 12
+    if (vp > 680) return 7
     if (vp < 350) return 4
     return 5
 }

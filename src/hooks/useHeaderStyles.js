@@ -14,8 +14,8 @@ export const useHeaderStyles = (theme, isWhite = false) => {
   const themeColors = useCurrentTheme();
   const insets = useSafeAreaInsets();
   const { width, height } = useWindowDimensions();
-  const HEADER_HEIGHT_SAFE = PLATFORM === "web" ? 55: 60;
-  const HEADER_HEIGHT_EXTRAS = Math.min(height * getRatioExtras(), 20);
+  const HEADER_HEIGHT_SAFE = PLATFORM === "web" ? 55 : 60;
+  const HEADER_HEIGHT_EXTRAS = Math.max(width, height) > 1100 ? 10 : Math.min(height * getRatioExtras(), 20);
   const INSET_SAFE = PLATFORM === "ios" && insets.top < 21 ? insets.top - 1 : insets.top;
   const BUTTON_DIMENSIONS = Math.floor(Math.min(width * 0.24, 120));
 
