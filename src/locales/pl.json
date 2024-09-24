@@ -27,6 +27,7 @@
   "act_cancel": "Anuluj",
   "act_save": "Zapisz",
   "act_delete": "Usuń",
+  "act_delete_item": "Usunąć",
   
   "every-day": "Codziennie",
   "every-week": "Co tydzień",
@@ -38,5 +39,35 @@
   "label_hist": "Historia",
   "label_stre": "Siła nawyku",
   "int_lang": "Język interfejsu",
-  "lang": "Język"
+  "lang": "Język", 
+  "int_theme": "Motyw interfejsu",
+  "month_0": "Styczeń",
+  "month_1": "Luty",
+  "month_2": "Marzec",
+  "month_3": "Kwiecień",
+  "month_4": "Maj",
+  "month_5": "Czerwiec",
+  "month_6": "Lipiec",
+  "month_7": "Sierpień",
+  "month_8": "Wrzesień",
+  "month_9": "Październik",
+  "month_10": "Listopad",
+  "month_11": "Grudzień",
+
+  "tutorial_title_screen_1": "DoHabit - Śledzenie Nawyku",
+  "tutorial_desc_screen_1": "Aplikacja, która pomaga Ci utrzymać cele, krok po kroku. I przypomina o nich.",
+
+  "tutorial_title_screen_2": "Dodaj Nowy Nawyki",
+  "tutorial_desc_screen_2": "Aby rozpocząć, kliknij przycisk akcji (+). Podaj szczegóły: wybierz preferowany kolor, ustaw regularność i interwały powtórzeń.",
+
+  "tutorial_title_screen_3": "Pola wyboru",
+  "tutorial_desc_screen_3": "Wykonałeś nawyk? Świetnie! Kliknij pole wyboru, aby zaznaczyć, że nawyk został wykonany w danym dniu.",
+
+  "tutorial_title_screen_4": "Regularność",
+  "tutorial_desc_screen_4": "Nie wyłączaj powiadomień — nasze analizy pokazują, że robiąc to, zmniejszasz szanse na sukces.",
+
+  "mp_addnew": "Aby rozpocząć, dodaj nowy nawyk.",
+  "del_undone": "Tej akcji nie można cofnąć.",
+  "act_exist": "Nawyk o podanej nazwie już istnieje."
+
 }

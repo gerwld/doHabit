@@ -8,7 +8,7 @@ import {
 import { produce } from "immer";
 
 const initialState = {
-    isInit: true,
+    isInit: false,
     items: Object.create(null),
     itemsIdsArray: []
 

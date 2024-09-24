@@ -66,7 +66,7 @@ const SetHabitScreen = React.memo(({ route, navigation, isEdit }) => {
     else {
       if (onSubmitCheckName(state.name)) {
         alert(
-          `Habit with provided name already exist.`,
+          t("act_exist"),
           "",
           [
             {

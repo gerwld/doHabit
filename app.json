@@ -9,9 +9,11 @@
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
+      "backgroundColor": "#ffffff",
       "dark": {
         "image": "./assets/splash.png",
-        "resizeMode": "contain"
+        "resizeMode": "contain",
+        "backgroundColor": "#000000"
    }
     },
     "ios": {
@@ -25,6 +27,7 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundImage": "./assets/adaptive-icon-background.png",
         "backgroundColor": "#3bb7e7",
+        "monochromeImage": "./assets/adaptive-icon.png",
         "userInterfaceStyle": "automatic"
       },
       "softwareKeyboardLayoutMode": "pan",

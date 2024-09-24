@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { Provider,  useSelector } from 'react-redux';
 import { StatusBar } from 'expo-status-bar';
@@ -7,13 +7,17 @@ import { Navigation } from 'screens/Navigation';
 import withTranslation from 'hocs/withTranslation';
 import { useInitializeApp } from 'hooks';
 import { appSelectors, store } from '@redux';
-import Debugger from './src/components/Debugger';
+import i18n from './i18n';
 
 
 function AppWithProvider({ children }) {
 
   const lang = useSelector(appSelectors.selectAppLang)
   useInitializeApp(lang);
+
+  useEffect(() => {
+    i18n.changeLanguage(lang);
+  }, [lang])
 
   return children;
 }
@@ -27,7 +31,6 @@ export default withTranslation(function RootComponent() {
         <StatusBar translucent style="light" />
       </AppWithProvider>
       </GestureHandlerRootView>
-      {/* <Debugger/> */}
     </Provider>
   )
 })

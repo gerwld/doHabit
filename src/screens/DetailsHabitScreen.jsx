@@ -38,15 +38,15 @@ const DetailsHabitScreen = React.memo(({ route, navigation }) => {
     }
 
     alert(
-      `Delete "${item.name}"?`,
-      "This action can't be undone.",
+      `${t("act_delete_item")} "${item.name}"?`,
+      t("del_undone"),
       [
         {
-          text: 'Cancel',
+          text: t("act_cancel"),
           style: 'cancel',
         },
         {
-          text: 'Delete',
+          text: t("act_delete"),
           onPress: onConfirm
         }
       ],

@@ -24,6 +24,7 @@
   "act_cancel": "Cancel",
   "act_save": "Save",
   "act_delete": "Delete",
+  "act_delete_item": "Delete",
   "act_skip": "Skip",
   "act_begin": "Begin",
   "every-day": "Every Day",
@@ -60,5 +61,9 @@
 "tutorial_desc_screen_3": "Performed your habit? Great! Click the checkbox to mark it as done for the specified day.",
 
 "tutorial_title_screen_4": "Regularity",
-"tutorial_desc_screen_4": "Don’t turn off notifications — our data analysis shows that doing so decreases users chances of success."
+"tutorial_desc_screen_4": "Don’t turn off notifications — our data analysis shows that doing so decreases users chances of success.",
+
+"mp_addnew": "To begin, add a new habit.",
+"del_undone": "This action can't be undone.",
+"act_exist": "Habit with provided name already exist."
 }

@@ -33,6 +33,8 @@ const withTranslation = (WrappedComponent) => {
       loadLanguage();
     }, []);
 
+    
+
     const changeLanguage = async (lng) => {
       i18next.changeLanguage(lng);
       setLanguage(lng);
