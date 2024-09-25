@@ -20,12 +20,12 @@ const Calendar = () => {
     let currentMiddleMonth = useSharedValue(d);
     const [threeVisibleMonths, setVisibleMonths] = useState(getVisibleItems(currentMiddleMonth.value));
     const { width } = useWindowDimensions();
-    const TOTAL_PAGES = 3;
+    // const TOTAL_PAGES = 3;
 
     const x = useSharedValue(-width);
     const page = useSharedValue(1);
     const startX = useSharedValue();
-
+    // TODO: calendar animation
     const pan = Gesture.Pan()
         .onBegin((event) => {
             // save val on start
@@ -37,33 +37,20 @@ const Calendar = () => {
             // x.value = (page.value * -width) + event.translationX
         })
         .onFinalize((event) => {
-             // prevent on tiny scroll
-             if (Math.max(startX.value, event.translationX) - Math.min(startX.value, event.translationX) > 10) {
+            // prevent on tiny scroll
+            if (Math.max(startX.value, event.translationX) - Math.min(startX.value, event.translationX) > 10) {
                 // back
-                if (startX.value < event.translationX && page.value >= 1) {
-                    x.value = withTiming(-width * (page.value - 1))
+                if (startX.value < event.translationX) {
                     page.value -= 1;
                 }
                 // forward   
-                else if (startX.value > event.translationX && page.value < TOTAL_PAGES - 1) {
-                    x.value = withTiming(-width * (page.value + 1));
+                else if (startX.value > event.translationX) {
                     page.value = page.value + 1;
                 }
-
-                // debounce back
-                else x.value = withTiming(-width * (page.value))
-
             }
-            // debounce back
-            else x.value = withTiming(-width * (page.value))
-            // reset startX
-            startX.value = 0
 
             // Infinite scroll logic
-
             if (page.value === 0) {
-                // const f = runOnJS(() => {}, 200)
-                // runOnJS(setTimeout)(f)
                 let v = (currentMiddleMonth.value - 1);
                 currentMiddleMonth.value = v;
                 const items = [v - 1, v, v + 1];
@@ -75,7 +62,7 @@ const Calendar = () => {
                 x.value = withTiming(-width); // Re-center
             }
 
-            else if (page.value === TOTAL_PAGES - 1) {
+            else if (page.value === 2) {
                 let v = (currentMiddleMonth.value + 1);
                 currentMiddleMonth.value = v;
                 const items = [v - 1, v, v + 1];
@@ -87,6 +74,10 @@ const Calendar = () => {
                 x.value = withTiming(-width); // Re-center
             }
 
+            // debounce back
+            x.value = withTiming(-width * (page.value))
+            // reset startX
+            startX.value = 0
         });
 
     const animStyle = useAnimatedStyle(() => ({
@@ -100,8 +91,9 @@ const Calendar = () => {
         <View style={{ paddingTop: 5, paddingBottom: 20, flexDirection: "row", overflow: "hidden" }}>
 
             <GestureHandlerRootView style={{ flex: 1 }}>
-                <View style={{ flex: 1, width: width, overflow: "hidden" }}>
-                    <GestureDetector gesture={pan}>
+
+                <GestureDetector gesture={pan}>
+                    <View style={{ flex: 1, width: width, overflow: "hidden" }}>
 
 
                         <Animated.View style={[{
@@ -112,9 +104,9 @@ const Calendar = () => {
                                 return <Month date={new Date(2024, month, 1)} />
                             })}
                         </Animated.View>
+                    </View>
+                </GestureDetector>
 
-                    </GestureDetector>
-                </View>
             </GestureHandlerRootView>
         </View>
     )
@@ -124,6 +116,7 @@ const Month = ({ date }) => {
     const { t } = useTranslation();
     const year = date.getFullYear();
     const month = date.getMonth();
+    const { width, height } = useWindowDimensions();
 
     const s = StyleSheet.create({
         v: {
@@ -142,7 +135,7 @@ const Month = ({ date }) => {
     });
 
     return (
-        <View>
+        <View style={{ maxWidth: width, overflow: "hidden" }}>
             <View style={s.v}>
                 <Text style={[s.m, s.mf]}>{t("month_" + month)}</Text>
                 <Text style={s.m}>{year}</Text>
