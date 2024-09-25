@@ -1,30 +1,121 @@
-import { View, Text, Pressable, StyleSheet, useWindowDimensions } from 'react-native'
-import React from 'react'
+import { View, Text, Pressable, StyleSheet, useWindowDimensions, Dimensions } from 'react-native'
+import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next';
-import { TouchableOpacity } from 'react-native-gesture-handler';
-import CalenarScroll from './CalenarScroll';
+import { Gesture, GestureDetector, GestureHandlerRootView, TouchableOpacity } from 'react-native-gesture-handler';
+import Animated, { runOnJS, useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated';
 
 const weekday = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-const weekdayFromMn = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
 
 const currentDate = new Date();
-const currentMonth = currentDate.getMonth();
-// yyyy / m / last first spec
 
 
 
-
-
-
+const getVisibleItems = (currentMonth) => {
+    return [currentMonth - 1, currentMonth, currentMonth + 1]
+}
 
 
 const Calendar = () => {
+    let d = currentDate.getMonth();
+    let currentMiddleMonth = useSharedValue(d);
+    const [threeVisibleMonths, setVisibleMonths] = useState(getVisibleItems(currentMiddleMonth.value));
+    const { width } = useWindowDimensions();
+    const TOTAL_PAGES = 3;
+
+    const x = useSharedValue(-width);
+    const page = useSharedValue(1);
+    const startX = useSharedValue();
+
+    const pan = Gesture.Pan()
+        .onBegin((event) => {
+            // save val on start
+            startX.value = event.translationX;
+
+        })
+        .onChange((event) => {
+            // keep tracking with press (scroll)
+            // x.value = (page.value * -width) + event.translationX
+        })
+        .onFinalize((event) => {
+             // prevent on tiny scroll
+             if (Math.max(startX.value, event.translationX) - Math.min(startX.value, event.translationX) > 10) {
+                // back
+                if (startX.value < event.translationX && page.value >= 1) {
+                    x.value = withTiming(-width * (page.value - 1))
+                    page.value -= 1;
+                }
+                // forward   
+                else if (startX.value > event.translationX && page.value < TOTAL_PAGES - 1) {
+                    x.value = withTiming(-width * (page.value + 1));
+                    page.value = page.value + 1;
+                }
+
+                // debounce back
+                else x.value = withTiming(-width * (page.value))
+
+            }
+            // debounce back
+            else x.value = withTiming(-width * (page.value))
+            // reset startX
+            startX.value = 0
+
+            // Infinite scroll logic
+
+            if (page.value === 0) {
+                // const f = runOnJS(() => {}, 200)
+                // runOnJS(setTimeout)(f)
+                let v = (currentMiddleMonth.value - 1);
+                currentMiddleMonth.value = v;
+                const items = [v - 1, v, v + 1];
+                // Use runOnJS to safely update state
+                runOnJS(setVisibleMonths)(items);
+
+                // Reset position
+                page.value = 1;
+                x.value = withTiming(-width); // Re-center
+            }
+
+            else if (page.value === TOTAL_PAGES - 1) {
+                let v = (currentMiddleMonth.value + 1);
+                currentMiddleMonth.value = v;
+                const items = [v - 1, v, v + 1];
+                // Use runOnJS to safely update state
+                runOnJS(setVisibleMonths)(items);
+
+                // Reset position
+                page.value = 1;
+                x.value = withTiming(-width); // Re-center
+            }
+
+        });
+
+    const animStyle = useAnimatedStyle(() => ({
+        transform: [{ translateX: x.value }]
+    }))
+
+
+
+
     return (
         <View style={{ paddingTop: 5, paddingBottom: 20, flexDirection: "row", overflow: "hidden" }}>
-            <CalenarScroll style={{position: "relative"}}>
-                <Month date={new Date(2024, currentMonth - 1, 1)} />
-                <Month date={new Date(2024, currentMonth, 1)} />
-            </CalenarScroll>
+
+            <GestureHandlerRootView style={{ flex: 1 }}>
+                <View style={{ flex: 1, width: width, overflow: "hidden" }}>
+                    <GestureDetector gesture={pan}>
+
+
+                        <Animated.View style={[{
+                            flex: 1,
+                            flexDirection: "row",
+                        }, animStyle]}>
+                            {threeVisibleMonths.map(month => {
+                                return <Month date={new Date(2024, month, 1)} />
+                            })}
+                        </Animated.View>
+
+                    </GestureDetector>
+                </View>
+            </GestureHandlerRootView>
         </View>
     )
 }
@@ -81,8 +172,8 @@ const Days = ({ currentMonth }) => {
             paddingVertical: 10,
             flexShrink: 0,
             flexGrow: 0,
-            width: Math.floor(width /7),
-            minWidth: Math.floor(width /7),
+            width: Math.floor(width / 7),
+            minWidth: Math.floor(width / 7),
             height: 42,
             lineHeight: 42,
             fontSize: 15,
@@ -93,7 +184,7 @@ const Days = ({ currentMonth }) => {
         },
         gap: {
             height: 42,
-            paddingLeft: 6 * Math.floor(width /7),
+            paddingLeft: 6 * Math.floor(width / 7),
         }
     })
 

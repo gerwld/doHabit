@@ -1,12 +1,10 @@
-import { View, SafeAreaView, Dimensions } from 'react-native'
+import { View, Dimensions, Text } from 'react-native'
 import React from 'react'
 import { Gesture, GestureDetector, GestureHandlerRootView } from 'react-native-gesture-handler';
 import { useAnimatedStyle, withTiming } from 'react-native-reanimated';
 import Animated, { useSharedValue } from 'react-native-reanimated';
-const AnimatedView = Animated.createAnimatedComponent(View);
-import { StatusBar } from 'expo-status-bar';
 
-const CalenarScroll = ({ children }) => {
+const CalenarScroll = ({ children, weekDays }) => {
     const windowWidth = Dimensions.get('window').width;
     const TOTAL_PAGES = React.Children.count(children);
 
@@ -48,34 +46,47 @@ const CalenarScroll = ({ children }) => {
             startX.value = 0
         });
 
-    const animatedContainerStyle = useAnimatedStyle(() => ({
+    const animStyle = useAnimatedStyle(() => ({
         transform: [{ translateX: x.value }]
     }))
-
+    
+    // const wrapMonthWeekDays = (child, index) => {
+    //     if (index === 0) { // Adjust the index as needed
+    //       return <View style={{background: "red", width: 50}}>{child}</View>;
+    //     }
+    //     return child;
+    //   }
 
     return (
-        <SafeAreaView style={{ flex: 1 }}>
-            <GestureHandlerRootView>
-                <View style={{ flex: 1, width: windowWidth, overflow: "hidden" }}>
+        <GestureHandlerRootView style={{ flex: 1 }}>
+            <View style={{ flex: 1, width: windowWidth, overflow: "hidden" }}>
+                <GestureDetector gesture={pan}>
+                    <Animated.View>
+                       {weekDays}
 
-                    {/* items */}
-                    <GestureDetector gesture={pan}>
-                    <Animated.View
-                        style={[{
+                       <Animated.View style={[{
                             flex: 1,
                             flexDirection: "row",
-                        }, animatedContainerStyle]}>
+                        }, animStyle]}>
+                            {React.Children.map(children, c => c)}
+                        </Animated.View>
                         
-                                {React.Children.map(children, c => c)}
                     </Animated.View>
-                        </GestureDetector>
-                </View>
-
-
-            </GestureHandlerRootView>
-        </SafeAreaView>
+                </GestureDetector>
+            </View>
+        </GestureHandlerRootView>
     )
 }
 
+const ScrollItem = ({ children, animStyle }) => {
+    return <Animated.View style={[{
+        flex: 1,
+        flexDirection: "row",
+    }, animStyle]}>
+        {React.Children.map(children, c => c)}
+    </Animated.View>
 
-export default CalenarScroll
+}
+
+
+export { CalenarScroll, ScrollItem }
