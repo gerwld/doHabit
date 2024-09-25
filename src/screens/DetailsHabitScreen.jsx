@@ -11,6 +11,7 @@ import { CircularProgress, LineItemView, STHeader, BaseView } from '@components'
 import CalendarPicker from 'react-native-calendar-picker';
 import { useCurrentTheme, useHabitScore } from 'hooks';
 import { SvgClock, SvgRepeat } from '../../assets/svg/hicons_svgr';
+import Calendar from '../components/calendar/Calendar';
 
 
 const DetailsHabitScreen = React.memo(({ route, navigation }) => {
@@ -172,7 +173,7 @@ const DetailsHabitScreen = React.memo(({ route, navigation }) => {
         <LineItemView st={{ ...styles.itemFlexible }}>
           <View style={{alignItems: "center", justifyContent:"center", width: "100%"}}>
             
-            <CalendarPicker
+            {/* <CalendarPicker
               width={Math.min(width, height, 800)}
               textStyle={{
                 color: themeColors.textColor,
@@ -183,7 +184,9 @@ const DetailsHabitScreen = React.memo(({ route, navigation }) => {
               selectedDayTextStyle={{ color: themeColors.textColor }}
               todayBackgroundColor={"#ffffff3f"}
               todayStyle={{ color: "red" }}
-              scrollable={true} />
+              scrollable={true} /> */}
+
+              <Calendar/>
 
           </View>
 
