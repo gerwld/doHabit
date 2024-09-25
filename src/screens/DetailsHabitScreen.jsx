@@ -186,7 +186,7 @@ const DetailsHabitScreen = React.memo(({ route, navigation }) => {
               todayStyle={{ color: "red" }}
               scrollable={true} /> */}
 
-              <Calendar/>
+              <Calendar color={themeColors.textColor}/>
 
           </View>
 
