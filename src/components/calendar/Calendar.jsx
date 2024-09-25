@@ -1,9 +1,8 @@
-import { View, Text, StyleSheet, useWindowDimensions, Dimensions } from 'react-native'
+import { View, Text, StyleSheet, useWindowDimensions } from 'react-native'
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next';
 import { Gesture, GestureDetector, GestureHandlerRootView, TouchableOpacity } from 'react-native-gesture-handler';
 import Animated, { runOnJS, useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated';
-import alert from '../../polyfils/alert';
 import SvgBack from '../../../assets/svg/hicons_svgr/Back';
 import SvgFront from '../../../assets/svg/hicons_svgr/Front';
 
@@ -19,7 +18,7 @@ const getVisibleItems = (currentMonth) => {
 }
 
 
-const Calendar = ({ color, activeColor }) => {
+const Calendar = ({ color, activeColor, payload, onChange }) => {
     let d = currentDate.getMonth();
     let currentMiddleMonth = useSharedValue(d);
     const [threeVisibleMonths, setVisibleMonths] = useState(getVisibleItems(currentMiddleMonth.value));
@@ -53,15 +52,15 @@ const Calendar = ({ color, activeColor }) => {
                 }
             }
 
-            // Infinite scroll logic
+            // infinite scroll part
             if (page.value === 0) {
                 let v = (currentMiddleMonth.value - 1);
                 currentMiddleMonth.value = v;
                 const items = [v - 1, v, v + 1];
-                // Use runOnJS to safely update state
+                // uses runOnJS to safely update state
                 runOnJS(setVisibleMonths)(items);
 
-                // Reset position
+                // reset position
                 page.value = 1;
                 x.value = withTiming(-width); // Re-center
             }
@@ -70,10 +69,10 @@ const Calendar = ({ color, activeColor }) => {
                 let v = (currentMiddleMonth.value + 1);
                 currentMiddleMonth.value = v;
                 const items = [v - 1, v, v + 1];
-                // Use runOnJS to safely update state
+                // uses runOnJS to safely update state
                 runOnJS(setVisibleMonths)(items);
 
-                // Reset position
+                // reset position
                 page.value = 1;
                 x.value = withTiming(-width); // Re-center
             }
@@ -90,32 +89,14 @@ const Calendar = ({ color, activeColor }) => {
 
 
     const onNavigate = (isBack) => {
-        if (isBack) page.value = page.value - 1;
-        else page.value = page.value + 1;
+        let v = isBack ? currentMiddleMonth.value - 1 : currentMiddleMonth.value + 1;
+        currentMiddleMonth.value = v;
+        const items = [v - 1, v, v + 1];
+        setVisibleMonths(items);
 
-        if (isBack) {
-            let v = (currentMiddleMonth.value - 1);
-            currentMiddleMonth.value = v;
-            const items = [v - 1, v, v + 1];
-            // Use runOnJS to safely update state
-            setVisibleMonths(items);
-
-            // Reset position
-            page.value = 1;
-            x.value = withTiming(-width); // Re-center
-        }
-
-        else {
-            let v = (currentMiddleMonth.value + 1);
-            currentMiddleMonth.value = v;
-            const items = [v - 1, v, v + 1];
-            // Use runOnJS to safely update state
-            setVisibleMonths(items);
-
-            // Reset position
-            page.value = 1;
-            x.value = withTiming(-width); // Re-center
-        }
+        // Reset position
+        page.value = 1;
+        x.value = withTiming(-width); // Re-center
     }
 
 
@@ -136,10 +117,16 @@ const Calendar = ({ color, activeColor }) => {
                         }, animStyle]}>
                             {threeVisibleMonths.map(month => {
                                 return <Month
-                                    color={color}
-                                    activeColor={activeColor}
-                                    onNavigate={onNavigate}
-                                    date={new Date(2024, month, 1)} />
+                                    {...{
+                                        key: month,
+                                        payload,
+                                        onChange,
+                                        color,
+                                        activeColor,
+                                        onNavigate,
+                                        date: new Date(2024, month, 1)
+                                    }}
+                                />
                             })}
                         </Animated.View>
                     </View>
@@ -150,7 +137,7 @@ const Calendar = ({ color, activeColor }) => {
     )
 }
 
-const Month = ({ color, date, onNavigate, activeColor }) => {
+const Month = ({ color, date, onNavigate, activeColor, payload, onChange }) => {
     const { t } = useTranslation();
     const year = date.getFullYear();
     const month = date.getMonth();
@@ -195,23 +182,26 @@ const Month = ({ color, date, onNavigate, activeColor }) => {
                 </View>
                 <TouchableOpacity style={s.p} onPress={onNavigateFront}><SvgFront color={activeColor ? activeColor : "#3c95d0"} size={24} /></TouchableOpacity>
             </View>
-            <MonthWeekDays month={month} />
-            <Days currentMonth={month} color={color} activeColor={activeColor} year={year} />
+            <MonthWeekDays month={month} activeColor={activeColor} />
+            <Days {...{
+                currentMonth: month,
+                color, activeColor, year,
+                payload, onChange
+            }} />
         </View>
     )
 }
 
-const Days = ({ currentMonth, color, year, activeColor }) => {
-    const { width, height } = useWindowDimensions();
+const Days = ({ currentMonth, color, year, activeColor, payload, onChange }) => {
+    const { width } = useWindowDimensions();
     const firstDayOfMonth = new Date(2024, currentMonth, 1);
     const dayOfWeek = firstDayOfMonth.toLocaleString('en-US', { weekday: 'long' });
     const fdayIndex = weekday.indexOf(dayOfWeek);
     const lastDayOfMonth = new Date(2024, currentMonth + 1, 0);
     const daysArray = Array.from({ length: lastDayOfMonth.getDate() }, (_, i) => i + 1);
 
-    console.log(fdayIndex);
-
-
+    // console.log(payload);
+    
     const s = StyleSheet.create({
         v: {
             flexDirection: "row",
@@ -224,8 +214,10 @@ const Days = ({ currentMonth, color, year, activeColor }) => {
             flexGrow: 0,
             width: 42,
             minWidth: 42,
-            marginHorizontal: (Math.floor(width / 7) - 42) /2,
+            marginHorizontal: (Math.floor(width / 7) - 42) / 2,
+            marginBottom: 5,
             height: 42,
+            borderRadius: 21,
             lineHeight: 41,
             fontSize: 18,
             textAlign: "center",
@@ -234,13 +226,13 @@ const Days = ({ currentMonth, color, year, activeColor }) => {
         t_inactive: {
             opacity: 0.5
         },
-        t_today:{
+        t_today: {
             borderColor: activeColor ? activeColor : "#3c95d0",
             borderWidth: 1,
-            borderRadius: 21,
+            
             overflow: "hidden",
             fontWeight: 500,
-            color: "white"
+            color: activeColor ? activeColor : "#3c95d0",
         },
         to: {
             zIndex: 100,
@@ -248,28 +240,43 @@ const Days = ({ currentMonth, color, year, activeColor }) => {
         gap: {
             height: 42,
             paddingLeft: fdayIndex * Math.floor(width / 7),
+        },
+        selected: {
+            backgroundColor: activeColor ? activeColor : "#3c95d0",
+            color: "#fff"
         }
     })
+
 
     return <View style={s.v}>
         <View style={s.gap} />
         {daysArray.map(day => {
             const timestamp = new Date(year, currentMonth, day).getTime();
-            console.log(timestamp, timestamp_now);
+            const dayinPayload = payload?.indexOf(timestamp) > 0;
+
+            console.log(payload);
             
-            if(timestamp === timestamp_now) return <TouchableOpacity style={s.to} onPress={() => alert(timestamp.toString())}>
-            <Text style={[s.t, s.t_today]}>{day}</Text>
-        </TouchableOpacity> 
-           if(timestamp < timestamp_now) return <TouchableOpacity style={s.to} onPress={() => alert(timestamp.toString())}>
-                <Text style={s.t}>{day}</Text>
-            </TouchableOpacity>
-            else return <Text style={[s.t, s.t_inactive]}>{day}</Text>
+            function onDateSelect() {
+                onChange(timestamp)
+            }
+
+            if (timestamp === timestamp_now)
+                return <TouchableOpacity key={timestamp} style={s.to} onPress={onDateSelect}>
+                    <Text style={[s.t, s.t_today, dayinPayload ? s.selected :null ]}>{day}</Text>
+                </TouchableOpacity>
+
+            if (timestamp < timestamp_now)
+                return <TouchableOpacity key={timestamp} style={s.to} onPress={onDateSelect}>
+                    <Text style={[s.t, dayinPayload ? s.selected :null ]}>{day}</Text>
+                </TouchableOpacity>
+
+            else return <Text key={timestamp} style={[s.t, s.t_inactive]}>{day}</Text>
         })
         }
     </View>
 }
 
-const MonthWeekDays = ({ color, month }) => {
+const MonthWeekDays = ({ activeColor, month }) => {
     const s = StyleSheet.create({
         v: {
             flexDirection: "row",
@@ -280,7 +287,7 @@ const MonthWeekDays = ({ color, month }) => {
             paddingTop: 4,
             width: "14.285%",
             textAlign: "center",
-            color: color ? color : "#3c95d0"
+            color: activeColor ? activeColor : "#3c95d0"
         }
     })
     return <View style={s.v} >

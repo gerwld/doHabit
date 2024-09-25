@@ -57,8 +57,8 @@ export const Navigation = () => {
         <GestureHandlerRootView style={{flex: 1, backgroundColor: themeColors.background || "white"}}>
         <NavigationContainer>
             <Stack.Navigator screenOptions={{ gestureEnabled: true, navigationBarColor: themeColors.background || "white" }}>
-                <Stack.Screen name="habitdetails" component={DetailsHabitScreen} options={{ headerShown: false, title: "Habit Details", animationTypeForReplace: "pop", animation: "fade_from_bottom" }} />
                 <Stack.Screen name="home" component={HomeScreen} options={{ headerShown: false, title: t("home_screen") }} />
+                <Stack.Screen name="habitdetails" component={DetailsHabitScreen} options={{ headerShown: false, title: "Habit Details", animationTypeForReplace: "pop", animation: "fade_from_bottom" }} />
                 {settingsSubdirectories}
                 {addEditSubdirectories}
                 <Stack.Screen
