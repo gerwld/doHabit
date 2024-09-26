@@ -2,7 +2,7 @@ import { View, useWindowDimensions } from 'react-native'
 import React, { useState } from 'react'
 import { Gesture, GestureDetector, GestureHandlerRootView } from 'react-native-gesture-handler';
 import { handleMonthChange, Month } from '.';
-import { useSharedValue } from 'react-native-reanimated';
+import { runOnJS, useSharedValue } from 'react-native-reanimated';
 
 const currentDate = new Date();
 let currentMonth = currentDate.getMonth();
@@ -55,9 +55,10 @@ const Calendar = React.memo(({ onChange, color, activeColor, itemID }) => {
             if (Math.max(startX.value, event.translationX) - Math.min(startX.value, event.translationX) > 100) {
                 // back
                 if (startX.value < event.translationX)
-                    onNavigate(true)
+                    
+                    runOnJS(onNavigate)(true)
                 // forward   
-                else onNavigate()
+                else runOnJS(onNavigate)()
             }
         });
 
