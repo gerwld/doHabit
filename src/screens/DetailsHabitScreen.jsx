@@ -1,14 +1,13 @@
-import React, { useCallback } from 'react'
-import { Text, Button, StyleSheet, ScrollView, View, useWindowDimensions, ActivityIndicator } from 'react-native'
+import React, { useCallback, useEffect, useMemo } from 'react'
+import { Text, Button, StyleSheet, ScrollView, View, ActivityIndicator } from 'react-native'
 import { useTranslation } from 'react-i18next';
-import { useDispatch, useSelector } from 'react-redux';
+import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 
 import alert from '../polyfils/alert';
 import { habitsActions } from "actions";
 import { uses24HourClock, convertTo12HourFormat } from '@constants';
 import { Label, InfoBar, InfoBarItem } from "styles/crudtask"
 import { CircularProgress, LineItemView, STHeader, BaseView } from '@components';
-import CalendarPicker from 'react-native-calendar-picker';
 import { useCurrentTheme, useHabitScore } from 'hooks';
 import { SvgClock, SvgRepeat } from '../../assets/svg/hicons_svgr';
 import Calendar from '../components/calendar/Calendar';
@@ -17,6 +16,7 @@ import * as Haptics from 'expo-haptics';
 import { PLATFORM } from '@constants';
 import { habitSelectors } from '../redux';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
+import { handleMonthChange } from '../components/calendar';
 const IS_APP = PLATFORM === "ios" || PLATFORM === "android";
 
 const DetailsHabitScreen = React.memo(({ route, navigation }) => {
@@ -24,11 +24,10 @@ const DetailsHabitScreen = React.memo(({ route, navigation }) => {
   const d = useDispatch();
   const [themeColors] = useCurrentTheme();
   const [habitID, sethabitID] = React.useState(null);
-  const { width, height } = useWindowDimensions()
-  
   
 
-  const item = useSelector(state => habitSelectors.selectItemById(state, habitID));
+  const item = useSelector(state => habitSelectors.selectItemById(state, habitID), shallowEqual);
+
   const [score, monthScore, yearScore] = useHabitScore(item);
   const time = item?.remindTime;
 
@@ -38,6 +37,7 @@ const DetailsHabitScreen = React.memo(({ route, navigation }) => {
   }, [time])
 
   React.useEffect(() => {
+    if(route.params.id)
     sethabitID(route.params.id);
   }, [route.params.id])
 
@@ -130,7 +130,14 @@ const DetailsHabitScreen = React.memo(({ route, navigation }) => {
         isSet: true
       }))
     }
-  })
+  }, [item])
+
+  const datesArray = useMemo(() => item?.datesArray, [item]);
+  const MemoizedCalendar = React.memo(Calendar);
+
+  useEffect(() => {
+    handleMonthChange(new Date().getMonth())
+  }, [])
 
   if (!item) return <SafeAreaProvider><SafeAreaView style={{flex: 1, width: "100%", alignItems: "center", justifyContent: "center"}}><ActivityIndicator size="small" color={"#5fb1e7"} /></SafeAreaView></SafeAreaProvider>
 
@@ -195,29 +202,14 @@ const DetailsHabitScreen = React.memo(({ route, navigation }) => {
         <Label>{t("label_ov")}</Label>
         <LineItemView st={{ ...styles.itemFlexible }}>
           <View style={{ alignItems: "center", justifyContent: "center", width: "100%" }}>
-
-            {/* <CalendarPicker
-              width={Math.min(width, height, 800)}
-              textStyle={{
-                color: themeColors.textColor,
-                fontSize: 17
-              }}
-              startFromMonday={uses24HourClock(new Date())}
-              selectedDayStyle={{}}
-              selectedDayTextStyle={{ color: themeColors.textColor }}
-              todayBackgroundColor={"#ffffff3f"}
-              todayStyle={{ color: "red" }}
-              scrollable={true} /> */}
-
-            <Calendar
+           
+            <MemoizedCalendar
               color={themeColors.textColor}
-              payload={item?.datesArray}
+              payload={datesArray}
               activeColor={item?.color}
               onChange={onDayPress} />
 
           </View>
-
-
         </LineItemView>
 
 

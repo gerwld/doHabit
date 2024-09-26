@@ -4,3 +4,5 @@ export { default as Rateapp } from "./Rateapp";
 export { default as Support } from "./Support";
 export { default as Theme } from "./Theme";
 export { default as Tutorial } from "./Tutorial";
+export { default as SvgBack } from "./Back";
+export { default as SvgFront } from "./Front";

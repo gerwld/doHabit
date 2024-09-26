@@ -1,17 +1,15 @@
 import React, { useCallback } from 'react'
 import styled from 'styled-components/native';
-import { Dimensions, Pressable, StyleSheet, useWindowDimensions, View } from 'react-native';
+import { Pressable, StyleSheet, useWindowDimensions, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import * as Haptics from 'expo-haptics';
 
-import { useDispatch, useSelector } from 'react-redux';
+import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import { habitSelectors } from '@redux';
 import { habitsActions } from "actions";
 import { useCurrentTheme } from "hooks";
-import { Check1, Check2, Check3, Close1, Close2, Close3 } from '../../assets/svg/hicons_svgr';
-import glow from "assets/img/glow.png"
+import { Check1, Close1 } from '../../assets/svg/hicons_svgr';
 import { PLATFORM } from '@constants';
-import useCoreWindowDimensions from '../hooks/useCoreWindowDimensions';
 
 
 
@@ -32,7 +30,8 @@ function getCountDays(vp) {
 export const LastSevenDays = React.memo(({ isHabit, habitID, color }) => {
     const { t } = useTranslation();
     const d = useDispatch();
-    const item = useSelector(state => habitSelectors.selectItemById(state, habitID));
+    const item = useSelector(state => habitSelectors.selectItemById(state, habitID), shallowEqual);
+
 
     const currentDay = useCallback(DATE.getDate(), [TIMESTAMP]);
     const currentMonth = useCallback((DATE.getMonth())); // Months are 0-indexed    
