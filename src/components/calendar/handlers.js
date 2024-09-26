@@ -20,4 +20,5 @@ export const getStoredMonth = async () => {
     } catch (error) {
         console.error('Failed to load stored month', error);
     }
-};
+    return null
+}

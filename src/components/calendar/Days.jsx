@@ -1,8 +1,10 @@
 import { View, TouchableOpacity, useWindowDimensions, StyleSheet, Text } from "react-native";
+import { habitSelectors } from "@redux";
+import { useSelector } from "react-redux";
 
 
 
-const Days = ({ currentMonth, currentDate, color, year, activeColor, payload, weekday, onChange  }) => {
+const Days = ({ currentMonth, currentDate, color, year, activeColor, itemID, weekday, onChange  }) => {
     console.log('days rerender')
     const timestamp_now = new Date(currentDate.setHours(0, 0, 0, 0)).getTime();
     const { width } = useWindowDimensions();
@@ -11,7 +13,6 @@ const Days = ({ currentMonth, currentDate, color, year, activeColor, payload, we
     const fdayIndex = weekday.indexOf(dayOfWeek);
     const lastDayOfMonth = new Date(2024, currentMonth + 1, 0);
     const daysArray = Array.from({ length: lastDayOfMonth.getDate() }, (_, i) => i + 1);
-
 
     const s = StyleSheet.create({
         v: {
@@ -61,11 +62,15 @@ const Days = ({ currentMonth, currentDate, color, year, activeColor, payload, we
 
     const first_day_timestamp = new Date(year, currentMonth, 1).getTime();
     const DAY_IN_MS = 86400000;
+    console.log(itemID);
+    
+    const payload = useSelector(state => habitSelectors.selectDatesItemById(state, itemID));
+
     return <View style={s.v}>
         <View style={s.gap} />
         {daysArray.map(day => {
             let timestamp = first_day_timestamp + (DAY_IN_MS * (day - 1))
-            const dayinPayload = payload.indexOf(timestamp) > -1;
+            const dayinPayload = payload?.indexOf(timestamp) > -1;
 
             function onDateSelect() {
                 onChange(timestamp)

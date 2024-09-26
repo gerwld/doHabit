@@ -9,17 +9,19 @@ const currentDate = new Date();
 let currentMonth = currentDate.getMonth();
 
 
-const Calendar = React.memo(({ color, activeColor, payload, onChange }) => {
+const Calendar = React.memo(({onChange, color, activeColor, itemID }) => {
     console.log('calendar rerender');
 
-    const [visibleMonth, setVisibleMonth] = useState(currentMonth); // Default to current month
+
+    const [visibleMonth, setVisibleMonth] = useState(null); // Default to current month
     const { width } = useWindowDimensions();
 
 
     useEffect( () => {
         async function fetchStoredMonth() {
             const storedMonth = await getStoredMonth()
-            storedMonth && setVisibleMonth(storedMonth);
+            if (storedMonth && storedMonth !== visibleMonth) 
+             setVisibleMonth(storedMonth);
         }
         fetchStoredMonth();
     }, []);
@@ -54,17 +56,17 @@ const Calendar = React.memo(({ color, activeColor, payload, onChange }) => {
             <GestureHandlerRootView style={{ flex: 1 }}>
 
                 <GestureDetector gesture={pan}>
-                    <View style={{ flex: 1, width: width, overflow: "hidden" }}>
+                    <View style={{ flex: 1, width: width, minHeight: 345, overflow: "hidden" }}>
 
                         <View style={{
                             flex: 1,
                             flexDirection: "row",
                         }}>
-
+                            {visibleMonth &&
                             <Month
                                 {...{
                                     key: visibleMonth,
-                                    payload,
+                                    itemID,
                                     onChange,
                                     color,
                                     activeColor,
@@ -72,7 +74,7 @@ const Calendar = React.memo(({ color, activeColor, payload, onChange }) => {
                                     currentDate,
                                     date: new Date(2024, visibleMonth, 1)
                                 }}
-                            />
+                            />}
 
                         </View>
                     </View>

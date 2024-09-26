@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo } from 'react'
+import React, { memo, useCallback, useEffect, useMemo } from 'react'
 import { Text, Button, StyleSheet, ScrollView, View, ActivityIndicator } from 'react-native'
 import { useTranslation } from 'react-i18next';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
@@ -24,11 +24,12 @@ const DetailsHabitScreen = React.memo(({ route, navigation }) => {
   const d = useDispatch();
   const [themeColors] = useCurrentTheme();
   const [habitID, sethabitID] = React.useState(null);
+  const [item, sethabit] = React.useState(null);
   
 
-  const item = useSelector(state => habitSelectors.selectItemById(state, habitID), shallowEqual);
+  // const item = useSelector(state => habitSelectors.selectItemById(state, habitID), shallowEqual);
 
-  const [score, monthScore, yearScore] = useHabitScore(item);
+
   const time = item?.remindTime;
 
   const twelveOr24Time = useCallback((time) => {
@@ -39,6 +40,7 @@ const DetailsHabitScreen = React.memo(({ route, navigation }) => {
   React.useEffect(() => {
     if(route.params.id)
     sethabitID(route.params.id);
+    sethabit(route.params);
   }, [route.params.id])
 
   const onPressDeleteHabit = () => {
@@ -110,15 +112,6 @@ const DetailsHabitScreen = React.memo(({ route, navigation }) => {
     }
   })
 
-  function getDecimal(value) {
-    let hasDec = value % 1 !== 0
-    if (hasDec) return value?.toFixed(1)
-    return value;
-  }
-  function addPlus(v) {
-    return v > 0 ? '+' + v : 0
-  }
-
   const onDayPress = React.useCallback((timestamp) => {
     if (IS_APP) {
       Haptics.selectionAsync()
@@ -168,35 +161,11 @@ const DetailsHabitScreen = React.memo(({ route, navigation }) => {
           </InfoBarItem>
         </LineItemView>
 
-
-
         <Label>{t("label_stre")}</Label>
         <View style={styles.item}>
-          <View style={styles.circle} >
-            <CircularProgress
-              progress={score > 0 ? score : 1}
-              size={55}
-              strokeWidth={8}
-              strColor={themeColors.crossSymbL}
-              color={item?.color ? item.color : "#7fcbfd"} />
-          </View>
-
-          <View style={styles.ovParent}>
-            <Text style={styles.ovBlockDT}>{addPlus(getDecimal(score))}%</Text>
-            <Text style={styles.ovBlockDD}>Score</Text>
-          </View>
-
-          <View style={styles.ovParent}>
-            <Text style={styles.ovBlockDT}>{addPlus(getDecimal(monthScore))}%</Text>
-            <Text style={styles.ovBlockDD}>Month</Text>
-          </View>
-
-          <View style={styles.ovParent}>
-            <Text style={styles.ovBlockDT}>{addPlus(getDecimal(yearScore))}%</Text>
-            <Text style={styles.ovBlockDD}>Year</Text>
-          </View>
-
+          <HabitStrengthContent {...{habitID, themeColors, styles}}/>
         </View>
+     
 
 
         <Label>{t("label_ov")}</Label>
@@ -205,7 +174,7 @@ const DetailsHabitScreen = React.memo(({ route, navigation }) => {
            
             <MemoizedCalendar
               color={themeColors.textColor}
-              payload={datesArray}
+              itemID={habitID}
               activeColor={item?.color}
               onChange={onDayPress} />
 
@@ -224,5 +193,53 @@ const DetailsHabitScreen = React.memo(({ route, navigation }) => {
     </BaseView>
   )
 });
+
+const HabitStrengthContent = memo(({styles, themeColors, habitID}) => {
+  const { t } = useTranslation();
+  const item = useSelector(state => habitSelectors.selectItemById(state, habitID), shallowEqual);
+  const [score, monthScore, yearScore] = useHabitScore(item);
+  
+ 
+
+  function getDecimal(value) {
+    let hasDec = value % 1 !== 0
+    if (hasDec) return value?.toFixed(1)
+    return value;
+  }
+  function addPlus(v) {
+    return v > 0 ? '+' + v : 0
+  }
+ 
+ 
+  return (
+    <>
+  
+      <View style={styles.circle} >
+        <CircularProgress
+          progress={score > 0 ? score : 1}
+          size={55}
+          strokeWidth={8}
+          strColor={themeColors.crossSymbL}
+          color={item?.color ? item.color : "#7fcbfd"} />
+      </View>
+
+      <View style={styles.ovParent}>
+        <Text style={styles.ovBlockDT}>{addPlus(getDecimal(score))}%</Text>
+        <Text style={styles.ovBlockDD}>Score</Text>
+      </View>
+
+      <View style={styles.ovParent}>
+        <Text style={styles.ovBlockDT}>{addPlus(getDecimal(monthScore))}%</Text>
+        <Text style={styles.ovBlockDD}>Month</Text>
+      </View>
+
+      <View style={styles.ovParent}>
+        <Text style={styles.ovBlockDT}>{addPlus(getDecimal(yearScore))}%</Text>
+        <Text style={styles.ovBlockDD}>Year</Text>
+      </View>
+
+    </>
+  )
+})
 
 export default DetailsHabitScreen

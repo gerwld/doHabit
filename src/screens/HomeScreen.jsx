@@ -48,24 +48,24 @@ export default React.memo(HomeScreen);
 const LatestTasks = (() => {
   const {t} = useTranslation();
   const [themeColors] = useCurrentTheme();
-  const items = useSelector(habitSelectors.selectItems);
+  // const items = useSelector(habitSelectors.selectItems);
   const itemsIDs = useSelector(habitSelectors.selectItemsIDs);
 
   const renderItem = useCallback(
     ({ item }) => (
-      <HomeTask item={item} color={themeColors.textColor} />
+      <HomeTask itemID={item} color={themeColors.textColor} />
     ),
     [themeColors]
   );
 
-  const keyExtractor = (item) => item?.id;
+  const keyExtractor = (item) => item;
 
-  const itemsArray = React.useMemo(() => 
-    (itemsIDs || []).map(id => items[id]), 
-    [items, itemsIDs]
-  );
+  // const itemsArray = React.useMemo(() => 
+  //   (itemsIDs || []).map(id => items[id]), 
+  //   [items, itemsIDs]
+  // );
   
-
+// 
   if (!itemsIDs || !itemsIDs.length) {
     return (
       <View style={styles.begin}>
@@ -78,7 +78,7 @@ const LatestTasks = (() => {
 
   const flatListProps = {
     contentContainerStyle: { paddingBottom: 60 },
-    data: itemsArray,
+    data: itemsIDs,
     renderItem,
     keyExtractor,
     ...(PLATFORM === 'android' ? { overScrollMode: 'always', scrollEnabled: true } : { bounces: true }),
