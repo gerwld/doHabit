@@ -5,13 +5,15 @@ import { TouchableOpacity } from "react-native";
 import { SvgBack, SvgFront } from '@icons';
 
 const weekday = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+const weekdayEU = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 
 const Month = ({ color, date, onNavigate, activeColor, itemID, onChange, currentDate }) => {
     console.log('month rerender')
+    const { width } = useWindowDimensions();
     const { t } = useTranslation();
     const year = date.getFullYear();
     const month = date.getMonth();
-    const { width } = useWindowDimensions();
+    
 
     const s = StyleSheet.create({
         v: {

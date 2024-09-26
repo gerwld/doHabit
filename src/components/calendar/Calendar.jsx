@@ -1,7 +1,7 @@
 import { View, useWindowDimensions } from 'react-native'
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { Gesture, GestureDetector, GestureHandlerRootView } from 'react-native-gesture-handler';
-import { getStoredMonth, handleMonthChange, Month } from '.';
+import { handleMonthChange, Month } from '.';
 
 
 
@@ -13,18 +13,18 @@ const Calendar = React.memo(({onChange, color, activeColor, itemID }) => {
     console.log('calendar rerender');
 
 
-    const [visibleMonth, setVisibleMonth] = useState(null); // Default to current month
+    const [visibleMonth, setVisibleMonth] = useState(currentMonth); // Default to current month
     const { width } = useWindowDimensions();
 
-
-    useEffect( () => {
-        async function fetchStoredMonth() {
-            const storedMonth = await getStoredMonth()
-            if (storedMonth && storedMonth !== visibleMonth) 
-             setVisibleMonth(storedMonth);
-        }
-        fetchStoredMonth();
-    }, []);
+    // fallback for rerenders
+    // useEffect( () => {
+    //     async function fetchStoredMonth() {
+    //         const storedMonth = await getStoredMonth()
+    //         if (storedMonth && storedMonth !== visibleMonth) 
+    //          setVisibleMonth(storedMonth);
+    //     }
+    //     fetchStoredMonth();
+    // }, []);
 
     // TODO: calendar animation
     const pan = Gesture.Pan()
@@ -56,13 +56,13 @@ const Calendar = React.memo(({onChange, color, activeColor, itemID }) => {
             <GestureHandlerRootView style={{ flex: 1 }}>
 
                 <GestureDetector gesture={pan}>
-                    <View style={{ flex: 1, width: width, minHeight: 345, overflow: "hidden" }}>
+                    <View style={{ flex: 1, width: width, minHeight: 300, overflow: "hidden" }}>
 
                         <View style={{
                             flex: 1,
                             flexDirection: "row",
                         }}>
-                            {visibleMonth &&
+                            {!isNaN(currentMonth) &&
                             <Month
                                 {...{
                                     key: visibleMonth,

@@ -1,17 +1,21 @@
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, useWindowDimensions, View } from "react-native";
 
 const WeekDays = ({ activeColor, month, weekday }) => {
     console.log('weekdays rerender')
+    const { width } = useWindowDimensions();
 
     const s = StyleSheet.create({
         v: {
             flexDirection: "row",
             alignItems: "center",
-            justifyContent: "space-between"
+            justifyContent: "space-between",
+            marginRight: 5
         },
         t: {
             paddingTop: 4,
-            width: "14.285%",
+            width: (Math.floor(width / 7)),
+            maxWidth: (Math.floor(width / 7)),
+            minWidth: (Math.floor(width / 7)),
             textAlign: "center",
             color: activeColor ? activeColor : "#3c95d0"
         }
