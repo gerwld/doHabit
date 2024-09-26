@@ -65,5 +65,17 @@
 
 "mp_addnew": "To begin, add a new habit.",
 "del_undone": "This action can't be undone.",
-"act_exist": "Habit with provided name already exist."
+"act_exist": "Habit with provided name already exist.",
+
+"dt_score": "Score",
+"dt_month": "Month",
+"dt_year": "Year",
+
+"sunday": "Sunday", 
+"monday": "Monday", 
+"tuesday": "Tuesday", 
+"wednesday": "Wednesday", 
+"thursday": "Thursday", 
+"friday": "Friday", 
+"saturday": "Saturday"
 }

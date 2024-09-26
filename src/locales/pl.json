@@ -68,6 +68,16 @@
 
   "mp_addnew": "Aby rozpocząć, dodaj nowy nawyk.",
   "del_undone": "Tej akcji nie można cofnąć.",
-  "act_exist": "Nawyk o podanej nazwie już istnieje."
-
+  "act_exist": "Nawyk o podanej nazwie już istnieje.",
+  "dt_score": "Wynik",
+  "dt_month": "Miesiąc",
+  "dt_year": "Rok",
+  
+  "sunday": "Niedziela",
+  "monday": "Poniedziałek",
+  "tuesday": "Wtorek",
+  "wednesday": "Środa",
+  "thursday": "Czwartek",
+  "friday": "Piątek",
+  "saturday": "Sobota"
 }
