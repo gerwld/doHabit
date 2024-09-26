@@ -56,7 +56,7 @@ const Calendar = React.memo(({ onChange, color, activeColor, itemID }) => {
     }
 
     return (
-        <View style={{ maxWidth: width,paddingTop: 5, paddingBottom: 20, flexDirection: "row", overflow: "hidden" }}>
+        <View style={{ maxWidth: width,paddingTop: 0, paddingBottom: 20, flexDirection: "row", overflow: "hidden" }}>
 
             <GestureHandlerRootView style={{ flex: 1 }}>
 

@@ -14,7 +14,7 @@ const Days = ({ currentMonth, currentDate, color, year, activeColor, itemID, onC
     const lastDayOfMonth = new Date(2024, currentMonth + 1, 0);
 
     const dayOfWeek = firstDayOfMonth.toLocaleString('en-US', { weekday: 'long' });
-    const fdayIndex = getWeekdays().indexOf(dayOfWeek);
+    const fdayIndex = getWeekdays().indexOf(dayOfWeek.toLowerCase());
     const daysArray = Array.from({ length: lastDayOfMonth.getDate() }, (_, i) => i + 1);
 
     const s = StyleSheet.create({

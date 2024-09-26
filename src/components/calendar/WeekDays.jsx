@@ -25,7 +25,7 @@ const WeekDays = ({ activeColor, month }) => {
         }
     })
     return <View style={s.v} >
-        {weekdays.map(w => <Text key={w + month + "_key"} style={s.t}>{t(w).slice(0, 3)}</Text>)}
+        {weekdays.map(w => <Text key={w + month + "_key"} style={s.t}>{t(w)}</Text>)}
     </View>
 }
 
