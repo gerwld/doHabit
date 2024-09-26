@@ -1,17 +1,20 @@
 import { View, TouchableOpacity, useWindowDimensions, StyleSheet, Text } from "react-native";
 import { habitSelectors } from "@redux";
 import { useSelector } from "react-redux";
+import { getWeekdays } from "../../constants";
 
 
 
-const Days = ({ currentMonth, currentDate, color, year, activeColor, itemID, weekday, onChange  }) => {
+const Days = ({ currentMonth, currentDate, color, year, activeColor, itemID, onChange  }) => {
     console.log('days rerender')
-    const timestamp_now = new Date(currentDate.setHours(0, 0, 0, 0)).getTime();
     const { width } = useWindowDimensions();
+
+    const timestamp_now = new Date(currentDate.setHours(0, 0, 0, 0)).getTime();   
     const firstDayOfMonth = new Date(2024, currentMonth, 1);
-    const dayOfWeek = firstDayOfMonth.toLocaleString('en-US', { weekday: 'long' });
-    const fdayIndex = weekday.indexOf(dayOfWeek);
     const lastDayOfMonth = new Date(2024, currentMonth + 1, 0);
+
+    const dayOfWeek = firstDayOfMonth.toLocaleString('en-US', { weekday: 'long' });
+    const fdayIndex = getWeekdays().indexOf(dayOfWeek);
     const daysArray = Array.from({ length: lastDayOfMonth.getDate() }, (_, i) => i + 1);
 
     const s = StyleSheet.create({
@@ -86,7 +89,7 @@ const Days = ({ currentMonth, currentDate, color, year, activeColor, itemID, wee
                     <Text style={[s.t, dayinPayload ? s.selected : null]}>{day}</Text>
                 </TouchableOpacity>
 
-            else return <Text key={timestamp} style={[s.t, s.t_inactive]}>{day}</Text>
+            else return <View style={s.to}><Text key={timestamp} style={[s.t, s.t_inactive]}>{day}</Text></View>
         })
         }
     </View>

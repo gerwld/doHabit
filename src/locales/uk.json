@@ -63,11 +63,11 @@
   "dt_month": "Місяць",
   "dt_year": "Рік",
 
-  "sunday": "Неділя", 
-  "monday": "Понеділок", 
-  "tuesday": "Вівторок", 
-  "wednesday": "Середа", 
-  "thursday": "Четвер", 
-  "friday": "П'ятниця", 
-  "saturday": "Субота"
+  "sunday": "Нд",
+  "monday": "Пн",
+  "tuesday": "Вт",
+  "wednesday": "Ср",
+  "thursday": "Чт",
+  "friday": "Пт",
+  "saturday": "Сб"
 }

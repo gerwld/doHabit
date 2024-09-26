@@ -71,11 +71,11 @@
 "dt_month": "Month",
 "dt_year": "Year",
 
-"sunday": "Sunday", 
-"monday": "Monday", 
-"tuesday": "Tuesday", 
-"wednesday": "Wednesday", 
-"thursday": "Thursday", 
-"friday": "Friday", 
-"saturday": "Saturday"
+"sunday": "Sun",
+"monday": "Mon",
+"tuesday": "Tue",
+"wednesday": "Wed",
+"thursday": "Thu",
+"friday": "Fri",
+"saturday": "Sat"
 }

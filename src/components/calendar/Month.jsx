@@ -4,8 +4,6 @@ import { StyleSheet, Text, useWindowDimensions, View } from "react-native";
 import { TouchableOpacity } from "react-native";
 import { SvgBack, SvgFront } from '@icons';
 
-const weekday = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-const weekdayEU = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 
 const Month = ({ color, date, onNavigate, activeColor, itemID, onChange, currentDate }) => {
     console.log('month rerender')
@@ -54,13 +52,12 @@ const Month = ({ color, date, onNavigate, activeColor, itemID, onChange, current
                 </View>
                 <TouchableOpacity style={s.p} onPress={onNavigateFront}><SvgFront color={activeColor ? activeColor : "#3c95d0"} size={24} /></TouchableOpacity>
             </View>
-            <WeekDays month={month} activeColor={activeColor} weekday={weekday} />
+            <WeekDays month={month} activeColor={activeColor} />
             <Days {...{
                 currentMonth: month,
                 currentDate,
                 color, activeColor, year,
                 itemID, onChange,
-                weekday
             }} />
         </View>
     )

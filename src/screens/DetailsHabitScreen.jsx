@@ -25,10 +25,6 @@ const DetailsHabitScreen = React.memo(({ route, navigation }) => {
   const [themeColors] = useCurrentTheme();
   const [habitID, sethabitID] = React.useState(null);
   const [item, sethabit] = React.useState(null);
-  
-
-  // const item = useSelector(state => habitSelectors.selectItemById(state, habitID), shallowEqual);
-
 
   const time = item?.remindTime;
 
@@ -210,6 +206,7 @@ const HabitStrengthContent = memo(({styles, themeColors, habitID}) => {
     return v > 0 ? '+' + v : 0
   }
  
+
  
   return (
     <>
@@ -225,17 +222,17 @@ const HabitStrengthContent = memo(({styles, themeColors, habitID}) => {
 
       <View style={styles.ovParent}>
         <Text style={styles.ovBlockDT}>{addPlus(getDecimal(score))}%</Text>
-        <Text style={styles.ovBlockDD}>Score</Text>
+        <Text style={styles.ovBlockDD}>{t("dt_score")}</Text>
       </View>
 
       <View style={styles.ovParent}>
         <Text style={styles.ovBlockDT}>{addPlus(getDecimal(monthScore))}%</Text>
-        <Text style={styles.ovBlockDD}>Month</Text>
+        <Text style={styles.ovBlockDD}>{t("dt_month")}</Text>
       </View>
 
       <View style={styles.ovParent}>
         <Text style={styles.ovBlockDT}>{addPlus(getDecimal(yearScore))}%</Text>
-        <Text style={styles.ovBlockDD}>Year</Text>
+        <Text style={styles.ovBlockDD}>{t("dt_year")}</Text>
       </View>
 
     </>

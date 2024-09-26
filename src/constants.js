@@ -2,6 +2,10 @@ const { StyleSheet, Platform } = require("react-native")
 
 const PLATFORM = Platform.OS;
 
+const WEEKDAYS = ["sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"];
+const WEEKDAYS_EU = ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"];
+
+
 const THEMES_MASKS = {
     "st_theme__light": "Light",
     "st_theme__dark": "Dark",
@@ -165,8 +169,35 @@ const uses24HourClock = (date) => {
     return !timeString.includes('AM') && !timeString.includes('PM');
 };
 
+/**
+ * Determines if the first day of the week in the user's locale is Monday.
+ *
+ * @param {string} [locale=navigator.language] - The user's locale string (e.g., 'en-US'). Defaults to the user's browser locale.
+ * @returns {boolean} - Returns true if the first day of the week is Monday, false if it's Sunday.
+ */
+function isFirstDayOfWeekMonday() {
+    const userLocale = navigator.language || 'en-US'; // Get the user's locale
+    const firstDayOfWeek = new Date(2024, 0, 1).toLocaleDateString(userLocale, { weekday: 'short' });
+    
+    // Check if the first day of the week in the locale is Monday
+    if (firstDayOfWeek === 'Mon') {
+      return true;
+    } else if (firstDayOfWeek === 'Sun') {
+      return false;
+    }
+  
+    // Default to Monday if locale is unclear
+    return true;
+  }
+
+  function getWeekdays() {
+   return isFirstDayOfWeekMonday() ? WEEKDAYS_EU : WEEKDAYS
+  }
+
 module.exports = {
     PLATFORM,
+    WEEKDAYS,
+    WEEKDAYS_EU,
     LANG_MASKS,
     THEMES_MASKS,
 
@@ -175,10 +206,12 @@ module.exports = {
     
     HABIT_COLORS,
     THEMEV,
+    getWeekdays,
     getRandomItem,
     getTheme,
     getThemeStatusBar,
     getTimeFromTimestamp,
     uses24HourClock,
-    convertTo12HourFormat
+    convertTo12HourFormat,
+    isFirstDayOfWeekMonday
 }

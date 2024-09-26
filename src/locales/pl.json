@@ -73,11 +73,11 @@
   "dt_month": "Miesiąc",
   "dt_year": "Rok",
   
-  "sunday": "Niedziela",
-  "monday": "Poniedziałek",
-  "tuesday": "Wtorek",
-  "wednesday": "Środa",
-  "thursday": "Czwartek",
-  "friday": "Piątek",
-  "saturday": "Sobota"
+  "sunday": "Nd",
+  "monday": "Pn",
+  "tuesday": "Wt",
+  "wednesday": "Śr",
+  "thursday": "Czw",
+  "friday": "Pt",
+  "saturday": "Sob"
 }
