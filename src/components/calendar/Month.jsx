@@ -13,17 +13,12 @@ const Month = ({ color, date, onNavigate, activeColor, itemID, onChange, current
     const year = date.getFullYear();
     const month = date.getMonth();
 
-    
-    
 
     const s = StyleSheet.create({
         v: {
             flexDirection: "row",
             alignContent: "center",
             justifyContent: "space-between",
-
-            // paddingTop: 8,
-            // paddingBottom: 8,
         },
         vb: {
             flexDirection: "row",

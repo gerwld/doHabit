@@ -17,6 +17,7 @@ import { PLATFORM } from '@constants';
 import { habitSelectors } from '../redux';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import { handleMonthChange } from '../components/calendar';
+import CalendarPicker from 'react-native-calendar-picker';
 const IS_APP = PLATFORM === "ios" || PLATFORM === "android";
 
 const DetailsHabitScreen = React.memo(({ route, navigation }) => {
@@ -168,6 +169,20 @@ const DetailsHabitScreen = React.memo(({ route, navigation }) => {
         <LineItemView st={{ ...styles.itemFlexible }}>
           <View style={{ alignItems: "center", justifyContent: "center", width: "100%" }}>
            
+          {/* <CalendarPicker
+              width={400}
+              textStyle={{
+                color: themeColors.textColor,
+                fontSize: 17
+              }}
+              startFromMonday={uses24HourClock(new Date())}
+              selectedDayStyle={{}}
+              selectedDayTextStyle={{ color: themeColors.textColor }}
+              todayBackgroundColor={"#ffffff3f"}
+              todayStyle={{ color: "red" }}
+              scrollable={true} /> */}
+
+
             <MemoizedCalendar
               color={themeColors.textColor}
               itemID={habitID}
