@@ -63,6 +63,8 @@ const Days = ({ currentMonth, currentDate, color, year, activeColor, itemID, onC
         }
     })
 
+    if(!itemID) return null;
+
     const first_day_timestamp = new Date(year, currentMonth, 1).getTime();
     const DAY_IN_MS = 86400000;
     console.log(itemID);
@@ -89,7 +91,7 @@ const Days = ({ currentMonth, currentDate, color, year, activeColor, itemID, onC
                     <Text style={[s.t, dayinPayload ? s.selected : null]}>{day}</Text>
                 </TouchableOpacity>
 
-            else return <View style={s.to}><Text key={timestamp} style={[s.t, s.t_inactive]}>{day}</Text></View>
+            else return <View key={timestamp} style={s.to}><Text style={[s.t, s.t_inactive]}>{day}</Text></View>
         })
         }
     </View>

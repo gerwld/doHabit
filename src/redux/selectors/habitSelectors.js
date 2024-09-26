@@ -14,7 +14,7 @@ export const selectItemById = createSelector(
 
 export const selectDatesItemById = createSelector(
   [selectItems, (_, habitID) => habitID],
-  (items, habitID) => items[habitID].datesArray
+  (items, habitID) => items[habitID]?.datesArray
 );
 
 

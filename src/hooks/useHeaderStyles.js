@@ -52,7 +52,7 @@ export const useHeaderStyles = (theme, isWhite = false) => {
     },
     headerTitle: {
       color: 'white',
-      fontSize: 22,
+      fontSize: 20,
       fontWeight: 'bold',
 
     },

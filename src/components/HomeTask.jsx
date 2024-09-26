@@ -14,6 +14,7 @@ export const HomeTask = React.memo(({ itemID, color }) => {
   const item = useSelector(state => habitSelectors.selectItemById(state, itemID));
   const [score] = useHabitScore(item);
   
+  if(!item) return null;
   
   return (
     <LineItemView st={{ height: 56 }}>
