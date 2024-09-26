@@ -172,7 +172,8 @@ const styles = StyleSheet.create({
         marginRight: 0
     },
     parentViewInt: {
-        marginRight: 4
+        marginRight: 4,
+        paddingLeft: 10,
     },
     parentView: {
         marginRight: 4
