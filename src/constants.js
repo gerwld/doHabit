@@ -29,6 +29,8 @@ const THEMEV = {
         copyright: "#c3c7d3",
         chevron: "#b3b7c1",
         chevronText:"#a8adb8", 
+        borderGraphColor: "#e0e6f0",
+        borderLinesColor: "#ebedf1"
     },
     "st_theme__dark": {
         label: "dark",
@@ -45,6 +47,8 @@ const THEMEV = {
         thumbBackgroundIos: "#45474b",
         chevron: "#888c95",
         chevronText:"#ccd1db",
+        borderGraphColor: "#6d777f",
+        borderLinesColor: "#363739"
     }
 }
 

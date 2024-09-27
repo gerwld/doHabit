@@ -4,17 +4,22 @@ import Svg, { Circle, Line, Text } from 'react-native-svg';
 
 const { width: screenWidth } = Dimensions.get('window');
 
-const initData = [
-    { name: 'January', y: 0 },
-    { name: 'February', y: 20 },
-    { name: 'March', y: 50 },
-    { name: 'April', y: 100 },
-    { name: 'April', y: 50 },
-    { name: 'ейпріл', y: 20 },
+const dataSample = [
+    { name: '', y: 0 },
+    { name: '', y: 0 },
 ];
 
-const CLineChart = ({ payload, bottomLabelColor, topLabelColor, borderColor, dotColor }) => {
-    const data = payload || initData;
+const CLineChart = ({ 
+    payload, 
+    bottomLabelColor, 
+    topLabelColor, 
+    dotColor,
+    dotBgColor, 
+    borderGraphColor,
+    borderLinesColor }) => {
+    const data = payload;
+
+    if (!data || !data?.length) return nodata
 
     const chartWidth = screenWidth - 40; // total chart width with padding
     const maxChartHeight = 150; // fixed height for the chart area (adjustable)
@@ -41,7 +46,7 @@ const CLineChart = ({ payload, bottomLabelColor, topLabelColor, borderColor, dot
                                 y1={y}
                                 x2={nextX}
                                 y2={nextY}
-                                stroke={borderColor || "black"}
+                                stroke={borderGraphColor || "black"}
                                 strokeWidth="2"
                             />
                         );
@@ -55,14 +60,34 @@ const CLineChart = ({ payload, bottomLabelColor, topLabelColor, borderColor, dot
 
                     return (
                         <React.Fragment key={`dot-label-${index}`}>
-                            <Circle cx={x} cy={y} r="4" fill={dotColor || "blue"} />
+
+
+                            {/* vertical line show part */}
+                            <Line
+                                x1={x}
+                                y1={topPadding}
+                                x2={x}
+                                y2={maxChartHeight + topPadding}
+                                stroke={borderLinesColor || "black"}
+                                strokeWidth="2"
+                                strokeDasharray="2, 2"
+                            />
+
+                            <Circle 
+                            cx={x} 
+                            cy={y} 
+                            r="4" 
+                             stroke={dotColor || "#3c95d0"}
+                            strokeWidth="2.5"
+                            fill={dotBgColor || "white"} />
 
                             {/* display the percentage above the dots */}
                             <Text
                                 x={x}
                                 y={y - 10} // adjust if you want to give more space above the dot
-                                fontSize="10"
+                                fontSize="11"
                                 fill={topLabelColor || "black"}
+                                fontFamily='sans-serif'
                                 textAnchor="middle"
                             >
                                 {`${point.y}%`}
@@ -73,6 +98,7 @@ const CLineChart = ({ payload, bottomLabelColor, topLabelColor, borderColor, dot
                                 x={x}
                                 y={maxChartHeight + topPadding + 30} // month name that is below the chart
                                 fontSize="12"
+                                fontFamily='sans-serif'
                                 fill={bottomLabelColor || "black"}
                                 textAnchor="middle"
                             >
@@ -85,5 +111,19 @@ const CLineChart = ({ payload, bottomLabelColor, topLabelColor, borderColor, dot
         </View>
     );
 };
+
+const nodata = (
+    <View style={{ height: 50 }}>
+        <Text
+            style={{
+                userSelect: "none",
+                color: "gray",
+                lineHeight: 50,
+                fontSize: 15,
+                fontFamily: "sans-serif"
+            }}>
+            No data to display.
+        </Text>
+    </View>)
 
 export default CLineChart;
