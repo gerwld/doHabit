@@ -1,6 +1,6 @@
 import { View, useWindowDimensions } from 'react-native'
 import React, { useState } from 'react'
-import { Gesture, GestureDetector, GestureHandlerRootView } from 'react-native-gesture-handler';
+import { Directions, Gesture, GestureDetector, GestureHandlerRootView } from 'react-native-gesture-handler';
 import { handleMonthChange, Month } from '.';
 import { runOnJS, useSharedValue } from 'react-native-reanimated';
 import { useWidthDimensions } from 'hooks';
@@ -19,20 +19,8 @@ let currentMonth = currentDate.getMonth();
 const Calendar = React.memo(({ onChange, color, colorContrast, activeColor, itemID }) => {
     console.log('calendar rerender');
 
-
     const [visibleMonth, setVisibleMonth] = useState(currentMonth); // Default to current month
     const { width } = useWidthDimensions(600, 20);
-
-    // fallback for rerenders
-    // useEffect( () => {
-    //     async function fetchStoredMonth() {
-    //         const storedMonth = await getStoredMonth()
-    //         if (storedMonth && storedMonth !== visibleMonth) 
-    //          setVisibleMonth(storedMonth);
-    //     }
-    //     fetchStoredMonth();
-    // }, []);
-
 
     const onNavigate = (isBack) => {
         if (isBack) {
@@ -46,55 +34,50 @@ const Calendar = React.memo(({ onChange, color, colorContrast, activeColor, item
     }
 
     // TODO: calendar animation
-    const startX = useSharedValue();
-    const pan = Gesture.Pan()
-        .onBegin((event) => {
-            startX.value = event.translationX;
+    const panLeft = Gesture.Fling()
+        .direction(Directions.LEFT)
+        .onStart((_) => {
+            runOnJS(onNavigate)(false)
         })
-        // .onChange(() => {})
-        .onFinalize((event) => {
-            if (Math.max(startX.value, event.translationX) - Math.min(startX.value, event.translationX) > 100) {
-                // back
-                if (startX.value < event.translationX)
-                    
-                    runOnJS(onNavigate)(true)
-                // forward   
-                else runOnJS(onNavigate)()
-            }
-        });
+    const panRight = Gesture.Fling()
+        .direction(Directions.RIGHT)
+        .onStart((_) => {
+            runOnJS(onNavigate)(true)
+        })
+
+    // native scrolling gesture to handle vertical scroll in ScrollView
+    const nativeGesture = Gesture.Native();
+
+    // combines the pan gesture for horizontal swipe and native scroll gesture
+    const composedGestures = Gesture.Simultaneous(panLeft, panRight, nativeGesture);
 
     return (
-        <View style={{ maxWidth: width, paddingTop: 0, paddingBottom: 10, flexDirection: "row", overflow: "hidden" }}>
+        <View style={{ maxWidth: width, paddingBottom: 8, flexDirection: "row", overflow: "hidden" }}>
+            <GestureDetector gesture={composedGestures}>
+                <View style={{ flex: 1, maxWidth: width, minHeight: 300, overflow: "hidden" }}>
 
-            <GestureHandlerRootView style={{ flex: 1 }}>
+                    <View style={{
+                        flex: 1,
+                        flexDirection: "row",
+                    }}>
+                        {!isNaN(currentMonth) &&
+                            <Month
+                                {...{
+                                    key: visibleMonth,
+                                    itemID,
+                                    onChange,
+                                    color,
+                                    colorContrast,
+                                    activeColor,
+                                    onNavigate,
+                                    currentDate,
+                                    date: new Date(2024, visibleMonth, 1)
+                                }}
+                            />}
 
-                <GestureDetector gesture={pan}>
-                    <View style={{ flex: 1, maxWidth: width, minHeight: 300, overflow: "hidden" }}>
-
-                        <View style={{
-                            flex: 1,
-                            flexDirection: "row",
-                        }}>
-                            {!isNaN(currentMonth) &&
-                                <Month
-                                    {...{
-                                        key: visibleMonth,
-                                        itemID,
-                                        onChange,
-                                        color,
-                                        colorContrast,
-                                        activeColor,
-                                        onNavigate,
-                                        currentDate,
-                                        date: new Date(2024, visibleMonth, 1)
-                                    }}
-                                />}
-
-                        </View>
                     </View>
-                </GestureDetector>
-
-            </GestureHandlerRootView>
+                </View>
+            </GestureDetector>
         </View>
     )
 }, (prevProps, nextProps) => {

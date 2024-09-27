@@ -31,7 +31,7 @@ const Month = ({ color, colorContrast, activeColor, date, onNavigate, itemID, on
             color: colorContrast || color || "#fff"
         },
         mf: {
-            paddingRight: 6
+            paddingRight: 5
         },
         p: {
             width: 55,
