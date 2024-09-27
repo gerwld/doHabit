@@ -1,12 +1,10 @@
 import { StyleSheet, Text, View } from "react-native";
 import { getWeekdays } from "@constants";
 import { useTranslation } from "react-i18next";
-import { useWidthDimensions } from "hooks";
 
-const WeekDays = ({ activeColor, month }) => {
+const WeekDays = ({width, activeColor, month }) => {
     console.log('weekdays rerender')
     const {t} = useTranslation();
-    const { width } = useWidthDimensions(600, 20);
     const weekdays = getWeekdays();
 
     const s = StyleSheet.create({

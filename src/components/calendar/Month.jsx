@@ -3,13 +3,11 @@ import { Days, WeekDays } from ".";
 import { StyleSheet, Text, View } from "react-native";
 import { TouchableOpacity } from "react-native";
 import { SvgBack, SvgFront } from '@icons';
-import { useWidthDimensions } from "hooks";
 
 const NAV_HEIGHT = 46;
 
-const Month = ({ color, colorContrast, activeColor, date, onNavigate, itemID, onChange, currentDate }) => {
+const Month = ({ width, color, colorContrast, activeColor, borderColor, date, onNavigate, itemID, onChange, currentDate }) => {
     console.log('month rerender')
-    const { width } = useWidthDimensions(600, 20);
     const { t } = useTranslation();
     const year = date.getFullYear();
     const month = date.getMonth();
@@ -26,19 +24,19 @@ const Month = ({ color, colorContrast, activeColor, date, onNavigate, itemID, on
             alignContent: "center",
         },
         m: {
-            fontSize: 16,
+            fontSize: 16.5,
+            fontWeight: "400",
             lineHeight: NAV_HEIGHT,
             color: colorContrast || color || "#fff"
         },
         mf: {
-            paddingRight: 5
+            paddingRight: 5,
         },
         p: {
-            width: 55,
+            width: Math.min(55 + width / 10, 400),
             height: NAV_HEIGHT,
             alignItems: "center",
             justifyContent: "center",
-            marginHorizontal: "5%"
         },
         p_left: {
             paddingLeft: 10
@@ -61,9 +59,11 @@ const Month = ({ color, colorContrast, activeColor, date, onNavigate, itemID, on
                 </View>
                 <TouchableOpacity style={[s.p, s.p_right]} onPress={onNavigateFront}><SvgFront color={activeColor ? activeColor : "#3c95d0"} size={22} /></TouchableOpacity>
             </View>
-            <WeekDays month={month} activeColor={activeColor} />
+            <WeekDays month={month} activeColor={activeColor} width={width} />
             <Days {...{
+                width,
                 currentMonth: month,
+                borderColor,
                 currentDate,
                 color, activeColor, year,
                 itemID, onChange,

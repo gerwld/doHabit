@@ -1,8 +1,8 @@
-import { View, useWindowDimensions } from 'react-native'
+import { View } from 'react-native'
 import React, { useState } from 'react'
-import { Directions, Gesture, GestureDetector, GestureHandlerRootView } from 'react-native-gesture-handler';
+import { Directions, Gesture, GestureDetector } from 'react-native-gesture-handler';
 import { handleMonthChange, Month } from '.';
-import { runOnJS, useSharedValue } from 'react-native-reanimated';
+import { runOnJS } from 'react-native-reanimated';
 import { useWidthDimensions } from 'hooks';
 
 const currentDate = new Date();
@@ -16,11 +16,11 @@ let currentMonth = currentDate.getMonth();
  * @param {string} itemID - Habit ID to show active (selected) habit timestamps (Days.jsx).
  * @returns {React FC} - Returns Calendar. 
  */
-const Calendar = React.memo(({ onChange, color, colorContrast, activeColor, itemID }) => {
+const Calendar = React.memo(({ onChange, color, colorContrast, borderColor, activeColor, itemID }) => {
     console.log('calendar rerender');
 
     const [visibleMonth, setVisibleMonth] = useState(currentMonth); // Default to current month
-    const { width } = useWidthDimensions(600, 20);
+    const { width } = useWidthDimensions(700, 20);
 
     const onNavigate = (isBack) => {
         if (isBack) {
@@ -52,7 +52,7 @@ const Calendar = React.memo(({ onChange, color, colorContrast, activeColor, item
     const composedGestures = Gesture.Simultaneous(panLeft, panRight, nativeGesture);
 
     return (
-        <View style={{ maxWidth: width, paddingBottom: 8, flexDirection: "row", overflow: "hidden" }}>
+        <View style={{ maxWidth: width, paddingBottom: width * 0.04, flexDirection: "row", overflow: "hidden" }}>
             <GestureDetector gesture={composedGestures}>
                 <View style={{ flex: 1, maxWidth: width, minHeight: 300, overflow: "hidden" }}>
 
@@ -64,10 +64,12 @@ const Calendar = React.memo(({ onChange, color, colorContrast, activeColor, item
                             <Month
                                 {...{
                                     key: visibleMonth,
+                                    width,
                                     itemID,
                                     onChange,
                                     color,
                                     colorContrast,
+                                    borderColor,
                                     activeColor,
                                     onNavigate,
                                     currentDate,

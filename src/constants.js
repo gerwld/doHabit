@@ -31,7 +31,8 @@ const THEMEV = {
         chevronText:"#a8adb8", 
         borderGraphColor: "#e8f1fe",
         borderLinesColor: "#ebedf1",
-        dayGraphColor: "#dee8f6"
+        dayGraphColor: "#dee8f6",
+        calendarBorderColor: "#d6dde6"
     },
     "st_theme__dark": {
         label: "dark",
@@ -50,7 +51,8 @@ const THEMEV = {
         chevronText:"#ccd1db",
         borderGraphColor: "#4b4f53",
         borderLinesColor: "#363739",
-        dayGraphColor: "#484c50"
+        dayGraphColor: "#484c50",
+        calendarBorderColor: "#313337"
     }
 }
 

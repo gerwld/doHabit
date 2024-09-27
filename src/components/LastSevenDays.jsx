@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react'
 import styled from 'styled-components/native';
-import { Pressable, StyleSheet, useWindowDimensions, View } from 'react-native';
+import { Dimensions, Pressable, StyleSheet, useWindowDimensions, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import * as Haptics from 'expo-haptics';
 
@@ -17,11 +17,12 @@ import { PLATFORM } from '@constants';
 const ONE_DAY_IN_MS = 86400000;
 const IS_APP = PLATFORM === "ios" || PLATFORM === "android";
 const DATE = new Date();
-const TIMESTAMP = DATE.setHours(0, 0, 0, 0)
+const TIMESTAMP = DATE.setHours(0, 0, 0, 0);
+const ITEM_WIDTH = Dimensions.get("window").width > 768 ? 36 : 32;
 
 function getCountDays(vp) {
-    if (vp > 1320) return 20
-    if (vp > 750) return 12
+    if (vp > 1320) return 14
+    if (vp > 750) return 10
     if (vp > 680) return 7
     if (vp < 350) return 4
     return 5
@@ -104,7 +105,7 @@ const RenderItem = ({ e, tmsArr, color, themeColors, onPress }) => {
 
     const s = StyleSheet.create({
         iconParent: {
-            width: 30,
+            width: Math.max(ITEM_WIDTH, 30) - 2,
             height: 57,
             justifyContent: "center",
             alignItems: "center",
@@ -162,9 +163,9 @@ const ItemIcon = React.memo(({ tmsArr, s, current }) => {
 const styles = StyleSheet.create({
     timeWiewInt: {
         height: 55,
-        width: 32,
-        minWidth: 32,
-        maxWidth: 32,
+        width: ITEM_WIDTH,
+        minWidth: ITEM_WIDTH,
+        maxWidth: ITEM_WIDTH,
         alignItems: "center",
         justifyContent: "center",
         paddingVertical: 0,
@@ -194,9 +195,9 @@ const ParentView = styled.View`
 `
 
 const TimeView = styled.View`
-    width: 32px;
-    max-width: 32px;
-    min-width: 32px;
+    width: ${ITEM_WIDTH}px;
+    max-width: ${ITEM_WIDTH}px;
+    min-width: ${ITEM_WIDTH}px;
     display: flex;
     flex-direction:column;
     align-items: center;

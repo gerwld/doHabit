@@ -1,4 +1,4 @@
-import { View, Button, SafeAreaView, Dimensions, Pressable, Text } from 'react-native'
+import { View, Button, SafeAreaView, Pressable, Text, useWindowDimensions } from 'react-native'
 import React, { useState } from 'react'
 import { Gesture, GestureDetector, GestureHandlerRootView } from 'react-native-gesture-handler';
 import { runOnJS, useAnimatedStyle, withTiming } from 'react-native-reanimated';
@@ -13,7 +13,7 @@ const ScrollPages = ({ children, navigateToHome = true }) => {
     const {t} = useTranslation();
     const navigation = useNavigation();
 
-    const windowWidth = Dimensions.get('window').width;
+    const {width: windowWidth} = useWindowDimensions();
     const TOTAL_PAGES = React.Children.count(children);
 
     const RANGE_ARR = Array.from({ length: TOTAL_PAGES }, (_, index) => index);

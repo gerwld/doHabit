@@ -5,17 +5,20 @@ import { getWeekdays } from "@constants";
 import { useWidthDimensions } from "hooks";
 
 
-const Days = ({ currentMonth, currentDate, color, year, activeColor, itemID, onChange  }) => {
+const Days = ({ width, currentMonth, currentDate, color, borderColor, year, activeColor, itemID, onChange }) => {
     console.log('days rerender')
-    const { width } = useWidthDimensions(600, 20);
 
-    const timestamp_now = new Date(currentDate.setHours(0, 0, 0, 0)).getTime();   
+    const timestamp_now = new Date(currentDate.setHours(0, 0, 0, 0)).getTime();
     const firstDayOfMonth = new Date(2024, currentMonth, 1);
     const lastDayOfMonth = new Date(2024, currentMonth + 1, 0);
 
     const dayOfWeek = firstDayOfMonth.toLocaleString('en-US', { weekday: 'long' });
     const fdayIndex = getWeekdays().indexOf(dayOfWeek.toLowerCase());
     const daysArray = Array.from({ length: lastDayOfMonth.getDate() }, (_, i) => i + 1);
+
+    // custom hook useWidthDimensions manages maxWidth as 700 in Calendar.jsx
+    const IS_TABLET = width === 700;
+    const ITEM_SIZE = IS_TABLET ? 54 : 40;
 
     const s = StyleSheet.create({
         v: {
@@ -27,20 +30,24 @@ const Days = ({ currentMonth, currentDate, color, year, activeColor, itemID, onC
         t: {
             flexShrink: 0,
             flexGrow: 0,
-            width: 40,
-            minWidth: 40,
-            marginHorizontal: (Math.floor(width / 7) - 40) / 2,
-            marginTop: (Math.floor(width / 7) - 40) / 2,
-            height: 40,
+            width: ITEM_SIZE,
+            minWidth: ITEM_SIZE,
+            marginHorizontal: (Math.floor(width / 7) - ITEM_SIZE) / 2,
+            marginTop: width * 0.02,
+            height: ITEM_SIZE,
             borderRadius: 12,
             overflow: "hidden",
-            lineHeight: 39,
-            fontSize: 17,
+            lineHeight: ITEM_SIZE - 1,
+            fontSize: IS_TABLET ? 18 : 17,
             textAlign: "center",
-            color: color ? color : "#fff"
+            color: color ? color : "#fff",
+            borderWidth: borderColor !== undefined ? 1 : null,
+            borderColor: borderColor !== undefined ? borderColor : null
         },
         t_inactive: {
-            opacity: 0.5
+            opacity: 0.5,
+            borderColor: null,
+            borderWidth: null,
         },
         t_today: {
             borderColor: activeColor ? activeColor : "#3c95d0",
@@ -59,15 +66,17 @@ const Days = ({ currentMonth, currentDate, color, year, activeColor, itemID, onC
         },
         selected: {
             backgroundColor: activeColor ? activeColor : "#3c95d0",
-            color: "#fff"
+            color: "#fff",
+            borderWidth: null,
+            borderColor: null,
         }
     })
 
-    if(!itemID) return null;
+    if (!itemID) return null;
 
     const first_day_timestamp = new Date(year, currentMonth, 1).getTime();
     const DAY_IN_MS = 86400000;
-    
+
     const payload = useSelector(state => habitSelectors.selectDatesItemById(state, itemID));
 
     return <View style={s.v}>

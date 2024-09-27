@@ -130,7 +130,7 @@ const DetailsHabitScreen = React.memo(({ route, navigation }) => {
     handleMonthChange(new Date().getMonth())
   }, [])
 
-  if (!item) return <View style={{ flex: 1, width: "100%", alignItems: "center", justifyContent: "center" }}><ActivityIndicator size="largegit " color={"#5fb1e7"} /></View>
+  if (!item) return <View style={{ flex: 1, width: "100%", alignItems: "center", justifyContent: "center" }}><ActivityIndicator size="large" color={"#5fb1e7"} /></View>
 
   return (
     <BaseView>
@@ -170,6 +170,7 @@ const DetailsHabitScreen = React.memo(({ route, navigation }) => {
           <View style={{ alignItems: "center", justifyContent: "center", width: "100%" }}>
 
             <MemoizedCalendar
+              borderColor={themeColors.calendarBorderColor}
               color={themeColors.textColor}
               colorContrast={themeColors.textColorHighlight}
               itemID={habitID}
@@ -214,14 +215,15 @@ const DetailsHabitScreen = React.memo(({ route, navigation }) => {
 
 const HeatmapYear = memo(({ habitID, itemColor }) => {
   const [themeColors] = useCurrentTheme();
-  const payload = useSelector(state => habitSelectors.selectDatesItemById(state, habitID));
+  // const payload = useSelector(state => habitSelectors.selectDatesItemById(state, habitID));
 
   return (
     <Heatmap
+      itemID={habitID}
       color={themeColors.textColorHighlight}
       backgroundDay={themeColors.dayGraphColor}
       backgroundActiveDay={itemColor}
-      timestamps={payload} />
+      />
   )
 })
 

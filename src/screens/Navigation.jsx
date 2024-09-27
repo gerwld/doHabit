@@ -41,7 +41,7 @@ export const Navigation = () => {
         <>
             <Stack.Screen name="addhabit" component={SetHabitScreen} options={{ headerShown: false, title: t("addt_screen") }} />
             <Stack.Screen name="edithabit" component={EditHabitScreen} options={{ headerShown: false, title: t("addt_screen") }} />
-            <Stack.Screen name="sethabit/repeat" component={AHSRepeat} options={{ headerShown: false, title: "Habit Details" }} />
+            <Stack.Screen name="sethabit/repeat" component={AHSRepeat} options={{ headerShown: false, title: "Repeat" }} />
         </>
     )
 
@@ -58,7 +58,7 @@ export const Navigation = () => {
         <NavigationContainer>
             <Stack.Navigator screenOptions={{ gestureEnabled: true, navigationBarColor: themeColors.background || "white" }}>
                 <Stack.Screen name="home" component={HomeScreen} options={{ headerShown: false, title: t("home_screen") }} />
-                <Stack.Screen name="habitdetails" component={DetailsHabitScreen} options={{ headerShown: false, title: "Habit Details", animationTypeForReplace: "pop", animation: "fade_from_bottom" }} />
+                <Stack.Screen name="habitdetails" component={DetailsHabitScreen} options={{ headerShown: false, title: "Habit Details", animationTypeForReplace: "pop", animation: "slide_from_bottom", animationDuration: 360 }} />
                 {settingsSubdirectories}
                 {addEditSubdirectories}
                 <Stack.Screen

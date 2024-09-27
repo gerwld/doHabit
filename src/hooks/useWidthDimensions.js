@@ -7,6 +7,6 @@ export default function useWidthDimensions(maxWidth, gap = 0) {
     width:
       dimWidth <= maxWidth
         ? (dimWidth - gap)
-        : (maxWidth - gap)
+        : maxWidth
   };
 }
