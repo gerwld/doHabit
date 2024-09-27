@@ -1,14 +1,15 @@
 import { useTranslation } from "react-i18next";
 import { Days, WeekDays } from ".";
-import { StyleSheet, Text, useWindowDimensions, View } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 import { TouchableOpacity } from "react-native";
 import { SvgBack, SvgFront } from '@icons';
+import { useWidthDimensions } from "hooks";
 
-const NAV_HEIGHT = 48;
+const NAV_HEIGHT = 46;
 
-const Month = ({ color, date, onNavigate, activeColor, itemID, onChange, currentDate }) => {
+const Month = ({ color, colorContrast, activeColor, date, onNavigate, itemID, onChange, currentDate }) => {
     console.log('month rerender')
-    const { width } = useWindowDimensions();
+    const { width } = useWidthDimensions(600, 20);
     const { t } = useTranslation();
     const year = date.getFullYear();
     const month = date.getMonth();
@@ -25,9 +26,9 @@ const Month = ({ color, date, onNavigate, activeColor, itemID, onChange, current
             alignContent: "center",
         },
         m: {
-            fontSize: 17,
+            fontSize: 16,
             lineHeight: NAV_HEIGHT,
-            color: color ? color : "#fff"
+            color: colorContrast || color || "#fff"
         },
         mf: {
             paddingRight: 6

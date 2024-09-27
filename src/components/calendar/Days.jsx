@@ -1,13 +1,13 @@
 import { View, TouchableOpacity, useWindowDimensions, StyleSheet, Text } from "react-native";
 import { habitSelectors } from "@redux";
 import { useSelector } from "react-redux";
-import { getWeekdays } from "../../constants";
-
+import { getWeekdays } from "@constants";
+import { useWidthDimensions } from "hooks";
 
 
 const Days = ({ currentMonth, currentDate, color, year, activeColor, itemID, onChange  }) => {
     console.log('days rerender')
-    const { width } = useWindowDimensions();
+    const { width } = useWidthDimensions(600, 20);
 
     const timestamp_now = new Date(currentDate.setHours(0, 0, 0, 0)).getTime();   
     const firstDayOfMonth = new Date(2024, currentMonth, 1);
@@ -30,12 +30,12 @@ const Days = ({ currentMonth, currentDate, color, year, activeColor, itemID, onC
             width: 40,
             minWidth: 40,
             marginHorizontal: (Math.floor(width / 7) - 40) / 2,
-            marginTop: 5,
+            marginTop: (Math.floor(width / 7) - 40) / 2,
             height: 40,
             borderRadius: 12,
             overflow: "hidden",
             lineHeight: 39,
-            fontSize: 18,
+            fontSize: 17,
             textAlign: "center",
             color: color ? color : "#fff"
         },

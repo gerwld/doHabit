@@ -3,6 +3,7 @@ import React, { useState } from 'react'
 import { Gesture, GestureDetector, GestureHandlerRootView } from 'react-native-gesture-handler';
 import { handleMonthChange, Month } from '.';
 import { runOnJS, useSharedValue } from 'react-native-reanimated';
+import { useWidthDimensions } from 'hooks';
 
 const currentDate = new Date();
 let currentMonth = currentDate.getMonth();
@@ -15,12 +16,12 @@ let currentMonth = currentDate.getMonth();
  * @param {string} itemID - Habit ID to show active (selected) habit timestamps (Days.jsx).
  * @returns {React FC} - Returns Calendar. 
  */
-const Calendar = React.memo(({ onChange, color, activeColor, itemID }) => {
+const Calendar = React.memo(({ onChange, color, colorContrast, activeColor, itemID }) => {
     console.log('calendar rerender');
 
 
     const [visibleMonth, setVisibleMonth] = useState(currentMonth); // Default to current month
-    const { width } = useWindowDimensions();
+    const { width } = useWidthDimensions(600, 20);
 
     // fallback for rerenders
     // useEffect( () => {
@@ -81,6 +82,7 @@ const Calendar = React.memo(({ onChange, color, activeColor, itemID }) => {
                                         itemID,
                                         onChange,
                                         color,
+                                        colorContrast,
                                         activeColor,
                                         onNavigate,
                                         currentDate,

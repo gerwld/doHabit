@@ -33,9 +33,9 @@ const DetailsHabitScreen = React.memo(({ route, navigation }) => {
   }, [time])
 
   React.useEffect(() => {
-    if(route.params?.id) {
-    sethabitID(route.params.id);
-    sethabit(route.params);
+    if (route.params?.id) {
+      sethabitID(route.params.id);
+      sethabit(route.params);
     }
   }, [route.params?.id])
 
@@ -66,7 +66,7 @@ const DetailsHabitScreen = React.memo(({ route, navigation }) => {
 
   const styles = StyleSheet.create({
     t: {
-      color: themeColors.textColorHighlight
+      color: themeColors.textColor
     },
     i: {
       color: themeColors.textColor
@@ -77,12 +77,14 @@ const DetailsHabitScreen = React.memo(({ route, navigation }) => {
     item: {
       flexDirection: "row",
       justifyContent: "space-around",
-      marginTop: 5,
+      marginTop: 4,
       marginBottom: 12,
-      paddingVertical: 11,
+      paddingVertical: 10,
       backgroundColor: themeColors.bgHighlight
-
-
+    },
+    itemInt: {
+      flexDirection: "row",
+      justifyContent: "space-around",
     },
     itemFlexible: {
       marginTop: 5,
@@ -128,7 +130,7 @@ const DetailsHabitScreen = React.memo(({ route, navigation }) => {
     handleMonthChange(new Date().getMonth())
   }, [])
 
-  if (!item) return <View style={{flex: 1, width: "100%", alignItems: "center", justifyContent: "center"}}><ActivityIndicator size="largegit " color={"#5fb1e7"} /></View>
+  if (!item) return <View style={{ flex: 1, width: "100%", alignItems: "center", justifyContent: "center" }}><ActivityIndicator size="largegit " color={"#5fb1e7"} /></View>
 
   return (
     <BaseView>
@@ -145,7 +147,8 @@ const DetailsHabitScreen = React.memo(({ route, navigation }) => {
 
       <ScrollView style={{ paddingTop: 14, flex: 1 }}>
 
-        <LineItemView st={{ justifyContent: "space-around", paddingVertical: 10, minHeight: 45 }}>
+
+        <LineItemView st={{ justifyContent: "space-around", paddingVertical: 10, minHeight: 0, backgroundColor: "transparent"}}>
           <InfoBarItem>
             <SvgRepeat size={22} color={themeColors.textColor} />
             <Text style={[styles.t, styles.l]}>{item?.repeat ? t(item.repeat) : "-"}</Text>
@@ -156,19 +159,19 @@ const DetailsHabitScreen = React.memo(({ route, navigation }) => {
           </InfoBarItem>
         </LineItemView>
 
-        <Label>{t("label_stre")}</Label>
-        <View style={styles.item}>
-          <HabitStrengthContent {...{habitID, themeColors, styles}}/>
+        <View style={[styles.item, { flexDirection: "column", width: "100%" }]}>
+          <HabitStrengthContent {...{ habitID, themeColors, styles }} />
         </View>
-     
+
 
 
         <Label>{t("label_ov")}</Label>
         <LineItemView st={{ ...styles.itemFlexible }}>
           <View style={{ alignItems: "center", justifyContent: "center", width: "100%" }}>
-          
+
             <MemoizedCalendar
               color={themeColors.textColor}
+              colorContrast={themeColors.textColorHighlight}
               itemID={habitID}
               activeColor={item?.color}
               onChange={onDayPress} />
@@ -177,19 +180,19 @@ const DetailsHabitScreen = React.memo(({ route, navigation }) => {
         </LineItemView>
 
         {habitID &&
-        <><Label>{t("label_heatmap_year")}</Label>
-        <LineItemView st={{ ...styles.itemFlexible }}>
-          <View style={{ alignItems: "center", justifyContent: "center", width: "100%" }}>
-          <HeatmapYear 
-          itemColor={item?.color}
-          habitID={habitID}/>
-          </View>
-        </LineItemView></>}
+          <><Label>{t("label_heatmap_year")}</Label>
+            <LineItemView st={{ ...styles.itemFlexible }}>
+              <View style={{ alignItems: "center", justifyContent: "center", width: "100%" }}>
+                <HeatmapYear
+                  itemColor={item?.color}
+                  habitID={habitID} />
+              </View>
+            </LineItemView></>}
 
-        <Label>{t("label_ch_year")}</Label>
+        <Label>{t("label_stre")}</Label>
         <LineItemView st={{ ...styles.itemFlexible }}>
           <View style={{ alignItems: "center", justifyContent: "center", width: "100%" }}>
-          <ChartYear itemColor={item?.color}/>
+            <ChartYear itemColor={item?.color} />
           </View>
         </LineItemView>
 
@@ -209,23 +212,23 @@ const DetailsHabitScreen = React.memo(({ route, navigation }) => {
 
 // Heatmap part
 
-const HeatmapYear = memo(({habitID, itemColor}) => {
+const HeatmapYear = memo(({ habitID, itemColor }) => {
   const [themeColors] = useCurrentTheme();
   const payload = useSelector(state => habitSelectors.selectDatesItemById(state, habitID));
 
   return (
-    <Heatmap 
+    <Heatmap
       color={themeColors.textColorHighlight}
       backgroundDay={themeColors.borderLinesColor}
       backgroundActiveDay={itemColor}
-      timestamps={payload}/>
+      timestamps={payload} />
   )
 })
 
 
 // ChartYear part 
 
-const ChartYear = memo(({itemColor}) => {
+const ChartYear = memo(({ itemColor }) => {
   const [themeColors] = useCurrentTheme();
   const initData = [
     { name: 'January', y: 0 },
@@ -234,31 +237,31 @@ const ChartYear = memo(({itemColor}) => {
     { name: 'April', y: 100 },
     { name: 'April', y: 50 },
     { name: 'ейпріл', y: 20 },
-];
+  ];
 
-return (
-  <LineChart
-    payload={initData}
-    bottomLabelColor={themeColors.textColor}
-    topLabelColor={themeColors.textColorHighlight}
-    borderGraphColor={themeColors.borderGraphColor}
-    borderLinesColor={themeColors.borderLinesColor}
-    dotBgColor={themeColors.bgHighlight}
-    dotColor={itemColor}
-  />
-)
+  return (
+    <LineChart
+      payload={initData}
+      bottomLabelColor={themeColors.textColor}
+      topLabelColor={themeColors.textColorHighlight}
+      borderGraphColor={themeColors.borderGraphColor}
+      borderLinesColor={themeColors.borderLinesColor}
+      dotBgColor={themeColors.bgHighlight}
+      dotColor={itemColor}
+    />
+  )
 
 })
 
 
 // HabitStrengthContent part 
 
-const HabitStrengthContent = memo(({styles, themeColors, habitID}) => {
+const HabitStrengthContent = memo(({ styles, themeColors, habitID }) => {
   const { t } = useTranslation();
   const item = useSelector(state => habitSelectors.selectItemById(state, habitID), shallowEqual);
   const [score, monthScore, yearScore] = useHabitScore(item);
-  
- 
+
+
 
   function getDecimal(value) {
     let hasDec = value % 1 !== 0
@@ -268,10 +271,10 @@ const HabitStrengthContent = memo(({styles, themeColors, habitID}) => {
   function addPlus(v) {
     return v > 0 ? '+' + v : 0
   }
- 
+
   return (
-    <>
-  
+    <View style={styles.itemInt}>
+
       <View style={styles.circle} >
         <CircularProgress
           progress={score > 0 ? score : 1}
@@ -296,7 +299,7 @@ const HabitStrengthContent = memo(({styles, themeColors, habitID}) => {
         <Text style={styles.ovBlockDD}>{t("dt_year")}</Text>
       </View>
 
-    </>
+    </View>
   )
 })
 
