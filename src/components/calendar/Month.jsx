@@ -25,7 +25,7 @@ const Month = ({ color, date, onNavigate, activeColor, itemID, onChange, current
             alignContent: "center",
         },
         m: {
-            fontSize: 18,
+            fontSize: 17,
             lineHeight: NAV_HEIGHT,
             color: color ? color : "#fff"
         },
@@ -53,12 +53,12 @@ const Month = ({ color, date, onNavigate, activeColor, itemID, onChange, current
     return (
         <View style={{ maxWidth: width, overflow: "hidden" }}>
             <View style={s.v}>
-                <TouchableOpacity style={[s.p, s.p_left]} onPress={onNavigateBack}><SvgBack color={activeColor ? activeColor : "#3c95d0"} size={24} /></TouchableOpacity>
+                <TouchableOpacity style={[s.p, s.p_left]} onPress={onNavigateBack}><SvgBack color={activeColor ? activeColor : "#3c95d0"} size={22} /></TouchableOpacity>
                 <View style={s.vb}>
                     <Text style={[s.m, s.mf]}>{t("month_" + month)}</Text>
                     <Text style={s.m}>{year}</Text>
                 </View>
-                <TouchableOpacity style={[s.p, s.p_right]} onPress={onNavigateFront}><SvgFront color={activeColor ? activeColor : "#3c95d0"} size={24} /></TouchableOpacity>
+                <TouchableOpacity style={[s.p, s.p_right]} onPress={onNavigateFront}><SvgFront color={activeColor ? activeColor : "#3c95d0"} size={22} /></TouchableOpacity>
             </View>
             <WeekDays month={month} activeColor={activeColor} />
             <Days {...{

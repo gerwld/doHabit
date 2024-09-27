@@ -27,14 +27,14 @@ const Days = ({ currentMonth, currentDate, color, year, activeColor, itemID, onC
         t: {
             flexShrink: 0,
             flexGrow: 0,
-            width: 42,
-            minWidth: 42,
-            marginHorizontal: (Math.floor(width / 7) - 42) / 2,
+            width: 40,
+            minWidth: 40,
+            marginHorizontal: (Math.floor(width / 7) - 40) / 2,
             marginTop: 5,
-            height: 42,
+            height: 40,
             borderRadius: 21,
             overflow: "hidden",
-            lineHeight: 41,
+            lineHeight: 39,
             fontSize: 18,
             textAlign: "center",
             color: color ? color : "#fff"
@@ -54,7 +54,7 @@ const Days = ({ currentMonth, currentDate, color, year, activeColor, itemID, onC
             zIndex: 100,
         },
         gap: {
-            height: 42,
+            height: 40,
             paddingLeft: fdayIndex * Math.floor(width / 7),
         },
         selected: {
