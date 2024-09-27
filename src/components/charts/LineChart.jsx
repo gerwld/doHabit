@@ -61,7 +61,6 @@ const CLineChart = ({
                     return (
                         <React.Fragment key={`dot-label-${index}`}>
 
-
                             {/* vertical line show part */}
                             <Line
                                 x1={x}
@@ -76,7 +75,7 @@ const CLineChart = ({
                             <Circle 
                             cx={x} 
                             cy={y} 
-                            r="4" 
+                            r="5.5" 
                              stroke={dotColor || "#3c95d0"}
                             strokeWidth="2.5"
                             fill={dotBgColor || "white"} />

@@ -1,5 +1,5 @@
 import React, { memo, useCallback, useEffect, useMemo } from 'react'
-import { Text, Button, StyleSheet, ScrollView, View, ActivityIndicator } from 'react-native'
+import { Text, Button, StyleSheet, ScrollView, View, ActivityIndicator, Dimensions } from 'react-native'
 import { useTranslation } from 'react-i18next';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 
@@ -7,7 +7,7 @@ import alert from '../polyfils/alert';
 import { habitsActions } from "actions";
 import { uses24HourClock, convertTo12HourFormat } from '@constants';
 import { Label, InfoBar, InfoBarItem } from "styles/crudtask"
-import { CircularProgress, LineItemView, STHeader, BaseView } from '@components';
+import { CircularProgress, LineItemView, STHeader, BaseView, LineChart, Heatmap } from '@components';
 import { useCurrentTheme, useHabitScore } from 'hooks';
 import { SvgClock, SvgRepeat } from '../../assets/svg/hicons_svgr';
 import Calendar from '../components/calendar/Calendar';
@@ -15,9 +15,7 @@ import * as Haptics from 'expo-haptics';
 
 import { PLATFORM } from '@constants';
 import { habitSelectors } from '../redux';
-import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import { handleMonthChange } from '../components/calendar';
-import CalendarPicker from 'react-native-calendar-picker';
 const IS_APP = PLATFORM === "ios" || PLATFORM === "android";
 
 const DetailsHabitScreen = React.memo(({ route, navigation }) => {
@@ -35,10 +33,11 @@ const DetailsHabitScreen = React.memo(({ route, navigation }) => {
   }, [time])
 
   React.useEffect(() => {
-    if(route.params.id)
+    if(route.params?.id) {
     sethabitID(route.params.id);
     sethabit(route.params);
-  }, [route.params.id])
+    }
+  }, [route.params?.id])
 
   const onPressDeleteHabit = () => {
     const onConfirm = () => {
@@ -80,7 +79,7 @@ const DetailsHabitScreen = React.memo(({ route, navigation }) => {
       justifyContent: "space-around",
       marginTop: 5,
       marginBottom: 12,
-      paddingVertical: 50,
+      paddingVertical: 11,
       backgroundColor: themeColors.bgHighlight
 
 
@@ -91,13 +90,13 @@ const DetailsHabitScreen = React.memo(({ route, navigation }) => {
     },
     ovBlockDT: {
       textAlign: "center",
-      fontSize: 26,
-      minWidth: 72,
+      fontSize: 20,
+      minWidth: 60,
       fontWeight: "bold",
       color: item?.color || "#3c95d0"
     },
     ovBlockDD: {
-      fontSize: 17,
+      fontSize: 15,
       color: themeColors.textColor
     },
     ovParent: {
@@ -105,7 +104,8 @@ const DetailsHabitScreen = React.memo(({ route, navigation }) => {
       justifyContent: "center"
     },
     circle: {
-      paddingLeft: 10
+      paddingLeft: 10,
+      alignSelf: "center"
     }
   })
 
@@ -122,20 +122,19 @@ const DetailsHabitScreen = React.memo(({ route, navigation }) => {
     }
   }, [item])
 
-  const datesArray = useMemo(() => item?.datesArray, [item]);
   const MemoizedCalendar = React.memo(Calendar);
 
   useEffect(() => {
     handleMonthChange(new Date().getMonth())
   }, [])
 
-  if (!item) return <SafeAreaProvider><SafeAreaView style={{flex: 1, width: "100%", alignItems: "center", justifyContent: "center"}}><ActivityIndicator size="small" color={"#5fb1e7"} /></SafeAreaView></SafeAreaProvider>
+  if (!item) return <View style={{flex: 1, width: "100%", alignItems: "center", justifyContent: "center"}}><ActivityIndicator size="large" color={"#5fb1e7"} /></View>
 
   return (
     <BaseView>
       <STHeader
         title={item?.name}
-
+        onGoBack={() => navigation.navigate("home")}
         leftText={t("act_back")}
         rightPress={() => navigation.navigate("edithabit", item)}
         rightText={t("act_edit")}
@@ -144,16 +143,15 @@ const DetailsHabitScreen = React.memo(({ route, navigation }) => {
         navigation={navigation}
       />
 
-
       <ScrollView style={{ paddingTop: 14, flex: 1 }}>
 
-        <LineItemView st={{ justifyContent: "space-around", paddingVertical: 10 }}>
+        <LineItemView st={{ justifyContent: "space-around", paddingVertical: 10, minHeight: 45 }}>
           <InfoBarItem>
-            <SvgRepeat size={24} color={themeColors.textColor} />
+            <SvgRepeat size={22} color={themeColors.textColor} />
             <Text style={[styles.t, styles.l]}>{item?.repeat ? t(item.repeat) : "-"}</Text>
           </InfoBarItem>
           <InfoBarItem>
-            <SvgClock size={24} color={themeColors.textColor} />
+            <SvgClock size={22} color={themeColors.textColor} />
             <Text style={[styles.t, styles.l]}>{time ? twelveOr24Time(time) : "--:--"}</Text>
           </InfoBarItem>
         </LineItemView>
@@ -168,27 +166,30 @@ const DetailsHabitScreen = React.memo(({ route, navigation }) => {
         <Label>{t("label_ov")}</Label>
         <LineItemView st={{ ...styles.itemFlexible }}>
           <View style={{ alignItems: "center", justifyContent: "center", width: "100%" }}>
-           
-          {/* <CalendarPicker
-              width={400}
-              textStyle={{
-                color: themeColors.textColor,
-                fontSize: 17
-              }}
-              startFromMonday={uses24HourClock(new Date())}
-              selectedDayStyle={{}}
-              selectedDayTextStyle={{ color: themeColors.textColor }}
-              todayBackgroundColor={"#ffffff3f"}
-              todayStyle={{ color: "red" }}
-              scrollable={true} /> */}
-
-
+          
             <MemoizedCalendar
               color={themeColors.textColor}
               itemID={habitID}
               activeColor={item?.color}
               onChange={onDayPress} />
 
+          </View>
+        </LineItemView>
+
+        {habitID &&
+        <><Label>{t("label_heatmap_year")}</Label>
+        <LineItemView st={{ ...styles.itemFlexible }}>
+          <View style={{ alignItems: "center", justifyContent: "center", width: "100%" }}>
+          <HeatmapYear 
+          itemColor={item?.color}
+          habitID={habitID}/>
+          </View>
+        </LineItemView></>}
+
+        <Label>{t("label_ch_year")}</Label>
+        <LineItemView st={{ ...styles.itemFlexible }}>
+          <View style={{ alignItems: "center", justifyContent: "center", width: "100%" }}>
+          <ChartYear itemColor={item?.color}/>
           </View>
         </LineItemView>
 
@@ -204,6 +205,52 @@ const DetailsHabitScreen = React.memo(({ route, navigation }) => {
     </BaseView>
   )
 });
+
+
+// Heatmap part
+
+const HeatmapYear = memo(({habitID, itemColor}) => {
+  const [themeColors] = useCurrentTheme();
+  const payload = useSelector(state => habitSelectors.selectDatesItemById(state, habitID));
+
+  return (
+    <Heatmap 
+    backgroundDay={themeColors.borderLinesColor}
+    backgroundActiveDay={itemColor}
+    timestamps={payload}/>
+  )
+})
+
+
+// ChartYear part 
+
+const ChartYear = memo(({itemColor}) => {
+  const [themeColors] = useCurrentTheme();
+  const initData = [
+    { name: 'January', y: 0 },
+    { name: 'February', y: 20 },
+    { name: 'March', y: 50 },
+    { name: 'April', y: 100 },
+    { name: 'April', y: 50 },
+    { name: 'ейпріл', y: 20 },
+];
+
+return (
+  <LineChart
+    payload={initData}
+    bottomLabelColor={themeColors.textColor}
+    topLabelColor={themeColors.textColorHighlight}
+    borderGraphColor={themeColors.borderGraphColor}
+    borderLinesColor={themeColors.borderLinesColor}
+    dotBgColor={themeColors.bgHighlight}
+    dotColor={itemColor}
+  />
+)
+
+})
+
+
+// HabitStrengthContent part 
 
 const HabitStrengthContent = memo(({styles, themeColors, habitID}) => {
   const { t } = useTranslation();
@@ -221,16 +268,14 @@ const HabitStrengthContent = memo(({styles, themeColors, habitID}) => {
     return v > 0 ? '+' + v : 0
   }
  
-
- 
   return (
     <>
   
       <View style={styles.circle} >
         <CircularProgress
           progress={score > 0 ? score : 1}
-          size={55}
-          strokeWidth={8}
+          size={40}
+          strokeWidth={5}
           strColor={themeColors.crossSymbL}
           color={item?.color ? item.color : "#7fcbfd"} />
       </View>
