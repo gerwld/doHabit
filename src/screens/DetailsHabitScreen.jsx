@@ -165,7 +165,7 @@ const DetailsHabitScreen = React.memo(({ route, navigation }) => {
 
 
 
-        <Label>{t("label_ov")}</Label>
+        <Label>{t("label_month")}</Label>
         <LineItemView st={{ ...styles.itemFlexible }}>
           <View style={{ alignItems: "center", justifyContent: "center", width: "100%" }}>
 
@@ -180,7 +180,7 @@ const DetailsHabitScreen = React.memo(({ route, navigation }) => {
         </LineItemView>
 
         {habitID &&
-          <><Label>{t("label_heatmap_year")}</Label>
+          <><Label>{t("label_ov")}</Label>
             <LineItemView st={{ ...styles.itemFlexible }}>
               <View style={{ alignItems: "center", justifyContent: "center", width: "100%" }}>
                 <HeatmapYear
@@ -219,7 +219,7 @@ const HeatmapYear = memo(({ habitID, itemColor }) => {
   return (
     <Heatmap
       color={themeColors.textColorHighlight}
-      backgroundDay={themeColors.borderLinesColor}
+      backgroundDay={themeColors.dayGraphColor}
       backgroundActiveDay={itemColor}
       timestamps={payload} />
   )

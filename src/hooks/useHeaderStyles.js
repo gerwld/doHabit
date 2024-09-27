@@ -54,7 +54,6 @@ export const useHeaderStyles = (theme, isWhite = false) => {
       color: 'white',
       fontSize: 20,
       fontWeight: 'bold',
-
     },
     centerComponent: {
       height: HEADER_HEIGHT_SAFE,
@@ -64,7 +63,6 @@ export const useHeaderStyles = (theme, isWhite = false) => {
       paddingHorizontal: 2,
       flex: 1,
     },
-
     leftComponent: {
       height: HEADER_HEIGHT_SAFE,
       justifyContent: "center",

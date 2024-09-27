@@ -2,6 +2,7 @@ import React from 'react';
 import { Dimensions, View, Text } from 'react-native';
 import Svg, { Circle, Rect } from 'react-native-svg';
 import { getWeekdays } from '@constants';
+import { useTranslation } from 'react-i18next';
 
 // returns the last day in a month
 const getDaysInMonth = (year, month) => {
@@ -22,6 +23,7 @@ const getHeatmapStartDate = () => {
 };
 
 const Heatmap = ({ timestamps, backgroundDay, backgroundActiveDay, color }) => {
+  const {t} = useTranslation();
   const startDate = getHeatmapStartDate(); // start date (current month - 11)
   const heatmapData = {};
 
@@ -43,7 +45,7 @@ const Heatmap = ({ timestamps, backgroundDay, backgroundActiveDay, color }) => {
       {Array.from({ length: 12 }).map((_, monthOffset) => {
         const currentMonthDate = new Date(startDate.getFullYear(), startDate.getMonth() + monthOffset, 1);
         const daysInMonth = getDaysInMonth(currentMonthDate.getFullYear(), currentMonthDate.getMonth());
-        const monthLabel = getMonthLabel(currentMonthDate.getMonth());
+        const monthLabel = t("month_" + (currentMonthDate.getMonth()));
         const yearLabel = currentMonthDate.getFullYear();
 
 
@@ -54,8 +56,8 @@ const Heatmap = ({ timestamps, backgroundDay, backgroundActiveDay, color }) => {
         return (
           <View key={monthLabel}>
             {/* month label & year label */}
-            <Text style={{ fontSize: 14, lineHeight: 14, color: color || "#000" }}>{monthLabel}</Text>
-            <Text style={{ fontSize: 11, lineHeight: 11, marginTop: 1, marginBottom: 4, color: backgroundActiveDay || "gray" }}>{yearLabel}</Text>
+            <Text style={{ fontSize: 13.2, lineHeight: 13.2, color: color || "#000" }}>{monthLabel}</Text>
+            <Text style={{ fontSize: 11, lineHeight: 11, fontWeight: "bold", marginTop: 1, marginBottom: 4, color: backgroundActiveDay || "gray" }}>{yearLabel}</Text>
             <Svg height={(cellSize + gap) * 6} width={(cellSize + gap) * columnsPerMonth}>
 
               {/* add offset for the first day of the month */}

@@ -11,7 +11,7 @@ const AHSRepeat = ({ route, navigation }) => {
     ...route.params.state
   });
   const theme = route.params.theme
-  
+
 
   const onChangeInput = useCallback((name, value) => {
     if (name && value !== undefined) {
@@ -36,7 +36,7 @@ const AHSRepeat = ({ route, navigation }) => {
         bgColor={state.color}
         onGoBack={handleGoBack}
         navigation={navigation}
-        title={t("addt_int_title")}
+        title={t("addt_repeat")}
       />
 
       <View style={{ paddingTop: 14, flex: 1 }}>

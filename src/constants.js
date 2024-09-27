@@ -30,7 +30,8 @@ const THEMEV = {
         chevron: "#b3b7c1",
         chevronText:"#a8adb8", 
         borderGraphColor: "#e8f1fe",
-        borderLinesColor: "#ebedf1"
+        borderLinesColor: "#ebedf1",
+        dayGraphColor: "#dee8f6"
     },
     "st_theme__dark": {
         label: "dark",
@@ -47,8 +48,9 @@ const THEMEV = {
         thumbBackgroundIos: "#45474b",
         chevron: "#888c95",
         chevronText:"#ccd1db",
-        borderGraphColor: "#3f4347",
-        borderLinesColor: "#363739"
+        borderGraphColor: "#4b4f53",
+        borderLinesColor: "#363739",
+        dayGraphColor: "#484c50"
     }
 }
 
@@ -109,7 +111,7 @@ const HABIT_COLORS = [
     '#007AFF', // Blue
     '#AF52DE', // Purple
     '#FF2D55', // Red
-    '#69dd91',  // Green
+    '#69dd91',  // Green 2
     '#e44244' // Bordo
 ];
 
