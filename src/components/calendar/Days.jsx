@@ -32,7 +32,7 @@ const Days = ({ currentMonth, currentDate, color, year, activeColor, itemID, onC
             marginHorizontal: (Math.floor(width / 7) - 40) / 2,
             marginTop: 5,
             height: 40,
-            borderRadius: 21,
+            borderRadius: 12,
             overflow: "hidden",
             lineHeight: 39,
             fontSize: 18,
@@ -67,7 +67,6 @@ const Days = ({ currentMonth, currentDate, color, year, activeColor, itemID, onC
 
     const first_day_timestamp = new Date(year, currentMonth, 1).getTime();
     const DAY_IN_MS = 86400000;
-    console.log(itemID);
     
     const payload = useSelector(state => habitSelectors.selectDatesItemById(state, itemID));
 

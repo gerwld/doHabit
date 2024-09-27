@@ -9,6 +9,13 @@ const dataSample = [
     { name: '', y: 0 },
 ];
 
+/**
+ * Shows Line Chart based on user payload.
+ * @param {funcion} payload - chart data (dataSample example above).
+ * @param {string} dotColor - dot color, usually HEX.
+ * @param {string} dotBgColor - dot background color, usually HEX.
+ * @returns {React FC} - Returns Line Chart. 
+ */
 const CLineChart = ({ 
     payload, 
     bottomLabelColor, 
@@ -47,7 +54,7 @@ const CLineChart = ({
                                 x2={nextX}
                                 y2={nextY}
                                 stroke={borderGraphColor || "black"}
-                                strokeWidth="2"
+                                strokeWidth="4"
                             />
                         );
                     }
@@ -69,13 +76,13 @@ const CLineChart = ({
                                 y2={maxChartHeight + topPadding}
                                 stroke={borderLinesColor || "black"}
                                 strokeWidth="2"
-                                strokeDasharray="2, 2"
+                                strokeDasharray="4, 4"
                             />
 
                             <Circle 
                             cx={x} 
                             cy={y} 
-                            r="5.5" 
+                            r="4.5" 
                              stroke={dotColor || "#3c95d0"}
                             strokeWidth="2.5"
                             fill={dotBgColor || "white"} />
@@ -91,6 +98,7 @@ const CLineChart = ({
                             >
                                 {`${point.y}%`}
                             </Text>
+                            
 
                             {/* display the month name at the bottom */}
                             <Text

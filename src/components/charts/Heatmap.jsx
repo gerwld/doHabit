@@ -1,6 +1,6 @@
 import React from 'react';
 import { Dimensions, View, Text } from 'react-native';
-import Svg, { Rect } from 'react-native-svg';
+import Svg, { Circle, Rect } from 'react-native-svg';
 import { getWeekdays } from '@constants';
 
 // returns the last day in a month
@@ -21,7 +21,7 @@ const getHeatmapStartDate = () => {
   return new Date(today.getFullYear(), startMonth, 1);
 };
 
-const Heatmap = ({ timestamps, backgroundDay, backgroundActiveDay }) => {
+const Heatmap = ({ timestamps, backgroundDay, backgroundActiveDay, color }) => {
   const startDate = getHeatmapStartDate(); // start date (current month - 11)
   const heatmapData = {};
 
@@ -38,7 +38,7 @@ const Heatmap = ({ timestamps, backgroundDay, backgroundActiveDay }) => {
   const weekdays = getWeekdays(); // user weekday array (starts from sunday or monday)
 
   return (
-    <View style={{ justifyContent: "center", paddingVertical: 15, marginLeft: 2, flexDirection: "row", gap: "14%", flexWrap: "wrap", justifyContent: "center" }}>
+    <View style={{ justifyContent: "center", paddingVertical: 15, marginLeft: 2, maxWidth: 800, flexDirection: "row", gap: "12px", flexWrap: "wrap", justifyContent: "center" }}>
       {/* maps each month starting from (currentMonth - 11) */}
       {Array.from({ length: 12 }).map((_, monthOffset) => {
         const currentMonthDate = new Date(startDate.getFullYear(), startDate.getMonth() + monthOffset, 1);
@@ -54,7 +54,7 @@ const Heatmap = ({ timestamps, backgroundDay, backgroundActiveDay }) => {
         return (
           <View key={monthLabel}>
             {/* month label & year label */}
-            <Text style={{ fontSize: 14, lineHeight: 14 }}>{monthLabel}</Text>
+            <Text style={{ fontSize: 14, lineHeight: 14, color: color || "#000" }}>{monthLabel}</Text>
             <Text style={{ fontSize: 11, lineHeight: 11, marginTop: 1, marginBottom: 4, color: backgroundActiveDay || "gray" }}>{yearLabel}</Text>
             <Svg height={(cellSize + gap) * 6} width={(cellSize + gap) * columnsPerMonth}>
 
@@ -83,6 +83,7 @@ const Heatmap = ({ timestamps, backgroundDay, backgroundActiveDay }) => {
                     key={dayIdx}
                     x={x}
                     y={y}
+                    rx={3}
                     width={cellSize}
                     height={cellSize}
                     fill={heatmapData[dayKey] === 1 ? (backgroundActiveDay || 'green') : (backgroundDay || 'lightgray')} // Color based on active day

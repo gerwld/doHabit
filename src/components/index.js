@@ -18,4 +18,5 @@ export { default as Segment } from "./styling/Segment";
 export { default as Toggle } from "./Toggle";
 export { default as SelectDate } from "./SelectDate";
 export { default as LineChart } from "./charts/LineChart";
+export { default as Heatmap } from "./charts/Heatmap";
 

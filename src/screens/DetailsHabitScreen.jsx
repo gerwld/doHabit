@@ -128,7 +128,7 @@ const DetailsHabitScreen = React.memo(({ route, navigation }) => {
     handleMonthChange(new Date().getMonth())
   }, [])
 
-  if (!item) return <View style={{flex: 1, width: "100%", alignItems: "center", justifyContent: "center"}}><ActivityIndicator size="large" color={"#5fb1e7"} /></View>
+  if (!item) return <View style={{flex: 1, width: "100%", alignItems: "center", justifyContent: "center"}}><ActivityIndicator size="largegit " color={"#5fb1e7"} /></View>
 
   return (
     <BaseView>
@@ -215,9 +215,10 @@ const HeatmapYear = memo(({habitID, itemColor}) => {
 
   return (
     <Heatmap 
-    backgroundDay={themeColors.borderLinesColor}
-    backgroundActiveDay={itemColor}
-    timestamps={payload}/>
+      color={themeColors.textColorHighlight}
+      backgroundDay={themeColors.borderLinesColor}
+      backgroundActiveDay={itemColor}
+      timestamps={payload}/>
   )
 })
 

@@ -29,7 +29,7 @@ const THEMEV = {
         copyright: "#c3c7d3",
         chevron: "#b3b7c1",
         chevronText:"#a8adb8", 
-        borderGraphColor: "#e0e6f0",
+        borderGraphColor: "#e8f1fe",
         borderLinesColor: "#ebedf1"
     },
     "st_theme__dark": {
@@ -47,7 +47,7 @@ const THEMEV = {
         thumbBackgroundIos: "#45474b",
         chevron: "#888c95",
         chevronText:"#ccd1db",
-        borderGraphColor: "#6d777f",
+        borderGraphColor: "#3f4347",
         borderLinesColor: "#363739"
     }
 }
@@ -102,15 +102,15 @@ const LANG_MASKS = {
 }
 
 const HABIT_COLORS = [
-    '#FF9440', // Orange
-    '#FFCC00', // Yellow
+    '#f0893a', // Orange
+    '#ffcf0f', // Yellow
     '#44C759', // Green
     '#5AC8FA', // Teal
     '#007AFF', // Blue
     '#AF52DE', // Purple
-    '#FF2D55', // Pink
+    '#FF2D55', // Red
     '#69dd91',  // Green
-    '#e44244' // Brown
+    '#e44244' // Bordo
 ];
 
 const getRandomItem = (arr) => {
