@@ -111,11 +111,7 @@ const MonthSVGContent = memo((props) => {
     firstTimestamp,
     lastTimestamp } = props;
 
-  // filtered timestamps
-  const filteredDates = useSelector(state =>
-    habitSelectors.selectItemDatesPortionById(state, itemID, firstTimestamp, lastTimestamp),
-    shallowEqual
-  );
+
 
   return (<>
       {/* map the actual days of the month */}
@@ -126,21 +122,31 @@ const MonthSVGContent = memo((props) => {
         const currentDate = new Date(currentMonthDate.getFullYear(), currentMonthDate.getMonth(), dayIdx + 1);
         const dayTimestamp = currentDate.setHours(0, 0, 0, 0);
         
-    return (
+    return <DaySVGContent {...{key:dayIdx,x,y,dayTimestamp, cellSize, backgroundActiveDay, backgroundDay, itemID}}/>
 
-      <Rect
-      key={dayIdx}
-      x={x}
-      y={y}
-      rx={3}
-      width={cellSize}
-      height={cellSize}
-      fill={filteredDates.indexOf(dayTimestamp) !== -1 ? (backgroundActiveDay || 'green') : (backgroundDay || 'lightgray')} // Color based on active day
-    />
     
-    )})}
+    
+    })}
   </>
   );
 })
+
+const DaySVGContent = (props) => {
+  console.log("DaySVGContent rerender");
+  
+  const {x,y,dayTimestamp, cellSize, backgroundActiveDay, backgroundDay, itemID} = props;
+  const timestampSelected = useSelector((state) => habitSelectors.selectItemDateById(state, itemID, dayTimestamp), shallowEqual)
+    
+
+  return  <Rect
+            
+            x={x}
+            y={y}
+            rx={3}
+            width={cellSize}
+            height={cellSize}
+            fill={timestampSelected ? (backgroundActiveDay || 'green') : (backgroundDay || 'lightgray')} // Color based on active day
+/>
+}
 
 export default Heatmap;

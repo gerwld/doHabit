@@ -1,11 +1,11 @@
 import { View, TouchableOpacity, useWindowDimensions, StyleSheet, Text } from "react-native";
 import { habitSelectors } from "@redux";
-import { useSelector } from "react-redux";
+import { shallowEqual, useSelector } from "react-redux";
 import { getWeekdays } from "@constants";
 import { useWidthDimensions } from "hooks";
 
 
-const Days = ({ width, currentMonth, currentDate, color, borderColor, year, activeColor, itemID, onChange }) => {
+const Days = ({ width, currentMonth, itemID, currentDate, color, borderColor, year, activeColor, onChange }) => {
     console.log('days rerender')
 
     const timestamp_now = new Date(currentDate.setHours(0, 0, 0, 0)).getTime();
@@ -77,32 +77,47 @@ const Days = ({ width, currentMonth, currentDate, color, borderColor, year, acti
     const first_day_timestamp = new Date(year, currentMonth, 1).getTime();
     const DAY_IN_MS = 86400000;
 
-    const payload = useSelector(state => habitSelectors.selectDatesItemById(state, itemID));
+    // const payload = useSelector(state => habitSelectors.selectDatesItemById(state, itemID));
 
     return <View style={s.v}>
         <View style={s.gap} />
         {daysArray.map(day => {
             let timestamp = first_day_timestamp + (DAY_IN_MS * (day - 1))
-            const dayinPayload = payload?.indexOf(timestamp) > -1;
+            // const dayinPayload = payload?.indexOf(timestamp) > -1;
 
             function onDateSelect() {
                 onChange(timestamp)
             }
 
-            if (timestamp === timestamp_now)
-                return <TouchableOpacity key={timestamp} style={s.to} onPress={onDateSelect}>
-                    <Text style={[s.t, s.t_today, dayinPayload ? s.selected : null]}>{day}</Text>
-                </TouchableOpacity>
-
-            if (timestamp < timestamp_now)
-                return <TouchableOpacity key={timestamp} style={s.to} onPress={onDateSelect}>
-                    <Text style={[s.t, dayinPayload ? s.selected : null]}>{day}</Text>
-                </TouchableOpacity>
-
-            else return <View key={timestamp} style={s.to}><Text style={[s.t, s.t_inactive]}>{day}</Text></View>
+            return <DayCalendarRender {...{ key: timestamp, itemID, day, timestamp, timestamp_now, onDateSelect, s, }} />
         })
         }
     </View>
+}
+
+const DayCalendarRender = (props) => {
+    console.log("DayRenderItem rerender");
+    
+    const {
+        itemID,
+        timestamp,
+        timestamp_now,
+        onDateSelect,
+        s,
+        day } = props;
+    const timestampSelected = useSelector((state) => habitSelectors.selectItemDateById(state, itemID, timestamp), shallowEqual)
+
+    if (timestamp === timestamp_now)
+        return <TouchableOpacity style={s.to} onPress={onDateSelect}>
+            <Text style={[s.t, s.t_today, timestampSelected && s.selected]}>{day}</Text>
+        </TouchableOpacity>
+
+    if (timestamp < timestamp_now)
+        return <TouchableOpacity style={s.to} onPress={onDateSelect}>
+            <Text style={[s.t, timestampSelected && s.selected]}>{day}</Text>
+        </TouchableOpacity>
+
+    return <View style={s.to}><Text style={[s.t, s.t_inactive]}>{day}</Text></View>
 }
 
 export default Days;

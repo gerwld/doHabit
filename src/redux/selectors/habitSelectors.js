@@ -46,3 +46,8 @@ export const selectItemDatesPortionById = createSelector(
     );
   }
 );
+
+export const selectItemDateById = createSelector(
+  [selectItems, (_, habitID) => habitID, (_, __, value) => (value)],
+  (items, habitID, value) => !!items[habitID].datesArray.includes(value)
+);
