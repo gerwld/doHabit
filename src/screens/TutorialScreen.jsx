@@ -6,8 +6,8 @@ import { useCurrentTheme } from 'hooks';
 import { ScrollPages } from '@components'
 import { getTheme } from '@constants';
 
-import logo from "assets/adaptive-icon.png"
-import logo_dark from "assets/adaptive-icon__dark.png"
+import logo_dark from "assets/logo_dark.svg"
+import logo from "assets/adaptive-icon__dark.png"
 
 import {
     l1_ios,
@@ -17,6 +17,7 @@ import {
     d2_ios,
     d3_ios
 } from "assets";
+import SvgLogo from '../../assets/Logo';
 
 
 
@@ -71,7 +72,9 @@ const TutorialScreen = () => {
         <ScrollPages>
             <View style={styles.screen}>
                 <View style={styles.imgBox}>
-                    <Image source={isDarkTheme ? logo : logo_dark} resizeMode="contain" style={styles.mainLogo} />
+                {isDarkTheme 
+                ? <SvgLogo  textColor="#d7e0e9" dimmed width={250} height={250}/>
+                : <SvgLogo textColor="black" width={250} height={250}/>}
                 </View>
                 <Text style={styles.title}>{t("tutorial_title_screen_1")}</Text>
                 <Text style={styles.description}>{t("tutorial_desc_screen_1")}</Text>

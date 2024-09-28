@@ -7,5 +7,6 @@ import { appSelectors } from "@redux";
 export default function useCurrentTheme() {
     const theme = useSelector(appSelectors.selectAppTheme);
     const themeColors = getTheme(theme);
+    
     return [themeColors, theme];
 }

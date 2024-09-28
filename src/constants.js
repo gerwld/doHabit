@@ -15,6 +15,8 @@ const THEMES_MASKS = {
 const THEMEV = {
     "st_theme__light": {
         label: "light",
+        headerGradientStart: "#95cef4",
+        headerGradientEnd: "#3c95d0",
         background: "#f0f2f7",
         bgHighlight: "#ffffff",
         bgHighlightSec: "#f7f8fc",
@@ -28,14 +30,18 @@ const THEMEV = {
         thumbBackgroundIos: "#ffffff",
         copyright: "#c3c7d3",
         chevron: "#b3b7c1",
-        chevronText:"#a8adb8", 
+        chevronText: "#a8adb8",
         borderGraphColor: "#e8f1fe",
         borderLinesColor: "#ebedf1",
         dayGraphColor: "#dee8f6",
-        calendarBorderColor: "#d6dde6"
+        calendarBorderColor: "#d6dde6",
+
     },
     "st_theme__dark": {
+
         label: "dark",
+        headerGradientStart: "#80b5d8",
+        headerGradientEnd: "#3181b6",
         background: "#000000",
         bgHighlight: "#1c1c21",
         bgHighlightSec: "#222228",
@@ -48,11 +54,12 @@ const THEMEV = {
         thumbBackground: "#45474b",
         thumbBackgroundIos: "#45474b",
         chevron: "#888c95",
-        chevronText:"#ccd1db",
+        chevronText: "#ccd1db",
         borderGraphColor: "#4b4f53",
         borderLinesColor: "#363739",
         dayGraphColor: "#484c50",
-        calendarBorderColor: "#313337"
+        calendarBorderColor: "#313337",
+      
     }
 }
 
@@ -64,7 +71,7 @@ const REPEAT_MASKS = {
 }
 
 const REPEAT_GAP_VALUES = {
-    "every-day": { 
+    "every-day": {
         "scale": 30,                     // day_percent * scale = 100%
         "gratitude_percent": 100 / 30,   // % score for extra days
         "day_percent": 100 / 30,         // score for specified days
@@ -186,21 +193,21 @@ const uses24HourClock = (date) => {
 function isFirstDayOfWeekMonday() {
     const userLocale = navigator.language || 'en-US'; // Get the user's locale
     const firstDayOfWeek = new Date(2024, 0, 1).toLocaleDateString(userLocale, { weekday: 'short' });
-    
+
     // Check if the first day of the week in the locale is Monday
     if (firstDayOfWeek === 'Mon') {
-      return true;
+        return true;
     } else if (firstDayOfWeek === 'Sun') {
-      return false;
+        return false;
     }
-  
+
     // Default to Monday if locale is unclear
     return true;
-  }
+}
 
-  function getWeekdays() {
-   return isFirstDayOfWeekMonday() ? WEEKDAYS_EU : WEEKDAYS
-  }
+function getWeekdays() {
+    return isFirstDayOfWeekMonday() ? WEEKDAYS_EU : WEEKDAYS
+}
 
 module.exports = {
     PLATFORM,
@@ -211,7 +218,7 @@ module.exports = {
 
     REPEAT_MASKS,
     REPEAT_GAP_VALUES,
-    
+
     HABIT_COLORS,
     THEMEV,
     getWeekdays,

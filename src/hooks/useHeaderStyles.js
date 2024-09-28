@@ -10,14 +10,18 @@ const getRatioExtras = () => {
 
 const GAP_BETWEEN_SCREEN_BORDERS = 14;
 
-export const useHeaderStyles = (theme, isWhite = false) => {
-  const themeColors = useCurrentTheme();
+export const useHeaderStyles = (_, isWhite = false) => {
+  const [themeColors ] = useCurrentTheme();
   const insets = useSafeAreaInsets();
   const { width, height } = useWindowDimensions();
   const HEADER_HEIGHT_SAFE = PLATFORM === "web" ? 55 : 60;
   const HEADER_HEIGHT_EXTRAS = Math.max(width, height) > 1100 ? 10 : Math.min(height * getRatioExtras(), 20);
   const INSET_SAFE = PLATFORM === "ios" && insets.top < 21 ? insets.top - 1 : insets.top;
   const BUTTON_DIMENSIONS = Math.floor(Math.min(width * 0.24, 120));
+
+  const headerGradientStart = themeColors.headerGradientStart;
+  const headerGradientEnd = themeColors.headerGradientEnd;
+  
 
   const headerStyles = StyleSheet.create({
     header: {
@@ -109,6 +113,8 @@ export const useHeaderStyles = (theme, isWhite = false) => {
     headerStyles,
     HEADER_HEIGHT_SAFE,
     HEADER_HEIGHT_EXTRAS,
-    INSET_SAFE
+    INSET_SAFE,
+    headerGradientStart,
+    headerGradientEnd
   };
 };

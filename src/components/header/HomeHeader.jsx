@@ -8,8 +8,12 @@ export const HomeHeader = React.memo(({ navigation, leftChild, rightChild }) => 
 
    const {headerStyles,
     HEADER_HEIGHT_SAFE,
-    HEADER_HEIGHT_EXTRAS,
-    INSET_SAFE} = useHeaderStyles();
+    headerGradientStart,
+    headerGradientEnd} = useHeaderStyles();
+
+    console.log(headerGradientEnd);
+    
+    
 
     const styles = StyleSheet.create({
         headerButton: {
@@ -30,7 +34,7 @@ export const HomeHeader = React.memo(({ navigation, leftChild, rightChild }) => 
     return (
     <View style={headerStyles.header}>
         <LinearGradient
-            colors={['#9ad7ff', '#3c95d0']}
+            colors={[headerGradientStart || '#9ad7ff', headerGradientEnd || '#3c95d0']}
             start={{ x: 0.2, y: 0.5 }}
             end={{ x: 1, y: 0.5 }}
             style={headerStyles.header}

@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react'
 import styled from 'styled-components/native';
-import { Dimensions, Pressable, StyleSheet, useWindowDimensions, View } from 'react-native';
+import { Dimensions, Platform, Pressable, StyleSheet, useWindowDimensions, Vibration, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import * as Haptics from 'expo-haptics';
 
@@ -15,7 +15,6 @@ import { PLATFORM } from '@constants';
 
 
 const ONE_DAY_IN_MS = 86400000;
-const IS_APP = PLATFORM === "ios" || PLATFORM === "android";
 const DATE = new Date();
 const TIMESTAMP = DATE.setHours(0, 0, 0, 0);
 const ITEM_WIDTH = Dimensions.get("window").width > 768 ? 36 : 32;
@@ -48,9 +47,11 @@ export const LastSevenDays = React.memo(({ isHabit, habitID, color }) => {
 
 
     const onDayPress = React.useCallback((date) => {
-        if (IS_APP) {
-            Haptics.selectionAsync()
-        }
+        if (Platform.OS === "ios")
+             Haptics.selectionAsync()
+        if (Platform.OS === "android")
+            Vibration.vibrate([0, 8]);
+
         d(habitsActions.setHabitTimestamp({
             id: habitID,
             timestamp: date,

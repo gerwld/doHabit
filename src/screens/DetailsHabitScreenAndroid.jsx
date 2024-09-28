@@ -1,5 +1,5 @@
-import React, { lazy, memo, useCallback, useEffect } from 'react'
-import { Text, Button, StyleSheet, ScrollView, View, ActivityIndicator, Dimensions, Platform } from 'react-native'
+import React, { memo, useCallback, useEffect } from 'react'
+import { Text, Button, StyleSheet, ScrollView, View, ActivityIndicator, Platform, Vibration } from 'react-native'
 import { useTranslation } from 'react-i18next';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 
@@ -20,7 +20,15 @@ const IS_APP = PLATFORM === "ios" || PLATFORM === "android";
 
 import HeatmapYear from "./details_lazy/LazyHeatmapYear";
 import ChartYear from "./details_lazy/LazyChartYear";
-import Animated, { FadeIn, FadeOut } from 'react-native-reanimated';
+import Animated, { FadeIn } from 'react-native-reanimated';
+
+
+// ---- ANDROID PART ----- //
+
+
+
+// ---- ANDROID PART ----- //
+
 
 
 const DetailsHabitScreenAndroid = React.memo(({ route, navigation }) => {
@@ -120,9 +128,10 @@ const DetailsHabitScreenAndroid = React.memo(({ route, navigation }) => {
   })
 
   const onDayPress = React.useCallback((timestamp) => {
-    if (IS_APP) {
-      Haptics.selectionAsync()
-    }
+
+  if (Platform.OS === "android")
+      Vibration.vibrate([0, 8]);
+    
     if (item && item?.id) {
       d(habitsActions.setHabitTimestamp({
         id: item.id,
@@ -150,7 +159,6 @@ const DetailsHabitScreenAndroid = React.memo(({ route, navigation }) => {
 
         navigation={navigation}
       />
-      <Text style={styles.t}>Android!</Text>
 
       <ScrollView style={{ paddingTop: 14, flex: 1 }}>
 

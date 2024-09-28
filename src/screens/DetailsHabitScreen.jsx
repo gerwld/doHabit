@@ -1,5 +1,5 @@
-import React, { lazy, memo, useCallback, useEffect } from 'react'
-import { Text, Button, StyleSheet, ScrollView, View, ActivityIndicator, Dimensions, Platform } from 'react-native'
+import React, { memo, useCallback, useEffect } from 'react'
+import { Text, Button, StyleSheet, ScrollView, View, ActivityIndicator, Vibration, Platform } from 'react-native'
 import { useTranslation } from 'react-i18next';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 
@@ -16,15 +16,10 @@ import * as Haptics from 'expo-haptics';
 import { PLATFORM } from '@constants';
 import { habitSelectors } from '../redux';
 import { handleMonthChange } from '../components/calendar';
-const IS_APP = PLATFORM === "ios" || PLATFORM === "android";
 
 import HeatmapYear from "./details_lazy/LazyHeatmapYear";
 import ChartYear from "./details_lazy/LazyChartYear";
-import Animated, { FadeIn, FadeOut } from 'react-native-reanimated';
-
-// const HeatmapYear = lazy(() => import('./details_lazy/LazyHeatmapYear'));
-// const ChartYear = lazy(() => import('./details_lazy/LazyChartYear'));
-
+import Animated, { FadeIn } from 'react-native-reanimated';
 
 const DetailsHabitScreen = React.memo(({ route, navigation }) => {
   const { t } = useTranslation();
@@ -131,9 +126,11 @@ const DetailsHabitScreen = React.memo(({ route, navigation }) => {
   })
 
   const onDayPress = React.useCallback((timestamp) => {
-    if (IS_APP) {
+    if (Platform.OS === "ios")
       Haptics.selectionAsync()
-    }
+    if (Platform.OS === "android")
+      Vibration.vibrate([0, 8]);
+
     if (item && item?.id) {
       d(habitsActions.setHabitTimestamp({
         id: item.id,
@@ -184,17 +181,17 @@ const DetailsHabitScreen = React.memo(({ route, navigation }) => {
 
         <Label>{t("label_month")}</Label>
         <LineItemView st={{ ...styles.itemFlexible }}>
-         <View style={{ alignItems: "center", justifyContent: "center", width: "100%" }}>
+          <View style={{ alignItems: "center", justifyContent: "center", width: "100%" }}>
 
-               <Calendar
-                borderColor={themeColors.calendarBorderColor}
-                color={themeColors.textColor}
-                colorContrast={themeColors.textColorHighlight}
-                itemID={habitID}
-                activeColor={item?.color}
-                onChange={onDayPress} />
-  
-          
+            <Calendar
+              borderColor={themeColors.calendarBorderColor}
+              color={themeColors.textColor}
+              colorContrast={themeColors.textColorHighlight}
+              itemID={habitID}
+              activeColor={item?.color}
+              onChange={onDayPress} />
+
+
 
           </View>
         </LineItemView>
@@ -215,8 +212,8 @@ const DetailsHabitScreen = React.memo(({ route, navigation }) => {
 
         <Label>{t("label_stre")}</Label>
         <LineItemView st={{ ...styles.itemFlexible }}>
-          <View style={{ alignItems: "center", justifyContent: "center", width: "100%", height: 250, minHeight: 250, maxHeight: 250, overflow: "hidden" }}>    
-          <ChartYear itemColor={item?.color} itemID={habitID} />
+          <View style={{ alignItems: "center", justifyContent: "center", width: "100%", height: 250, minHeight: 250, maxHeight: 250, overflow: "hidden" }}>
+            <ChartYear itemColor={item?.color} itemID={habitID} />
           </View>
         </LineItemView>
 
