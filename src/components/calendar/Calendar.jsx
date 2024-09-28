@@ -17,7 +17,7 @@ let currentMonth = currentDate.getMonth();
  * @returns {React FC} - Returns Calendar. 
  */
 const Calendar = React.memo(({ onChange, color, colorContrast, borderColor, activeColor, itemID }) => {
-    console.log('calendar rerender');
+    // console.log('calendar rerender');
 
     const [visibleMonth, setVisibleMonth] = useState(currentMonth); // Default to current month
     const { width } = useWidthDimensions(700, 20);

@@ -1,4 +1,4 @@
-import { View, Button, SafeAreaView, Pressable, Text, useWindowDimensions } from 'react-native'
+import { View, Button, SafeAreaView, Pressable, Text, useWindowDimensions, Platform } from 'react-native'
 import React, { useState } from 'react'
 import { Gesture, GestureDetector, GestureHandlerRootView } from 'react-native-gesture-handler';
 import { runOnJS, useAnimatedStyle, withTiming } from 'react-native-reanimated';
@@ -123,7 +123,7 @@ const ScrollPages = ({ children, navigateToHome = true }) => {
                     </View>
 
                     {/* hide statusbar */}
-                    <StatusBar hidden={true} />
+                 {Platform.OS === "ios" && <StatusBar hidden={true} />}
                 </View>
 
 

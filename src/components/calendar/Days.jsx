@@ -5,7 +5,7 @@ import { getWeekdays } from "@constants";
 
 
 const Days = ({ width, currentMonth, itemID, currentDate, color, borderColor, year, activeColor, onChange }) => {
-    console.log('days rerender')
+    // console.log('days rerender')
 
     const timestamp_now = new Date(currentDate.setHours(0, 0, 0, 0)).getTime();
     const firstDayOfMonth = new Date(2024, currentMonth, 1);
@@ -95,7 +95,7 @@ const Days = ({ width, currentMonth, itemID, currentDate, color, borderColor, ye
 }
 
 const DayCalendarRender = (props) => {
-    console.log("DayRenderItem rerender");
+    // console.log("DayRenderItem rerender");
     
     const {
         itemID,
@@ -104,6 +104,7 @@ const DayCalendarRender = (props) => {
         onDateSelect,
         s,
         day } = props;
+
     const timestampSelected = useSelector((state) => habitSelectors.selectItemDateById(state, itemID, timestamp), shallowEqual)
 
     if (timestamp === timestamp_now)

@@ -13,6 +13,8 @@ import { GestureHandlerRootView } from "react-native-gesture-handler";
 import React from "react";
 import { useCurrentTheme } from "hooks";
 import * as SystemUI from 'expo-system-ui';
+import { Platform } from "react-native";
+import DetailsHabitScreenAndroid from "./DetailsHabitScreenAndroid";
 
 
 
@@ -58,7 +60,12 @@ export const Navigation = () => {
         <NavigationContainer>
             <Stack.Navigator screenOptions={{ gestureEnabled: true, navigationBarColor: themeColors.background || "white" }}>
                 <Stack.Screen name="home" component={HomeScreen} options={{ headerShown: false, title: t("home_screen") }} />
-                <Stack.Screen name="habitdetails" component={DetailsHabitScreen} options={{ headerShown: false, title: "Habit Details", animationTypeForReplace: "pop", animation: "slide_from_bottom", animationDuration: 360 }} />
+              
+              {Platform.OS === "android"  || Platform.OS === "web" 
+              ? <Stack.Screen name="habitdetails" component={DetailsHabitScreenAndroid} options={{ headerShown: false, title: "Habit Details", animation:"fade" }} />
+              : <Stack.Screen name="habitdetails" component={DetailsHabitScreen} options={{ headerShown: false, title: "Habit Details" }} />
+            }
+                
                 {settingsSubdirectories}
                 {addEditSubdirectories}
                 <Stack.Screen

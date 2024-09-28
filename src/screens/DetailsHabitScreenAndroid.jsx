@@ -22,11 +22,8 @@ import HeatmapYear from "./details_lazy/LazyHeatmapYear";
 import ChartYear from "./details_lazy/LazyChartYear";
 import Animated, { FadeIn, FadeOut } from 'react-native-reanimated';
 
-// const HeatmapYear = lazy(() => import('./details_lazy/LazyHeatmapYear'));
-// const ChartYear = lazy(() => import('./details_lazy/LazyChartYear'));
 
-
-const DetailsHabitScreen = React.memo(({ route, navigation }) => {
+const DetailsHabitScreenAndroid = React.memo(({ route, navigation }) => {
   const { t } = useTranslation();
   const d = useDispatch();
   const [themeColors] = useCurrentTheme();
@@ -74,14 +71,6 @@ const DetailsHabitScreen = React.memo(({ route, navigation }) => {
         onDismiss: () => { }
       })
   }
-
-  const [showHeatmap, setShowHeatmap] = React.useState(false)
-
-  useEffect(() => {
-    if (item && item?.id && !showHeatmap) {
-      setTimeout(() => setShowHeatmap(true), 10)
-    }
-  }, [item, showHeatmap])
 
   const styles = StyleSheet.create({
     t: {
@@ -147,7 +136,7 @@ const DetailsHabitScreen = React.memo(({ route, navigation }) => {
     handleMonthChange(new Date().getMonth())
   }, [])
 
-  if (!item?.color) return <View style={{ flex: 1, width: "100%", alignItems: "center", justifyContent: "center" }}><ActivityIndicator size="large" color={"#5fb1e7"} /></View>
+  if (!item) return <View style={{ flex: 1, width: "100%", alignItems: "center", justifyContent: "center" }}><ActivityIndicator size="large" color={"#5fb1e7"} /></View>
 
   return (
     <BaseView>
@@ -161,6 +150,7 @@ const DetailsHabitScreen = React.memo(({ route, navigation }) => {
 
         navigation={navigation}
       />
+      <Text style={styles.t}>Android!</Text>
 
       <ScrollView style={{ paddingTop: 14, flex: 1 }}>
 
@@ -184,17 +174,17 @@ const DetailsHabitScreen = React.memo(({ route, navigation }) => {
 
         <Label>{t("label_month")}</Label>
         <LineItemView st={{ ...styles.itemFlexible }}>
-         <View style={{ alignItems: "center", justifyContent: "center", width: "100%" }}>
+          <View style={{ alignItems: "center", justifyContent: "center", width: "100%" }}>
 
-               <Calendar
-                borderColor={themeColors.calendarBorderColor}
-                color={themeColors.textColor}
-                colorContrast={themeColors.textColorHighlight}
-                itemID={habitID}
-                activeColor={item?.color}
-                onChange={onDayPress} />
-  
-          
+            <Calendar
+              borderColor={themeColors.calendarBorderColor}
+              color={themeColors.textColor}
+              colorContrast={themeColors.textColorHighlight}
+              itemID={habitID}
+              activeColor={item?.color}
+              onChange={onDayPress} />
+
+
 
           </View>
         </LineItemView>
@@ -203,20 +193,18 @@ const DetailsHabitScreen = React.memo(({ route, navigation }) => {
         <Label>{t("label_ov")}</Label>
         <LineItemView st={{ ...styles.itemFlexible }}>
           <View style={{ alignItems: "center", justifyContent: "center", width: "100%", minHeight: 340 }}>
-            {showHeatmap &&
-              <Animated.View entering={FadeIn.duration(300)}>
-                <HeatmapYear
-                  itemColor={item?.color}
-                  habitID={habitID} />
-              </Animated.View>
-            }
+
+            <ShowHeatmapDelay itemColor={item?.color} habitID={habitID} />
+
           </View>
         </LineItemView>
 
         <Label>{t("label_stre")}</Label>
         <LineItemView st={{ ...styles.itemFlexible }}>
-          <View style={{ alignItems: "center", justifyContent: "center", width: "100%", height: 250, minHeight: 250, maxHeight: 250, overflow: "hidden" }}>    
-          <ChartYear itemColor={item?.color} itemID={habitID} />
+          <View style={{ alignItems: "center", justifyContent: "center", width: "100%", height: 250, minHeight: 250, maxHeight: 250, overflow: "hidden" }}>
+
+            <ShowChartDelay itemColor={item?.color} habitID={habitID} />
+
           </View>
         </LineItemView>
 
@@ -233,8 +221,33 @@ const DetailsHabitScreen = React.memo(({ route, navigation }) => {
   )
 });
 
+const ShowChartDelay = ({ itemColor, habitID }) => {
+  const [showChart, setShowChart] = React.useState(false)
+
+  useEffect(() => {
+    !showChart && setTimeout(() => setShowChart(true), 1000)
+  }, [showChart])
+
+  if (showChart) return <Animated.View entering={FadeIn.duration(800)}>
+  <ChartYear itemColor={itemColor} itemID={habitID} />
+  </Animated.View>
+
+}
 
 
+const ShowHeatmapDelay = ({ itemColor, habitID }) => {
+  const [showHeatmap, setShowHeatmap] = React.useState(false)
+  useEffect(() => {
+    !showHeatmap && setTimeout(() => setShowHeatmap(true), 20)
+  }, [showHeatmap])
+
+
+  if (showHeatmap) return <Animated.View entering={FadeIn.duration(800)}>
+    <HeatmapYear
+      itemColor={itemColor}
+      habitID={habitID} />
+  </Animated.View>
+}
 
 
 
@@ -288,4 +301,4 @@ const OverviewContent = memo(({ styles, themeColors, habitID }) => {
   )
 })
 
-export default DetailsHabitScreen
+export default DetailsHabitScreenAndroid

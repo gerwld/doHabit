@@ -32,7 +32,7 @@ const Heatmap = memo(({ itemID, backgroundDay, backgroundActiveDay, color }) => 
   const weekdays = getWeekdays(); // user weekday array (starts from sunday or monday)
 
   return (
-    <View style={{ justifyContent: "center", maxWidth: 720, paddingVertical: 15, marginLeft: 2, flexDirection: "row", gap: "19px", marginHorizontal: "1%", flexWrap: "wrap", justifyContent: "center" }}>
+    <View style={{ justifyContent: "center", maxWidth: 720, paddingVertical: 15, marginLeft: 2, flexDirection: "row", gap: 19, marginHorizontal: "1%", flexWrap: "wrap", justifyContent: "center" }}>
       {/* maps each month starting from (currentMonth - 11) */}
       {Array.from({ length: 12 }).map((_, monthOffset) => {
         const currentMonthDate = new Date(startDate.getFullYear(), startDate.getMonth() + monthOffset, 1);
@@ -133,7 +133,7 @@ const MonthSVGContent = memo((props) => {
 })
 
 const DaySVGContent = (props) => {
-  console.log("DaySVGContent rerender");
+  // console.log("DaySVGContent rerender");
 
   const { x, y, dayTimestamp, cellSize, backgroundActiveDay, backgroundDay, itemID } = props;
   const timestampSelected = useSelector((state) => habitSelectors.selectItemDateById(state, itemID, dayTimestamp), shallowEqual)
