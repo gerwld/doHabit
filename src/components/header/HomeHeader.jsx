@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Pressable, StyleSheet, Text } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
-import { Add2, Gear3 } from '@icons';
+import { Add2, Gear3, SvgLogoInline } from '@icons';
 import { useHeaderStyles } from 'hooks';
 
 export const HomeHeader = React.memo(({ navigation, leftChild, rightChild }) => {
@@ -39,17 +39,18 @@ export const HomeHeader = React.memo(({ navigation, leftChild, rightChild }) => 
                 <View style={headerStyles.leftComponent}>
                     {leftChild ? leftChild : (
                         <Pressable style={styles.headerButton} onPress={() => navigation.navigate('settings')}>
-                                <Gear3 width={32} height={32} color={"white"}/>
+                                <Gear3 width={33} height={33} color={"white"}/>
                         </Pressable>
                     )}
                 </View>
                 <View style={headerStyles.centerComponent}>
-                    <Text style={styles.headerTitle}>DoHabit</Text>
+                    {/* <Text style={styles.headerTitle}>DoHabit</Text> */}
+                    <SvgLogoInline size={22} style={headerStyles.logo}/>
                 </View>
                 <View style={headerStyles.rightComponent}>
                     {rightChild ? rightChild : (
                         <Pressable style={headerStyles.headerButton} onPress={() => navigation.navigate('addhabit')}>
-                                <Add2 width={47} height={47} color={"white"}/>
+                                <Add2 width={47} height={46} color={"white"}/>
                         </Pressable>
                     )}
                 </View>

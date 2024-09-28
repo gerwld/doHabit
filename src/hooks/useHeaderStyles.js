@@ -52,7 +52,7 @@ export const useHeaderStyles = (theme, isWhite = false) => {
     },
     headerTitle: {
       color: 'white',
-      fontSize: 20,
+      fontSize: 21,
       fontWeight: 'bold',
     },
     centerComponent: {
@@ -99,8 +99,10 @@ export const useHeaderStyles = (theme, isWhite = false) => {
       userSelect: "none",
       textAlign: "left",
       color: isWhite ? themeColors.textColorHighlight : "#ffffff",
-
     },
+    logo: {
+      marginBottom: 1
+    }
   });
 
   return {
