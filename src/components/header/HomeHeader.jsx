@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Pressable, StyleSheet, Text } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
-import { Add1, Add2, Add3, Gear1, Gear2, Gear3,} from '../../../assets/svg/hicons_svgr';
+import { Add2, Gear3 } from '@icons';
 import { useHeaderStyles } from 'hooks';
 
 export const HomeHeader = React.memo(({ navigation, leftChild, rightChild }) => {

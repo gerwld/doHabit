@@ -5,7 +5,7 @@ import styled from 'styled-components/native';
 
 import { useCurrentTheme } from 'hooks';
 import Toggle from '../Toggle';
-import { ChevronRight } from '../../../assets/svg/hicons_svgr';
+import { ChevronRight } from '@icons';
 import { PLATFORM } from '@constants';
 
 const LineItemView = React.memo(({ onPress,isFirstItem, leftIcon, children, rightArrow, toggle, toggleColor, onToggle, isEnabled, pl1, st }) => {

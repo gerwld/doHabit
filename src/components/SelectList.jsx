@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next"
 import { Text, View, Pressable, FlatList, StyleSheet, ActivityIndicator } from "react-native"
 import { Label } from "styles/crudtask"
 import { useCurrentTheme } from "hooks"
-import { Check1 } from "../../assets/svg/hicons_svgr"
+import { Check1 } from "@icons"
 import { PLATFORM } from "@constants"
 
 const SelectList = React.memo(({ showFetch, data, title, currentValue, setValue, color, theme, withoutTranslate }) => {

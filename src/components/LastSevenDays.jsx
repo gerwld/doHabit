@@ -8,7 +8,7 @@ import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import { habitSelectors } from '@redux';
 import { habitsActions } from "actions";
 import { useCurrentTheme } from "hooks";
-import { Check1, Close1 } from '../../assets/svg/hicons_svgr';
+import { Check1, Close1 } from '@icons';
 import { PLATFORM } from '@constants';
 
 

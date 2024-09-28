@@ -9,7 +9,7 @@ import { uses24HourClock, convertTo12HourFormat } from '@constants';
 import { Label, InfoBar, InfoBarItem } from "styles/crudtask"
 import { CircularProgress, LineItemView, STHeader, BaseView, LineChart, Heatmap } from '@components';
 import { useCurrentTheme, getHabitScore } from 'hooks';
-import { SvgClock, SvgRepeat } from '../../assets/svg/hicons_svgr';
+import { SvgClock, SvgRepeat } from '../../assets/svg/icons_svgr';
 import Calendar from '../components/calendar/Calendar';
 import * as Haptics from 'expo-haptics';
 
@@ -271,11 +271,11 @@ const ChartYear = memo(({ itemColor, itemID }) => {
     })
   }
 
-  const initData2 = createChartData();
+  const initData = createChartData();
 
   return (
     <LineChart
-      payload={initData2}
+      payload={initData}
       bottomLabelColor={themeColors.textColor}
       topLabelColor={themeColors.textColorHighlight}
       borderGraphColor={themeColors.borderGraphColor}

@@ -62,6 +62,8 @@ export const useHeaderStyles = (theme, isWhite = false) => {
       maxWidth: width - (BUTTON_DIMENSIONS * 2),
       paddingHorizontal: 2,
       flex: 1,
+      pointerEvents: "none",
+      userSelect: "none"
     },
     leftComponent: {
       height: HEADER_HEIGHT_SAFE,
