@@ -148,7 +148,7 @@ const DetailsHabitScreen = React.memo(({ route, navigation }) => {
       <ScrollView style={{ paddingTop: 14, flex: 1 }}>
 
 
-        <LineItemView st={{ justifyContent: "space-around", paddingVertical: 10, minHeight: 0, backgroundColor: "transparent"}}>
+        <LineItemView st={{ justifyContent: "space-around", paddingVertical: 10, minHeight: 0, backgroundColor: "transparent" }}>
           <InfoBarItem>
             <SvgRepeat size={22} color={themeColors.textColor} />
             <Text style={[styles.t, styles.l]}>{item?.repeat ? t(item.repeat) : "-"}</Text>
@@ -180,15 +180,15 @@ const DetailsHabitScreen = React.memo(({ route, navigation }) => {
           </View>
         </LineItemView>
 
-        {habitID &&
-          <><Label>{t("label_ov")}</Label>
-            <LineItemView st={{ ...styles.itemFlexible }}>
-              <View style={{ alignItems: "center", justifyContent: "center", width: "100%" }}>
-                <HeatmapYear
-                  itemColor={item?.color}
-                  habitID={habitID} />
-              </View>
-            </LineItemView></>}
+
+        <Label>{t("label_ov")}</Label>
+        <LineItemView st={{ ...styles.itemFlexible }}>
+          <View style={{ alignItems: "center", justifyContent: "center", width: "100%" }}>
+            <HeatmapYear
+              itemColor={item?.color}
+              habitID={habitID} />
+          </View>
+        </LineItemView>
 
         <Label>{t("label_stre")}</Label>
         <LineItemView st={{ ...styles.itemFlexible }}>
@@ -222,7 +222,7 @@ const HeatmapYear = memo(({ habitID, itemColor }) => {
       color={themeColors.textColorHighlight}
       backgroundDay={themeColors.dayGraphColor}
       backgroundActiveDay={itemColor}
-      />
+    />
   )
 })
 
@@ -230,24 +230,14 @@ const HeatmapYear = memo(({ habitID, itemColor }) => {
 // ChartYear part 
 
 const ChartYear = memo(({ itemColor, itemID }) => {
-  const {t} = useTranslation();
+  const { t } = useTranslation();
   const [themeColors] = useCurrentTheme();
-
   const item = useSelector((state) => habitSelectors.selectItemById(state, itemID), shallowEqual);
-  
-  const initData = [
+
+  if(!itemID || !item) return;
+
+  const dataSample = [
     { subname: "03/24", name: 'January', y: 0 },
-    { subname: "03/24", name: 'February', y: 20 },
-    { subname: "03/24", name: 'March', y: 50 },
-    { subname: "03/24", name: 'April', y: 100 },
-    { subname: "03/24", name: 'April', y: 50 },
-    { subname: "03/24", name: 'ейпріл', y: 20 },
-    { subname: "03/24", name: 'January', y: 0 },
-    { subname: "03/24", name: 'February', y: 20 },
-    { subname: "03/24", name: 'March', y: 50 },
-    { subname: "03/24", name: 'April', y: 100 },
-    { subname: "03/24", name: 'April', y: 50 },
-    { subname: "03/24", name: 'ейпріл', y: 20 },
   ];
 
   function createChartData(totalMonths = 12) {
@@ -259,25 +249,25 @@ const ChartYear = memo(({ itemColor, itemID }) => {
 
     const startDate = getChartStartDate();
 
-   return Array.from({ length: totalMonths }).map((_, monthOffset) => {
-    const currentMonthDate = new Date(startDate.getFullYear(), startDate.getMonth() + monthOffset, 1);
-    const lastMonthDate = new Date(startDate.getFullYear(), startDate.getMonth() + monthOffset + 1, 0);
+    return Array.from({ length: totalMonths }).map((_, monthOffset) => {
+      const currentMonthDate = new Date(startDate.getFullYear(), startDate.getMonth() + monthOffset, 1);
+      const lastMonthDate = new Date(startDate.getFullYear(), startDate.getMonth() + monthOffset + 1, 0);
 
-    const firstTimestamp = currentMonthDate.setHours(0, 0, 0, 0);
-    const lastTimestamp = lastMonthDate.setHours(0, 0, 0, 0);
+      const firstTimestamp = currentMonthDate.setHours(0, 0, 0, 0);
+      const lastTimestamp = lastMonthDate.setHours(0, 0, 0, 0);
 
-    const monthIndex = currentMonthDate.getMonth();
-    const monthLabel = t("month_" + monthIndex);
+      const monthIndex = currentMonthDate.getMonth();
+      const monthLabel = t("month_" + monthIndex);
 
-    const [score, monthScore, yearScore] = getHabitScore(item, firstTimestamp, lastTimestamp);
+      const {monthScore} = getHabitScore(item, firstTimestamp, lastTimestamp);      
 
-    return {
-      firstTimestamp, 
-      lastTimestamp, 
-      name: monthLabel,
-      subname: String(monthIndex + 1).padStart(2, "0") + "/" + String(currentMonthDate.getFullYear()).slice(2, 4),
-      y: Math.round(score)
-    }
+      return {
+        firstTimestamp,
+        lastTimestamp,
+        name: monthLabel,
+        subname: String(monthIndex + 1).padStart(2, "0") + "/" + String(currentMonthDate.getFullYear()).slice(2, 4),
+        y: Math.round(monthScore || 0)
+      }
     })
   }
 
@@ -304,7 +294,7 @@ const ChartYear = memo(({ itemColor, itemID }) => {
 const OverviewContent = memo(({ styles, themeColors, habitID }) => {
   const { t } = useTranslation();
   const item = useSelector(state => habitSelectors.selectItemById(state, habitID), shallowEqual);
-  const [score, monthScore, yearScore] = getHabitScore(item);
+  const {weekScore, monthScore, yearScore} = getHabitScore(item);
 
 
 
@@ -322,7 +312,7 @@ const OverviewContent = memo(({ styles, themeColors, habitID }) => {
 
       <View style={styles.circle} >
         <CircularProgress
-          progress={score > 0 ? score : 1}
+          progress={monthScore}
           size={40}
           strokeWidth={5}
           strColor={themeColors.crossSymbL}
@@ -330,8 +320,8 @@ const OverviewContent = memo(({ styles, themeColors, habitID }) => {
       </View>
 
       <View style={styles.ovParent}>
-        <Text style={styles.ovBlockDT}>{addPlus(getDecimal(score))}%</Text>
-        <Text style={styles.ovBlockDD}>{t("dt_score")}</Text>
+        <Text style={styles.ovBlockDT}>{addPlus(getDecimal(weekScore))}%</Text>
+        <Text style={styles.ovBlockDD}>{t("dt_week")}</Text>
       </View>
 
       <View style={styles.ovParent}>

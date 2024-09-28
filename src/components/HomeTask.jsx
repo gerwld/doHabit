@@ -12,7 +12,7 @@ export const HomeTask = React.memo(({ itemID, color }) => {
   const navigation = useNavigation();
   const [themeColors] = useCurrentTheme();
   const item = useSelector(state => habitSelectors.selectItemById(state, itemID));
-  const [score] = getHabitScore(item);
+  const {monthScore} = getHabitScore(item);
   
   if(!item) return null;
   
@@ -20,7 +20,7 @@ export const HomeTask = React.memo(({ itemID, color }) => {
     <LineItemView st={{ height: 56 }}>
       <Pressable style={{ flex: 1 }} onPress={() => navigation.navigate("habitdetails", item)} >
         <View style={styles.pressArea}>
-          <CircularProgress progress={score} size={27} strokeWidth={3.5} strColor={themeColors.crossSymbL} color={item?.color ? item.color : "#7fcbfd"} />
+          <CircularProgress progress={monthScore} size={27} strokeWidth={3.5} strColor={themeColors.crossSymbL} color={item?.color ? item.color : "#7fcbfd"} />
           <Text numberOfLines={2} ellipsizeMode='tail' style={{ fontSize: 16, flex: 1, marginLeft: 10, marginRight: 5, userSelect: "none", color: color ?? "#50677a" }}>{item.name}</Text>
         </View>
       </Pressable>

@@ -65,10 +65,10 @@ const REPEAT_MASKS = {
 
 const REPEAT_GAP_VALUES = {
     "every-day": { 
-        "scale": 44,                     // day_percent * scale = 100%
+        "scale": 30,                     // day_percent * scale = 100%
         "gratitude_percent": 100 / 30,   // % score for extra days
-        "day_percent": 100 / 44,         // score for specified days
-        "reset_gap": 2,                  // when score resets
+        "day_percent": 100 / 30,         // score for specified days
+        "reset_gap": 4,                  // when score resets
     },
     "every-week": {
         "scale": 33,
