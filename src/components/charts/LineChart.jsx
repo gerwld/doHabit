@@ -1,8 +1,10 @@
 import React from 'react';
 import { View, Dimensions } from 'react-native';
 import Svg, { Circle, Line, Text } from 'react-native-svg';
+import { useWidthDimensions } from 'hooks';
 
-const { width: screenWidth } = Dimensions.get('window');
+
+const {width: screenWidth} = useWidthDimensions(680, 0) || 700;
 
 const dataSample = [
     { name: '', y: 0 },
@@ -19,6 +21,7 @@ const dataSample = [
 const CLineChart = ({ 
     payload, 
     bottomLabelColor, 
+    bottomLabelColorSec,
     topLabelColor, 
     dotColor,
     dotBgColor, 
@@ -28,7 +31,7 @@ const CLineChart = ({
 
     if (!data || !data?.length) return nodata
 
-    const chartWidth = screenWidth - 40; // total chart width with padding
+    const chartWidth = screenWidth; // total chart width 
     const maxChartHeight = 150; // fixed height for the chart area (adjustable)
     const margin = 20; // left/right margin to avoid overflow
     const spacing = (chartWidth - 2 * margin) / (data.length - 1); // adjust spacing for margins
@@ -36,7 +39,7 @@ const CLineChart = ({
     const topPadding = 20; // extra Padding for top space to fit the label
 
     return (
-        <View style={{ padding: 20 }}>
+        <View style={{ padding: 20}}>
             <Svg height={maxChartHeight + topPadding + 40} width={chartWidth}>
                 {data.map((point, index) => {
                     const x = margin + index * spacing; // x for left margin
@@ -103,14 +106,27 @@ const CLineChart = ({
                             {/* display the month name at the bottom */}
                             <Text
                                 x={x}
-                                y={maxChartHeight + topPadding + 30} // month name that is below the chart
+                                y={maxChartHeight + topPadding + 21} // month name that is below the chart
                                 fontSize="12"
                                 fontFamily='sans-serif'
                                 fill={bottomLabelColor || "black"}
                                 textAnchor="middle"
                             >
-                                {point.name}
+                                {payload.length < 7 ? point.name : point.name.slice(0, 3)}
+                                
+                                    
                             </Text>
+                            {point.subname &&   <Text
+                                x={x}
+                                y={maxChartHeight + topPadding + 34} // month subname that is below the chart
+                                fontSize="12.5"
+                                fontWeight={payload.length > 7 && chartWidth > 450 ? 400 : 600}
+                                fontFamily='sans-serif'
+                                fill={bottomLabelColorSec || bottomLabelColor || "black"}
+                                textAnchor="middle"
+                            >
+                                {payload.length > 7 && chartWidth > 450  ? point.subname : point.subname.slice(0, 2)}
+                            </Text>}
                         </React.Fragment>
                     );
                 })}

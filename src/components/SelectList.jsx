@@ -1,6 +1,6 @@
 import React, { useCallback } from "react"
 import { useTranslation } from "react-i18next"
-import { Text, View, Pressable, FlatList, StyleSheet, Platform, ActivityIndicator } from "react-native"
+import { Text, View, Pressable, FlatList, StyleSheet, ActivityIndicator } from "react-native"
 import { Label } from "styles/crudtask"
 import { useCurrentTheme } from "hooks"
 import { Check1 } from "../../assets/svg/hicons_svgr"

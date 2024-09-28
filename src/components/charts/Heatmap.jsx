@@ -1,11 +1,12 @@
 import React, { memo } from 'react';
-import { Dimensions, View, Text } from 'react-native';
-import Svg, { Circle, Rect } from 'react-native-svg';
-import { getWeekdays } from '@constants';
-import { useTranslation } from 'react-i18next';
-import { useWidthDimensions } from '../../hooks';
-import { habitSelectors } from '../../redux';
+import { View, Text } from 'react-native';
 import { shallowEqual, useSelector } from 'react-redux';
+import Svg, { Rect } from 'react-native-svg';
+import { useTranslation } from 'react-i18next';
+
+import { getWeekdays } from '@constants';
+import { useWidthDimensions } from 'hooks';
+import { habitSelectors } from '@redux';
 
 // returns the last day in a month
 const getDaysInMonth = (year, month) => {
@@ -68,23 +69,23 @@ const Heatmap = memo(({ itemID, backgroundDay, backgroundActiveDay, color }) => 
                 />}
 
               <MonthSVGContent
-                  {...{
-                    gap,
-                    cellSize,
-                    firstDayOffset,
-                    currentMonthDate,
-                    backgroundDay,
-                    backgroundActiveDay,
-                    daysInMonth,
-                    columnsPerMonth,
-                    itemID,
-                    firstTimestamp,
-                    lastTimestamp
-                  }}
-                />
+                {...{
+                  gap,
+                  cellSize,
+                  firstDayOffset,
+                  currentMonthDate,
+                  backgroundDay,
+                  backgroundActiveDay,
+                  daysInMonth,
+                  columnsPerMonth,
+                  itemID,
+                  firstTimestamp,
+                  lastTimestamp
+                }}
+              />
 
-            
-            
+
+
 
 
             </Svg>
@@ -114,18 +115,18 @@ const MonthSVGContent = memo((props) => {
 
 
   return (<>
-      {/* map the actual days of the month */}
-      {Array.from({ length: daysInMonth }).map((_, dayIdx) => {
-        const dayPositionIdx = dayIdx + firstDayOffset; // x offset for gap rect
-        const x = (dayPositionIdx % columnsPerMonth) * (cellSize + gap); // adjust for gaps in x direction (horizontal)
-        const y = Math.floor(dayPositionIdx / columnsPerMonth) * (cellSize + gap); // adjust for gaps in y direction (vertical)
-        const currentDate = new Date(currentMonthDate.getFullYear(), currentMonthDate.getMonth(), dayIdx + 1);
-        const dayTimestamp = currentDate.setHours(0, 0, 0, 0);
-        
-    return <DaySVGContent {...{key:dayIdx,x,y,dayTimestamp, cellSize, backgroundActiveDay, backgroundDay, itemID}}/>
+    {/* map the actual days of the month */}
+    {Array.from({ length: daysInMonth }).map((_, dayIdx) => {
+      const dayPositionIdx = dayIdx + firstDayOffset; // x offset for gap rect
+      const x = (dayPositionIdx % columnsPerMonth) * (cellSize + gap); // adjust for gaps in x direction (horizontal)
+      const y = Math.floor(dayPositionIdx / columnsPerMonth) * (cellSize + gap); // adjust for gaps in y direction (vertical)
+      const currentDate = new Date(currentMonthDate.getFullYear(), currentMonthDate.getMonth(), dayIdx + 1);
+      const dayTimestamp = currentDate.setHours(0, 0, 0, 0);
 
-    
-    
+      return <DaySVGContent {...{ key: dayIdx, x, y, dayTimestamp, cellSize, backgroundActiveDay, backgroundDay, itemID }} />
+
+
+
     })}
   </>
   );
@@ -133,20 +134,20 @@ const MonthSVGContent = memo((props) => {
 
 const DaySVGContent = (props) => {
   console.log("DaySVGContent rerender");
-  
-  const {x,y,dayTimestamp, cellSize, backgroundActiveDay, backgroundDay, itemID} = props;
-  const timestampSelected = useSelector((state) => habitSelectors.selectItemDateById(state, itemID, dayTimestamp), shallowEqual)
-    
 
-  return  <Rect
-            
-            x={x}
-            y={y}
-            rx={3}
-            width={cellSize}
-            height={cellSize}
-            fill={timestampSelected ? (backgroundActiveDay || 'green') : (backgroundDay || 'lightgray')} // Color based on active day
-/>
+  const { x, y, dayTimestamp, cellSize, backgroundActiveDay, backgroundDay, itemID } = props;
+  const timestampSelected = useSelector((state) => habitSelectors.selectItemDateById(state, itemID, dayTimestamp), shallowEqual)
+
+
+  return <Rect
+
+    x={x}
+    y={y}
+    rx={3}
+    width={cellSize}
+    height={cellSize}
+    fill={timestampSelected ? (backgroundActiveDay || 'green') : (backgroundDay || 'lightgray')} // Color based on active day
+  />
 }
 
 export default Heatmap;

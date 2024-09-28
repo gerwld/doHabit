@@ -1,8 +1,7 @@
-import { View, TouchableOpacity, useWindowDimensions, StyleSheet, Text } from "react-native";
+import { View, TouchableOpacity, StyleSheet, Text } from "react-native";
 import { habitSelectors } from "@redux";
 import { shallowEqual, useSelector } from "react-redux";
 import { getWeekdays } from "@constants";
-import { useWidthDimensions } from "hooks";
 
 
 const Days = ({ width, currentMonth, itemID, currentDate, color, borderColor, year, activeColor, onChange }) => {

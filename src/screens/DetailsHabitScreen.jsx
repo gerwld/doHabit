@@ -8,7 +8,7 @@ import { habitsActions } from "actions";
 import { uses24HourClock, convertTo12HourFormat } from '@constants';
 import { Label, InfoBar, InfoBarItem } from "styles/crudtask"
 import { CircularProgress, LineItemView, STHeader, BaseView, LineChart, Heatmap } from '@components';
-import { useCurrentTheme, useHabitScore } from 'hooks';
+import { useCurrentTheme, getHabitScore } from 'hooks';
 import { SvgClock, SvgRepeat } from '../../assets/svg/hicons_svgr';
 import Calendar from '../components/calendar/Calendar';
 import * as Haptics from 'expo-haptics';
@@ -160,7 +160,7 @@ const DetailsHabitScreen = React.memo(({ route, navigation }) => {
         </LineItemView>
 
         <View style={[styles.item, { flexDirection: "column", width: "100%" }]}>
-          <HabitStrengthContent {...{ habitID, themeColors, styles }} />
+          <OverviewContent {...{ habitID, themeColors, styles }} />
         </View>
 
 
@@ -193,7 +193,7 @@ const DetailsHabitScreen = React.memo(({ route, navigation }) => {
         <Label>{t("label_stre")}</Label>
         <LineItemView st={{ ...styles.itemFlexible }}>
           <View style={{ alignItems: "center", justifyContent: "center", width: "100%" }}>
-            <ChartYear itemColor={item?.color} />
+            <ChartYear itemColor={item?.color} itemID={habitID} />
           </View>
         </LineItemView>
 
@@ -215,7 +215,6 @@ const DetailsHabitScreen = React.memo(({ route, navigation }) => {
 
 const HeatmapYear = memo(({ habitID, itemColor }) => {
   const [themeColors] = useCurrentTheme();
-  // const payload = useSelector(state => habitSelectors.selectDatesItemById(state, habitID));
 
   return (
     <Heatmap
@@ -230,24 +229,68 @@ const HeatmapYear = memo(({ habitID, itemColor }) => {
 
 // ChartYear part 
 
-const ChartYear = memo(({ itemColor }) => {
+const ChartYear = memo(({ itemColor, itemID }) => {
+  const {t} = useTranslation();
   const [themeColors] = useCurrentTheme();
+
+  const item = useSelector((state) => habitSelectors.selectItemById(state, itemID), shallowEqual);
+  
   const initData = [
-    { name: 'January', y: 0 },
-    { name: 'February', y: 20 },
-    { name: 'March', y: 50 },
-    { name: 'April', y: 100 },
-    { name: 'April', y: 50 },
-    { name: 'ейпріл', y: 20 },
+    { subname: "03/24", name: 'January', y: 0 },
+    { subname: "03/24", name: 'February', y: 20 },
+    { subname: "03/24", name: 'March', y: 50 },
+    { subname: "03/24", name: 'April', y: 100 },
+    { subname: "03/24", name: 'April', y: 50 },
+    { subname: "03/24", name: 'ейпріл', y: 20 },
+    { subname: "03/24", name: 'January', y: 0 },
+    { subname: "03/24", name: 'February', y: 20 },
+    { subname: "03/24", name: 'March', y: 50 },
+    { subname: "03/24", name: 'April', y: 100 },
+    { subname: "03/24", name: 'April', y: 50 },
+    { subname: "03/24", name: 'ейпріл', y: 20 },
   ];
+
+  function createChartData(totalMonths = 12) {
+    const getChartStartDate = () => {
+      const today = new Date();
+      const startMonth = today.getMonth() - 11; // current month - 11
+      return new Date(today.getFullYear(), startMonth, 1);
+    };
+
+    const startDate = getChartStartDate();
+
+   return Array.from({ length: totalMonths }).map((_, monthOffset) => {
+    const currentMonthDate = new Date(startDate.getFullYear(), startDate.getMonth() + monthOffset, 1);
+    const lastMonthDate = new Date(startDate.getFullYear(), startDate.getMonth() + monthOffset + 1, 0);
+
+    const firstTimestamp = currentMonthDate.setHours(0, 0, 0, 0);
+    const lastTimestamp = lastMonthDate.setHours(0, 0, 0, 0);
+
+    const monthIndex = currentMonthDate.getMonth();
+    const monthLabel = t("month_" + monthIndex);
+
+    const [score, monthScore, yearScore] = getHabitScore(item, firstTimestamp, lastTimestamp);
+
+    return {
+      firstTimestamp, 
+      lastTimestamp, 
+      name: monthLabel,
+      subname: String(monthIndex + 1).padStart(2, "0") + "/" + String(currentMonthDate.getFullYear()).slice(2, 4),
+      y: Math.round(score)
+    }
+    })
+  }
+
+  const initData2 = createChartData();
 
   return (
     <LineChart
-      payload={initData}
+      payload={initData2}
       bottomLabelColor={themeColors.textColor}
       topLabelColor={themeColors.textColorHighlight}
       borderGraphColor={themeColors.borderGraphColor}
       borderLinesColor={themeColors.borderLinesColor}
+      bottomLabelColorSec={themeColors.borderGraphColor}
       dotBgColor={themeColors.bgHighlight}
       dotColor={itemColor}
     />
@@ -256,19 +299,19 @@ const ChartYear = memo(({ itemColor }) => {
 })
 
 
-// HabitStrengthContent part 
+// OverviewContent part 
 
-const HabitStrengthContent = memo(({ styles, themeColors, habitID }) => {
+const OverviewContent = memo(({ styles, themeColors, habitID }) => {
   const { t } = useTranslation();
   const item = useSelector(state => habitSelectors.selectItemById(state, habitID), shallowEqual);
-  const [score, monthScore, yearScore] = useHabitScore(item);
+  const [score, monthScore, yearScore] = getHabitScore(item);
 
 
 
   function getDecimal(value) {
-    let hasDec = value % 1 !== 0
-    if (hasDec) return value?.toFixed(1)
-    return value;
+    // let hasDec = value % 1 !== 0
+    // if (hasDec) return value?.toFixed(1)
+    return Math.round(value);
   }
   function addPlus(v) {
     return v > 0 ? '+' + v : 0

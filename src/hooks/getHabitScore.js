@@ -7,7 +7,7 @@ const endOfMonthTS = new Date(now.getFullYear(), now.getMonth() + 1, 0, 23, 59, 
 const ONE_DAY_IN_MS = 86400000;
 
 
-export default function useHabitScore(item) {
+export default function getHabitScore(item, timestampMin, timestampMax) {
     let score,
         monthScore,
         yearScore = 0;
@@ -15,6 +15,7 @@ export default function useHabitScore(item) {
     if (item) {
         const { datesArray, repeat } = item;
         const tsSorted = Array.from(datesArray).sort((a, b) => b - a);
+        const tsFiltered = Array.from(tsSorted).filter(ts => ts >=timestampMin && ts <= timestampMax);
 
         // score part
         // gets obj of current preset (repeat count) 
@@ -23,7 +24,7 @@ export default function useHabitScore(item) {
 
         function getLastActivePortion() {
             const reset_gap = (GAP_VALUES.reset_gap) * ONE_DAY_IN_MS;
-            return Array.from(tsSorted).reduce((acc, cur, i) => {
+            return Array.from(timestampMin ? tsFiltered : tsSorted).reduce((acc, cur, i) => {
                 // if first iteration or next timestamp has lower gap detween prev than reset_gap
                  if (i === 0 || acc?.length && acc[0] - reset_gap <= cur) 
                     acc.unshift(cur);

@@ -4,7 +4,7 @@ import LineItemView from './styling/LineItemView'
 import { LastSevenDays } from './LastSevenDays'
 import CircularProgress from './CircularProgress'
 import { useNavigation } from '@react-navigation/native'
-import { useCurrentTheme, useHabitScore } from "hooks";
+import { useCurrentTheme, getHabitScore } from "hooks";
 import { useSelector } from 'react-redux'
 import { habitSelectors } from '../redux'
 
@@ -12,7 +12,7 @@ export const HomeTask = React.memo(({ itemID, color }) => {
   const navigation = useNavigation();
   const [themeColors] = useCurrentTheme();
   const item = useSelector(state => habitSelectors.selectItemById(state, itemID));
-  const [score] = useHabitScore(item);
+  const [score] = getHabitScore(item);
   
   if(!item) return null;
   
