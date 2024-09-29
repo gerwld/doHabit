@@ -14,7 +14,7 @@ const ChartYear = memo(({ itemColor, itemID }) => {
     shallowEqual
   );
 
-  if (!itemID || !item) return null;
+  
 
   
   const getChartStartDate = useCallback(() => {
@@ -50,6 +50,8 @@ const ChartYear = memo(({ itemColor, itemID }) => {
 
   // memoized data recieve call
   const initData = useMemo(() => createChartData(), [createChartData]);
+
+  if (!itemID || !item) return null;
 
   return initData ? (
     <LineChart

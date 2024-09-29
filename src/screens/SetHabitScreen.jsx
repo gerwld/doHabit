@@ -1,5 +1,5 @@
-import React, { useCallback, useRef } from 'react'
-import { View, Text, StyleSheet, TextInput, ScrollView, KeyboardAvoidingView, TouchableWithoutFeedback } from 'react-native'
+import React, { useCallback, useEffect, useRef } from 'react'
+import { View, Text, StyleSheet, TextInput, ScrollView, KeyboardAvoidingView, TouchableWithoutFeedback, Platform } from 'react-native'
 import styled from 'styled-components/native';
 import { useTranslation } from 'react-i18next';
 import uuid from 'react-native-uuid';
@@ -13,6 +13,7 @@ import { habitSelectors } from '@redux';
 import alert from '../polyfils/alert';
 import { useCurrentTheme, useInputFocusOnInit } from 'hooks';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import requestNotificationPermissions from '../tools/grantNotifications';
 
 const DEFAULT_TIME = "11:00"
 
@@ -36,13 +37,30 @@ const SetHabitScreen = React.memo(({ route, navigation, isEdit }) => {
   const [themeColors] = useCurrentTheme();
 
 
-  const androidTimeSelected = state.remindTime && PLATFORM === "android";
+  const toggleRemind = (v, type) => {
+    if(type === "android" && Platform.OS === "android") v = true;
+    onChangeInput("remind", v); 
+    setSelectTime(v);
+  }
+
+   
+
+
+  const androidOrWebTimeSelected = state.remindTime && PLATFORM === "android" || PLATFORM === "web";
 
   const onChangeInput = useCallback((name, value) => {
     if (name && value !== undefined) {
 
+      // grant access to notifications API
+      if(name === "remindTime") {
+        if(value) {
+          requestNotificationPermissions();
+        }
+      }
+
       // case "remind, remindTime" part. if enabled and no prev value = set 12, else null
       if (name === "remind") {
+      
         let remindTime = state?.remindTime ? state.remindTime : DEFAULT_TIME
         if (!value) remindTime = null;
         setState({ ...state, [name]: value, remindTime })
@@ -266,27 +284,27 @@ const SetHabitScreen = React.memo(({ route, navigation, isEdit }) => {
             value={t(state.repeat)} />
 
           {/* TODO: Web support */}
-          {PLATFORM === "ios" || PLATFORM === "android"
-            ? <LineItemView 
+          <LineItemView 
                 pl1 
                 toggle 
                 toggleColor={state.color} 
                 isEnabled={state.remind} 
-                onPress={() => {onChangeInput("remind", true); setSelectTime(true)}}
-                onToggle={(v) => { onChangeInput("remind", v); setSelectTime(v) }}>
-                <Text style={{ fontSize: 17, color: themeColors.textColorHighlight, flex: 1 }}>{t("addt_remind")}</Text>
-                {androidTimeSelected
-               ? <Text style={{ fontSize: 17, color: themeColors.chevronText, marginRight: 10 }}>{twelveOr24Time(state.remindTime)}</Text>
+                onPress={() => toggleRemind(false, "android")}
+                onToggle={(v) => toggleRemind(v)}>
+                <Text style={{ fontSize: 17, color: themeColors.textColorHighlight, flex: 1, userSelect: "none" }}>{t("addt_remind")}</Text>
+                {androidOrWebTimeSelected
+               ? <Text style={{ fontSize: 17, color: themeColors.chevronText, marginRight: 10, userSelect: "none" }}>{twelveOr24Time(state.remindTime)}</Text>
                 :  null}
               </LineItemView>
-            : null}
 
-          {state.remind 
+
+
+          {PLATFORM === "ios" || PLATFORM === "android" && state.remind 
           ? <SelectDate
                 remind={state.remind}
                 themeColors={themeColors}
                 value={state?.remindTime}
-                isSelectTime={isSelectTime}
+                isSelectTime={Platform.OS === "ios" ? state.remind : isSelectTime}
                 setSelectTime={setSelectTime}
                 onChangeInput={onChangeInput} />
           : null}

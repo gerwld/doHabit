@@ -1,4 +1,7 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import notificationsHandler from "../../tools/notificationsHandler";
+import { convertTo24Hour } from "@constants";
+import cancelNotificationsGroup from "../../tools/cancelNotificationsGroup";
 
 const ADD_HABIT = 'habits/ADD_HABIT';
 const DEL_HABIT = 'habits/DEL_HABIT';
@@ -13,17 +16,44 @@ const initializeHabits = (payload, payloadIDs) => ({
 });
 
 
-const addHabit = (payload) => async (dispatch, getState) => {
+const addHabit = (payload) => async (dispatch, getState) => {  
+
+  let notificationIDs;
+  if(payload.remind){
+    let time = convertTo24Hour(payload.remindTime).split(":").map(e => e * 1);
+    notificationIDs = await notificationsHandler(payload.repeat, time[0], time[1], payload.name, payload.notification);
+    console.log(notificationIDs);
+  }
+
+  payload.notificationIDs = notificationIDs;
+
   await dispatch({
     type: ADD_HABIT,
-    payload,
+    payload: payload,
     id: payload.id
   });
+
 
   await setHabitsToAsyncStorage(getState);
 };
 
 const updateHabit = (payload) => async (dispatch, getState) => {
+
+  // cancel prev notifications
+  if(payload.notificationIDs)
+    cancelNotificationsGroup(payload.notificationIDs)
+
+  // setup new (if set)
+  let notificationIDs;
+  if(payload.remind){
+    let time = convertTo24Hour(payload.remindTime).split(":").map(e => e * 1);
+    notificationIDs = await notificationsHandler(payload.repeat, time[0], time[1], payload.name, payload.notification);
+    console.log(notificationIDs);
+  }
+
+  // set new ids
+  payload.notificationIDs = notificationIDs;
+
   await dispatch({
     type: UPD_HABIT,
     payload,
@@ -34,6 +64,9 @@ const updateHabit = (payload) => async (dispatch, getState) => {
 };
 
 const delHabit = (id) => async (dispatch, getState) => {
+  const habit = getState().habits[id];
+  console.log(habit);
+  
   await dispatch({
     type: DEL_HABIT,
     id,

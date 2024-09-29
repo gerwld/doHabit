@@ -184,6 +184,28 @@ const uses24HourClock = (date) => {
     return !timeString.includes('AM') && !timeString.includes('PM');
 };
 
+const getTwelveOr24Time = (time) => {
+    if (uses24HourClock(new Date())) return time;
+    return convertTo12HourFormat(time);
+  }
+
+  const convertTo24Hour = (timeStr) =>  {
+    if (/^\d{2}:\d{2}$/.test(timeStr)) {
+      return timeStr;  // return if already in 24-hour format (e.g., "13:45")
+    }
+  
+    const [time, modifier] = timeStr.split(' ');  // split time and AM/PM
+    let [hours, minutes] = time.split(':');       // split hours and minutes
+  
+    if (hours === '12') {
+      hours = modifier === 'AM' ? '00' : '12';    // handle 12 AM and 12 PM cases
+    } else if (modifier === 'PM') {
+      hours = String(+hours + 12);                // convert PM hours to 24-hour format
+    }
+  
+    return `${hours.padStart(2, '0')}:${minutes}`;  // return 24-hour formatted time
+  }
+
 /**
  * Determines if the first day of the week in the user's locale is Monday.
  *
@@ -227,6 +249,8 @@ module.exports = {
     getThemeStatusBar,
     getTimeFromTimestamp,
     uses24HourClock,
+    getTwelveOr24Time,
+    convertTo24Hour,
     convertTo12HourFormat,
     isFirstDayOfWeekMonday
 }

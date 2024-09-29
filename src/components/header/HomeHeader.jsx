@@ -9,11 +9,8 @@ export const HomeHeader = React.memo(({ navigation, leftChild, rightChild }) => 
    const {headerStyles,
     HEADER_HEIGHT_SAFE,
     headerGradientStart,
-    headerGradientEnd} = useHeaderStyles();
+    headerGradientEnd} = useHeaderStyles();    
 
-    console.log(headerGradientEnd);
-    
-    
 
     const styles = StyleSheet.create({
         headerButton: {
