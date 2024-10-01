@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react'
+import React, { useCallback, useState } from 'react'
 import styled from 'styled-components/native';
 import { Dimensions, Platform, Pressable, StyleSheet, useWindowDimensions, Vibration, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
@@ -72,15 +72,26 @@ export const LastSevenDays = React.memo(({ isHabit, habitID, color }) => {
                 )}
         </ParentView>
     )
+
+    let lastPrevMonthDay = new Date(DATE.getFullYear(), currentMonth, 0).getDate();
     return (
         <ParentView style={[{ marginTop: 14, marginBottom: 7, marginRight: 4 }, styles.parentView]}>
             {RANGE_ARR
                 .map((e, i) => {
+                    let shownMonthMask;
+                    let iterationDay = currentDay - e;
                     const activeStyle = isCurrent(i) ? { color: "#5fb1e7" } : null;
-                    const iterationDay = currentDay - e;
 
-                    return <TimeView key={`key_dayitem_${iterationDay}`}>
-                        <T key={`key_dayitem${iterationDay}__part1`} style={activeStyle}>{currentMonthMask}</T>
+                    if (iterationDay <= 0) {
+                        shownMonthMask = t("month_" + (currentMonth - 1)).substring(0, 3)
+
+                        if(iterationDay <= 0) {                            
+                            iterationDay = lastPrevMonthDay + (currentDay - e)
+                        }
+                    }
+
+                    return <TimeView key={`key_dayitem_${iterationDay + Math.random()}`}>
+                        <T key={`key_dayitem${iterationDay}__part1`} style={activeStyle}>{shownMonthMask ? shownMonthMask : currentMonthMask}</T>
                         <T key={`key_dayitem${iterationDay}__part2`} style={[activeStyle, { fontSize: 17, lineHeight: 19 }]}>{iterationDay}</T>
                     </TimeView>
                 })
