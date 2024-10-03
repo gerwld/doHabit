@@ -1,10 +1,15 @@
 import * as Notifications from 'expo-notifications';
 import { getTwelveOr24Time } from '@constants';
+import { Platform } from 'react-native';
 
 async function notificationsHandler(frequency, hour, minute, name, desc) {
   let notificationIds = [];
-  let userTime = getTwelveOr24Time(hour + ":" + minute) + " ";
+  let userTime = getTwelveOr24Time(hour + ":" + (minute < 10 ? ("0" + minute) : minute)) + " ";
   
+  if(Platform.OS === "web") {
+    console.warn("Used Notifications.scheduleNotificationAsync in Web. Returning empty array.");
+    return []
+  }
 
   switch (frequency) {
     case 'every-day':

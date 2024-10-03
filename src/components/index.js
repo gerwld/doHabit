@@ -19,4 +19,5 @@ export { default as Toggle } from "./Toggle";
 export { default as SelectDate } from "./SelectDate";
 export { default as LineChart } from "./charts/LineChart";
 export { default as Heatmap } from "./charts/Heatmap";
+export { default as Calendar } from "./calendar/Calendar";
 

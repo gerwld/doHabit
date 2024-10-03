@@ -1,9 +1,10 @@
 import { memo, useMemo, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
-import { getHabitScore, useCurrentTheme } from 'hooks';
+import { useCurrentTheme } from 'hooks';
 import { shallowEqual, useSelector } from 'react-redux';
 import { habitSelectors } from '@redux';
 import { LineChart } from '@components';
+import { getHabitScore } from '@tools'
 
 const ChartYear = memo(({ itemColor, itemID }) => {
   const { t } = useTranslation();

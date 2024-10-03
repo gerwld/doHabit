@@ -17,7 +17,8 @@ module.exports = function (api) {
             styles: './src/styles',
             "@polyfils": './src/polyfils',
             "@constants": './src/constants.js',
-            "@icons": "./assets/svg/icons_svgr"
+            "@icons": "./assets/svg/icons_svgr",
+            "@tools": "./src/tools"
           },
         },
       ],

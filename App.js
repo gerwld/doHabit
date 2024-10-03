@@ -9,9 +9,14 @@ import { useInitializeApp } from 'hooks';
 import { appSelectors, store } from '@redux';
 import i18n from './i18n';
 
+import * as SplashScreen from 'expo-splash-screen';
+
+// keep the splash screen visible while app fetch resources
+SplashScreen.preventAutoHideAsync();
+
 
 function AppWithProvider({ children }) {
-
+  
   const lang = useSelector(appSelectors.selectAppLang)
   useInitializeApp(lang);
 

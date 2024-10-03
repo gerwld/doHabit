@@ -1,7 +1,9 @@
 import { View } from 'react-native'
 import React, { useState } from 'react'
 import { Directions, Gesture, GestureDetector } from 'react-native-gesture-handler';
-import { handleMonthChange, Month } from '.';
+import { handleMonthChange } from '.';
+import Month from './Month';
+
 import { runOnJS } from 'react-native-reanimated';
 import { useWidthDimensions } from 'hooks';
 

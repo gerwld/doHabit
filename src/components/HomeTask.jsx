@@ -1,12 +1,14 @@
 import { Text, Pressable, StyleSheet, View } from 'react-native'
-import React, { useEffect } from 'react'
+import React from 'react'
 import LineItemView from './styling/LineItemView'
 import { LastSevenDays } from './LastSevenDays'
 import CircularProgress from './CircularProgress'
 import { useNavigation } from '@react-navigation/native'
-import { useCurrentTheme, getHabitScore } from "hooks";
-import { useSelector } from 'react-redux'
-import { habitSelectors } from '../redux'
+import { useSelector } from 'react-redux';
+
+import { useCurrentTheme } from "hooks";
+import { habitSelectors } from '@redux'
+import { getHabitScore } from '@tools'
 
 export const HomeTask = React.memo(({ itemID, color }) => {
   const navigation = useNavigation();

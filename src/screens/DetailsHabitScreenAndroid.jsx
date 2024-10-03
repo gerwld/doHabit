@@ -5,18 +5,16 @@ import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 
 import alert from '../polyfils/alert';
 import { habitsActions } from "actions";
-import { uses24HourClock, convertTo12HourFormat } from '@constants';
 import { Label, InfoBar, InfoBarItem } from "styles/crudtask"
-import { CircularProgress, LineItemView, STHeader, BaseView } from '@components';
-import { useCurrentTheme, getHabitScore } from 'hooks';
+import { uses24HourClock, convertTo12HourFormat } from '@constants';
+import { CircularProgress, LineItemView, STHeader, BaseView, Calendar } from '@components';
+import { useCurrentTheme } from 'hooks';
+import { getHabitScore } from '@tools'
 import { SvgClock, SvgRepeat } from '../../assets/svg/icons_svgr';
-import Calendar from '../components/calendar/Calendar';
-import * as Haptics from 'expo-haptics';
 
-import { PLATFORM } from '@constants';
+
 import { habitSelectors } from '../redux';
-import { handleMonthChange } from '../components/calendar';
-const IS_APP = PLATFORM === "ios" || PLATFORM === "android";
+import { handleMonthChange } from '@components/calendar';
 
 import HeatmapYear from "./details_lazy/LazyHeatmapYear";
 import ChartYear from "./details_lazy/LazyChartYear";
