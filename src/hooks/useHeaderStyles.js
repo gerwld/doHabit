@@ -21,6 +21,7 @@ export const useHeaderStyles = (_, isWhite = false) => {
 
   const headerGradientStart = themeColors.headerGradientStart;
   const headerGradientEnd = themeColors.headerGradientEnd;
+  const TITLE_SIZE = Math.max(width, height) > 1200 ? 24 : 21;
   
 
   const headerStyles = StyleSheet.create({
@@ -56,7 +57,7 @@ export const useHeaderStyles = (_, isWhite = false) => {
     },
     headerTitle: {
       color: 'white',
-      fontSize: 21,
+      fontSize: TITLE_SIZE,
       fontWeight: 'bold',
     },
     centerComponent: {

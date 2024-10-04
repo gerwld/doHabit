@@ -5,20 +5,22 @@ import { StatusBar } from 'expo-status-bar';
 
 import { Navigation } from 'screens/Navigation';
 import withTranslation from 'hocs/withTranslation';
-import { useInitializeApp } from 'hooks';
+import { useInitializeApp, useInitializeAppDemo, useOrientationLock } from 'hooks';
 import { appSelectors, store } from '@redux';
 import i18n from './i18n';
 
 import * as SplashScreen from 'expo-splash-screen';
 
-// keep the splash screen visible while app fetch resources
+// keeps the splash screen visible while app fetch resources
 SplashScreen.preventAutoHideAsync();
 
 
 function AppWithProvider({ children }) {
+  useOrientationLock();
   
   const lang = useSelector(appSelectors.selectAppLang)
-  useInitializeApp(lang);
+  // useInitializeApp(lang);
+  useInitializeAppDemo(lang);
 
   useEffect(() => {
     i18n.changeLanguage(lang);

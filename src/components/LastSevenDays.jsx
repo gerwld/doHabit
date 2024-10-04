@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react'
+import React, { useCallback } from 'react'
 import styled from 'styled-components/native';
 import { Dimensions, Platform, Pressable, StyleSheet, useWindowDimensions, Vibration, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
@@ -9,7 +9,6 @@ import { habitSelectors } from '@redux';
 import { habitsActions } from "actions";
 import { useCurrentTheme } from "hooks";
 import { Check1, Close1 } from '@icons';
-import { PLATFORM } from '@constants';
 
 
 
@@ -20,8 +19,8 @@ const TIMESTAMP = DATE.setHours(0, 0, 0, 0);
 const ITEM_WIDTH = Dimensions.get("window").width > 768 ? 36 : 32;
 
 function getCountDays(vp) {
-    if (vp > 1320) return 14
-    if (vp > 750) return 10
+    if (vp > 1320) return 12
+    if (vp > 750) return 9
     if (vp > 680) return 7
     if (vp < 350) return 4
     return 5
@@ -88,6 +87,10 @@ export const LastSevenDays = React.memo(({ isHabit, habitID, color }) => {
                         if(iterationDay <= 0) {                            
                             iterationDay = lastPrevMonthDay + (currentDay - e)
                         }
+                    }
+
+                    if(iterationDay < 9) {
+                        iterationDay = "0" + iterationDay
                     }
 
                     return <TimeView key={`key_dayitem_${iterationDay + Math.random()}`}>

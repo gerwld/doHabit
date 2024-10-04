@@ -44,6 +44,9 @@ importers:
       expo-notifications:
         specifier: 0.28.17
         version: 0.28.17(expo@51.0.35(@babel/core@7.25.2)(@babel/preset-env@7.25.4(@babel/core@7.25.2)))
+      expo-screen-orientation:
+        specifier: ~7.0.5
+        version: 7.0.5(expo@51.0.35(@babel/core@7.25.2)(@babel/preset-env@7.25.4(@babel/core@7.25.2)))
       expo-splash-screen:
         specifier: ~0.27.6
         version: 0.27.6(expo-modules-autolinking@1.11.2)(expo@51.0.35(@babel/core@7.25.2)(@babel/preset-env@7.25.4(@babel/core@7.25.2)))
@@ -2066,6 +2069,11 @@ packages:
 
   expo-notifications@0.28.17:
     resolution: {integrity: sha512-tuhc/X385O1gLSBEsPpXSqmmBK6Ve6zG8u6YFa1kXILbyy83DHJuHB5ELJKo/HZdstlYeFjkDCei4haOuxCLCQ==}
+    peerDependencies:
+      expo: '*'
+
+  expo-screen-orientation@7.0.5:
+    resolution: {integrity: sha512-1j0MzVzYpjKQo4BWowQ3ZYwC3OnddX/8k06C8VYTAxMyd8ou1k+rG4tm+GIV2n2RSzc3g7cfPlQwSYr3/SGmbg==}
     peerDependencies:
       expo: '*'
 
@@ -7078,6 +7086,10 @@ snapshots:
     transitivePeerDependencies:
       - encoding
       - supports-color
+
+  expo-screen-orientation@7.0.5(expo@51.0.35(@babel/core@7.25.2)(@babel/preset-env@7.25.4(@babel/core@7.25.2))):
+    dependencies:
+      expo: 51.0.35(@babel/core@7.25.2)(@babel/preset-env@7.25.4(@babel/core@7.25.2))
 
   expo-splash-screen@0.27.6(expo-modules-autolinking@1.11.2)(expo@51.0.35(@babel/core@7.25.2)(@babel/preset-env@7.25.4(@babel/core@7.25.2))):
     dependencies:

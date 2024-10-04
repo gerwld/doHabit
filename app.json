@@ -3,7 +3,7 @@
     "name": "DoHabit",
     "slug": "doHabit-habits-tracker",
     "version": "0.0.1",
-    "orientation": "portrait",
+    "orientation": "default",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "automatic",
     "splash": {
