@@ -21,7 +21,7 @@
       "bundleIdentifier": "com.weblxapp.dohabithabitstracker.v1",
       "userInterfaceStyle": "automatic",
       "splash": {
-        "backgroundColor": "#ffffff",
+        "backgroundColor": "#000000",
         "image": "./assets/splash_image_light.png",
         "resizeMode": "contain",
         "dark": {
@@ -41,7 +41,7 @@
       },
       "userInterfaceStyle": "automatic",
       "splash": {
-        "backgroundColor": "#ffffff",
+        "backgroundColor": "#000000",
         "resizeMode": "contain",
         "image": "./assets/splash_image_light.png",
         "mdpi": "./assets/bootsplash/android/drawable-mdpi/splashscreen_image.png",
@@ -81,7 +81,7 @@
     ],
     "extra": {
       "eas": {
-        "projectId": "399bedba-025d-40d1-858c-e8203ef947ea"
+        "projectId": "8ce531eb-7903-43e4-8ce8-bc63a91217a2"
       }
     }
   }

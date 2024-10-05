@@ -17,6 +17,30 @@
     "preview": {
       "distribution": "internal",
       "android": {
+        "buildType": "app-bundle",
+        "cache": {
+          "key": "my-project-preview-cache-key",
+          "paths": [
+            "node_modules",
+            "ios/Pods"
+          ]
+        }
+      },
+      "ios": {
+        "simulator": true,
+        "cache": {
+          "key": "my-project-preview-cache-key",
+          "paths": [
+            "node_modules",
+            "ios/Pods"
+          ]
+        }
+      }
+    },
+    "previewtesting": {
+      "distribution": "internal",
+      "android": {
+        "buildType": "apk",
         "cache": {
           "key": "my-project-preview-cache-key",
           "paths": [
