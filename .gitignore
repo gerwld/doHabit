@@ -73,6 +73,9 @@ Payload/
 *.tar.gz
 *.ipa
 *.apk
+*.zip
+*.aab
+build-*
 
 # local env files
 .env*.local
