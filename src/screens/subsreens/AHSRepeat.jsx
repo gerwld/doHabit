@@ -26,8 +26,19 @@ const AHSRepeat = ({ route, navigation }) => {
   };
 
   React.useEffect(() => {
+    const unsubscribe = navigation.addListener('beforeRemove', (e) => {
+      e.preventDefault();
+      if (route.params?.onGoBack) {
+        route.params.onGoBack({ data: { ...state } });
+      }
+      navigation.dispatch(e.data.action);
+    });
+    return unsubscribe;
+  }, [navigation, route.params, state]);
+
+React.useEffect(() => {
     setState({ ...state, ...route.params.state });
-  }, [route.params])
+}, [route.params])
 
   return (
 
